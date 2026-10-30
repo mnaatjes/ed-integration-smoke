@@ -119,8 +119,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ed-schema", editable = "../ed-schema" },
-    { name = "ed-transport", editable = "../ed-transport" },
+    { name = "ed-schema", git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.0.0" },
+    { name = "ed-transport", git = "https://github.com/mnaatjes/ed-transport.git?branch=main" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.13.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.7.3" },
@@ -130,43 +130,15 @@ provides-extras = ["dev"]
 [[package]]
 name = "ed-schema"
 version = "1.0.0"
-source = { editable = "../ed-schema" }
-
-[package.metadata]
-requires-dist = [
-    { name = "bump-my-version", marker = "extra == 'dev'", specifier = ">=1.6.0" },
-    { name = "import-linter", marker = "extra == 'dev'", specifier = ">=2.1" },
-    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.13.0" },
-    { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.0.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
-    { name = "pytest-archon", marker = "extra == 'dev'", specifier = ">=0.0.6" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.7.3" },
-]
-provides-extras = ["dev"]
+source = { git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.0.0#bbf804c44a3a2f0e1d6617338a784a8448917124" }
 
 [[package]]
 name = "ed-transport"
 version = "0.1.0"
-source = { editable = "../ed-transport" }
+source = { git = "https://github.com/mnaatjes/ed-transport.git?branch=main#f0b04765fd5c2d4f175954be2a5875ffda5794da" }
 dependencies = [
     { name = "httpx" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "bump-my-version", marker = "extra == 'dev'", specifier = ">=1.6.0" },
-    { name = "httpx", specifier = ">=0.27.0" },
-    { name = "import-linter", marker = "extra == 'dev'", specifier = ">=2.1" },
-    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.13.0" },
-    { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.0.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
-    { name = "pytest-archon", marker = "extra == 'dev'", specifier = ">=0.0.6" },
-    { name = "pytest-asyncio", marker = "extra == 'dev'", specifier = ">=0.23.0" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.7.3" },
-]
-provides-extras = ["dev"]
 
 [[package]]
 name = "h11"
