@@ -137,17 +137,36 @@ def run() -> None:
     assert transport is not None
 
     # Model instantiation
-    # Using the bound model_cls directly; schemaRef is cleanly sanitized from $schemaRef
+    # Using the bound model_cls directly; schemaRef is cleanly sanitized from $schemaRef.
+    # Instantiate child DTOs recursively synthesized by ed-schema v1.1.0:
+    header_cls = getattr(module, "EddnJournalV10HeaderDTO")
+    message_cls = getattr(module, "EddnJournalV10MessageDTO")
+
+    header_instance = header_cls(
+        uploaderID=eddn_payload["header"]["uploaderID"],
+        softwareName=eddn_payload["header"]["softwareName"],
+        softwareVersion=eddn_payload["header"]["softwareVersion"],
+    )
+    message_instance = message_cls(
+        timestamp=eddn_payload["message"]["timestamp"],
+        event=eddn_payload["message"]["event"],
+        StarSystem=eddn_payload["message"]["StarSystem"],
+        SystemAddress=eddn_payload["message"]["SystemAddress"],
+        StarPos=eddn_payload["message"]["StarPos"],
+    )
+
     field_kwargs = {
         "schemaRef": eddn_payload["$schemaRef"],
-        "header": eddn_payload["header"],
-        "message": eddn_payload["message"],
+        "header": header_instance,
+        "message": message_instance,
     }
     dto_instance = descriptor.model_cls(**field_kwargs)
-    print(f"           - Hydrated DTO instance: {type(dto_instance).__name__}")
-    print(f"           - Schema Ref:    {dto_instance.schemaRef}")
-    print(f"           - Software Name: {dto_instance.header['softwareName']}")
-    print(f"           - Star System:   {dto_instance.message['StarSystem']}")
+    print(f"           - Hydrated Root DTO:    {type(dto_instance).__name__}")
+    print(f"           - Schema Ref:           {dto_instance.schemaRef}")
+    print(f"           - Child Header DTO:     {type(dto_instance.header).__name__}")
+    print(f"           - Software Name (attr): {dto_instance.header.softwareName}")
+    print(f"           - Child Message DTO:    {type(dto_instance.message).__name__}")
+    print(f"           - Star System (attr):   {dto_instance.message.StarSystem}")
 
     print("\n" + "=" * 60)
     print("EDDN Pipeline Simulation Completed Successfully!")

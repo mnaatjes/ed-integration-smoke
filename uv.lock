@@ -119,7 +119,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ed-schema", git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.0.1" },
+    { name = "ed-schema", git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.1.0" },
     { name = "ed-transport", git = "https://github.com/mnaatjes/ed-transport.git?branch=main" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.13.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
@@ -129,8 +129,8 @@ provides-extras = ["dev"]
 
 [[package]]
 name = "ed-schema"
-version = "1.0.1"
-source = { git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.0.1#02d24e85deeb3851405557dd8fb309675600b363" }
+version = "1.1.0"
+source = { git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.1.0#74b2d9a5165cea5217712f4cf6444e8eafd84869" }
 
 [[package]]
 name = "ed-transport"
