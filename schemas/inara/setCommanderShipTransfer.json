@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderShipTransfer#",
+  "title": "InaraSetCommanderShipTransfer",
+  "description": "Sets ship in-transit transfer status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderShipTransfer"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        },
+        "starsystemName": {
+          "type": "string"
+        },
+        "stationName": {
+          "type": "string"
+        },
+        "marketID": {
+          "type": "integer"
+        },
+        "transferTime": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "shipType",
+        "shipGameID",
+        "starsystemName"
+      ]
+    }
+  }
+}

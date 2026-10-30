@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/inapi/v1/envelope#",
+  "title": "InaraBatchEnvelope",
+  "description": "Standard root batch request envelope for the Inara API v1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "header",
+    "events"
+  ],
+  "properties": {
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "appName",
+        "appVersion",
+        "APIkey"
+      ],
+      "properties": {
+        "appName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "appVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "isBeingDeveloped": {
+          "type": "boolean"
+        },
+        "APIkey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commanderName": {
+          "type": "string"
+        },
+        "commanderFrontierID": {
+          "type": "string"
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eventName",
+          "eventTimestamp",
+          "eventData"
+        ],
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "eventTimestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eventCustomID": {
+            "type": "integer"
+          },
+          "eventData": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderReputationMajorFaction#",
+  "title": "InaraSetCommanderReputationMajorFaction",
+  "description": "Updates major faction reputation percentages (Federation, Empire, Alliance).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderReputationMajorFaction"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "majorfactionName": {
+          "type": "string",
+          "enum": [
+            "Federation",
+            "Empire",
+            "Alliance",
+            "Independent"
+          ]
+        },
+        "reputationValue": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0
+        }
+      },
+      "required": [
+        "majorfactionName",
+        "reputationValue"
+      ]
+    }
+  }
+}

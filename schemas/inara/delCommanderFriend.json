@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/delCommanderFriend#",
+  "title": "InaraDelCommanderFriend",
+  "description": "Removes a target commander from the friends list on Inara.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "delCommanderFriend"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "commanderName": {
+          "type": "string",
+          "description": "In-game name of the target commander."
+        },
+        "gamePlatform": {
+          "type": "string",
+          "enum": [
+            "pc",
+            "xbox",
+            "ps4"
+          ],
+          "description": "Target commander's game platform."
+        }
+      },
+      "required": [
+        "commanderName",
+        "gamePlatform"
+      ]
+    }
+  }
+}

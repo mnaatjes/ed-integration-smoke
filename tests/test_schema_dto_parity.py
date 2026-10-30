@@ -6,6 +6,7 @@ import dataclasses
 import importlib.util
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any, get_args, get_origin, get_type_hints
 
@@ -42,15 +43,15 @@ ALL_SCHEMAS = _discover_all_schemas()
 def test_schema_dto_structural_parity(namespace: str, schema_file: Path) -> None:
     """Verifies that every JSON schema has a matching compiled DTO module with deep typing."""
     # 1. Assert corresponding Python module exists
-    expected_stem = schema_file.stem.replace(".", "_").replace("-", "_")
-    module_path = GENERATED_DTOS_ROOT / namespace / f"{expected_stem}.py"
+    clean_stem = re.sub(r"[^0-9a-zA-Z_]+", "_", schema_file.stem).lower().strip("_")
+    module_path = GENERATED_DTOS_ROOT / namespace / f"{clean_stem}.py"
     assert module_path.exists(), (
         f"Missing generated DTO module for schema {schema_file}. "
         f"Expected path: {module_path}"
     )
 
     # 2. Dynamically import the module
-    module_name = f"generated_dtos.{namespace}.{expected_stem}"
+    module_name = f"generated_dtos.{namespace}.{clean_stem}"
     spec = importlib.util.spec_from_file_location(module_name, module_path)
     assert spec is not None and spec.loader is not None, f"Failed creating spec for {module_path}"
     module = importlib.util.module_from_spec(spec)

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderGameStatistics#",
+  "title": "InaraSetCommanderGameStatistics",
+  "description": "Synchronizes complete career game statistics from statistics event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderGameStatistics"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bankAccount": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "combat": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "crime": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "smuggling": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "trading": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "mining": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "exploration": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "passengers": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "searchAndRescue": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "crafting": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "crew": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "multicrew": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "materialTraderStats": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "cqc": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "exobiology": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "thargoid": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": []
+    }
+  }
+}

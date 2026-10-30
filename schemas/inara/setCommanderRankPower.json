@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderRankPower#",
+  "title": "InaraSetCommanderRankPower",
+  "description": "Updates Powerplay affiliation, rank, and weekly merits.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderRankPower"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "powerName": {
+          "type": "string"
+        },
+        "rankValue": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timePledged": {
+          "type": "integer",
+          "description": "Seconds pledged."
+        },
+        "merits": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "powerName"
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderReputationMinorFaction#",
+  "title": "InaraSetCommanderReputationMinorFaction",
+  "description": "Updates minor faction reputation value.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderReputationMinorFaction"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minorfactionName": {
+          "type": "string"
+        },
+        "reputationValue": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0
+        }
+      },
+      "required": [
+        "minorfactionName",
+        "reputationValue"
+      ]
+    }
+  }
+}

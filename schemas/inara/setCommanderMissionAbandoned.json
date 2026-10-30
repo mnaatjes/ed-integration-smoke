@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderMissionAbandoned#",
+  "title": "InaraSetCommanderMissionAbandoned",
+  "description": "Marks a mission abandoned.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderMissionAbandoned"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missionName": {
+          "type": "string"
+        },
+        "missionGameID": {
+          "type": "integer"
+        },
+        "fine": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "missionName",
+        "missionGameID"
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderCombatInterdicted#",
+  "title": "InaraAddCommanderCombatInterdicted",
+  "description": "Logs player being interdicted by another ship.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderCombatInterdicted"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "interdictorName": {
+          "type": "string"
+        },
+        "isSubmitted": {
+          "type": "boolean"
+        },
+        "isPlayer": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "starsystemName",
+        "interdictorName"
+      ]
+    }
+  }
+}

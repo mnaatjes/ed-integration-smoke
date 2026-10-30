@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderCombatInterdiction#",
+  "title": "InaraAddCommanderCombatInterdiction",
+  "description": "Logs player attempting an FSD interdiction on another ship.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderCombatInterdiction"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "targetName": {
+          "type": "string"
+        },
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "isPlayer": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "starsystemName",
+        "targetName",
+        "isSuccess"
+      ]
+    }
+  }
+}

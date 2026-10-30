@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderInventoryCargo#",
+  "title": "InaraSetCommanderInventoryCargo",
+  "description": "Sets commodity cargo manifest.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderInventoryCargo"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cargo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string"
+              },
+              "itemCount": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "isStolen": {
+                "type": "boolean"
+              },
+              "isMission": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "itemName",
+              "itemCount"
+            ]
+          }
+        }
+      },
+      "required": [
+        "cargo"
+      ]
+    }
+  }
+}

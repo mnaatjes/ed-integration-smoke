@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderMission#",
+  "title": "InaraAddCommanderMission",
+  "description": "Registers an accepted mission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderMission"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missionName": {
+          "type": "string"
+        },
+        "missionGameID": {
+          "type": "integer"
+        },
+        "missionExpiry": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "influence": {
+          "type": "string"
+        },
+        "reputation": {
+          "type": "string"
+        },
+        "reward": {
+          "type": "integer"
+        },
+        "wing": {
+          "type": "boolean"
+        },
+        "minorfactionName": {
+          "type": "string"
+        },
+        "starsystemName": {
+          "type": "string"
+        },
+        "stationName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "missionName",
+        "missionGameID"
+      ]
+    }
+  }
+}

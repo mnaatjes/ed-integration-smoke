@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderInventory#",
+  "title": "InaraSetCommanderInventory",
+  "description": "Sets general item inventory counts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderInventory"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "itemName": {
+          "type": "string"
+        },
+        "itemCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "itemName",
+        "itemCount"
+      ]
+    }
+  }
+}

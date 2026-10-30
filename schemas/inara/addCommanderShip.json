@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderShip#",
+  "title": "InaraAddCommanderShip",
+  "description": "Registers a newly purchased ship in the commander's fleet.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderShip"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        },
+        "shipName": {
+          "type": "string"
+        },
+        "shipIdent": {
+          "type": "string"
+        },
+        "shipHullValue": {
+          "type": "integer"
+        },
+        "shipModulesValue": {
+          "type": "integer"
+        },
+        "isCurrentShip": {
+          "type": "boolean"
+        },
+        "isHot": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "shipType",
+        "shipGameID"
+      ]
+    }
+  }
+}

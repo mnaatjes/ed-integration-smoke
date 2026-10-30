@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderCredits#",
+  "title": "InaraSetCommanderCredits",
+  "description": "Updates commander's credit balance, assets, and loan debt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderCredits"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "commanderCredits": {
+          "type": "integer",
+          "description": "Current available credits."
+        },
+        "commanderLoan": {
+          "type": "integer",
+          "description": "Current loan debt if any."
+        },
+        "commanderAssets": {
+          "type": "integer",
+          "description": "Total assets value."
+        }
+      },
+      "required": [
+        "commanderCredits"
+      ]
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderTravelDock#",
+  "title": "InaraAddCommanderTravelDock",
+  "description": "Logs a docking event at a station, outpost, or carrier.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderTravelDock"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "stationName": {
+          "type": "string"
+        },
+        "marketID": {
+          "type": "integer"
+        },
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "starsystemName",
+        "stationName"
+      ]
+    }
+  }
+}

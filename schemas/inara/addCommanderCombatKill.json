@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderCombatKill#",
+  "title": "InaraAddCommanderCombatKill",
+  "description": "Logs an NPC or PvP combat kill.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderCombatKill"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "targetName": {
+          "type": "string"
+        },
+        "targetShip": {
+          "type": "string"
+        },
+        "targetRank": {
+          "type": "string"
+        },
+        "reward": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "starsystemName",
+        "targetName"
+      ]
+    }
+  }
+}

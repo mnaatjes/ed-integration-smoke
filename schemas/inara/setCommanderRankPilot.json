@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderRankPilot#",
+  "title": "InaraSetCommanderRankPilot",
+  "description": "Updates commander pilot ranks and progression percentages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderRankPilot"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rankName": {
+          "type": "string",
+          "enum": [
+            "combat",
+            "trade",
+            "exploration",
+            "cqc",
+            "soldier",
+            "exobiologist",
+            "federation",
+            "empire"
+          ]
+        },
+        "rankValue": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rankProgress": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "required": [
+        "rankName",
+        "rankValue"
+      ]
+    }
+  }
+}

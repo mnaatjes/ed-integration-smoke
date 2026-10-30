@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderTravelLand#",
+  "title": "InaraAddCommanderTravelLand",
+  "description": "Logs a planetary touchdown.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderTravelLand"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "bodyName": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "starsystemName",
+        "bodyName"
+      ]
+    }
+  }
+}

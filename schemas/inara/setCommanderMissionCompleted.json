@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderMissionCompleted#",
+  "title": "InaraSetCommanderMissionCompleted",
+  "description": "Marks a mission successfully completed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderMissionCompleted"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "missionName": {
+          "type": "string"
+        },
+        "missionGameID": {
+          "type": "integer"
+        },
+        "reward": {
+          "type": "integer"
+        },
+        "donation": {
+          "type": "integer"
+        },
+        "permits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "commodities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "count"
+            ]
+          }
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "count"
+            ]
+          }
+        }
+      },
+      "required": [
+        "missionName",
+        "missionGameID"
+      ]
+    }
+  }
+}

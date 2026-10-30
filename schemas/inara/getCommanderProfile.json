@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/getCommanderProfile#",
+  "title": "InaraGetCommanderProfile",
+  "description": "Returns basic information about commander from Inara like ranks, squadron, etc.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "getCommanderProfile"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "searchName": {
+          "type": "string",
+          "description": "Commander's name for exact match search."
+        }
+      },
+      "required": [
+        "searchName"
+      ]
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderShipLoadout#",
+  "title": "InaraSetCommanderShipLoadout",
+  "description": "Sets the complete outfitting loadout and engineering mods for a ship.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderShipLoadout"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        },
+        "shipLoadout": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slotName": {
+                "type": "string"
+              },
+              "itemName": {
+                "type": "string"
+              },
+              "itemValue": {
+                "type": "integer"
+              },
+              "itemHealth": {
+                "type": "number"
+              },
+              "isOn": {
+                "type": "boolean"
+              },
+              "itemPriority": {
+                "type": "integer"
+              },
+              "itemAmmoClip": {
+                "type": "integer"
+              },
+              "itemAmmoHopper": {
+                "type": "integer"
+              },
+              "engineering": {
+                "type": "object",
+                "properties": {
+                  "blueprintName": {
+                    "type": "string"
+                  },
+                  "blueprintLevel": {
+                    "type": "integer"
+                  },
+                  "blueprintQuality": {
+                    "type": "number"
+                  },
+                  "experimentalEffect": {
+                    "type": "string"
+                  },
+                  "modifiers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "number"
+                        },
+                        "originalValue": {
+                          "type": "number"
+                        },
+                        "lessIsGood": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "value"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "blueprintName",
+                  "blueprintLevel"
+                ]
+              }
+            },
+            "required": [
+              "slotName",
+              "itemName"
+            ]
+          }
+        }
+      },
+      "required": [
+        "shipType",
+        "shipGameID",
+        "shipLoadout"
+      ]
+    }
+  }
+}

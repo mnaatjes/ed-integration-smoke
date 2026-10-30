@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderSuitLoadout#",
+  "title": "InaraSetCommanderSuitLoadout",
+  "description": "Registers an Odyssey on-foot suit loadout.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderSuitLoadout"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "suitID": {
+          "type": "integer"
+        },
+        "suitName": {
+          "type": "string"
+        },
+        "suitLoadoutName": {
+          "type": "string"
+        },
+        "suitModules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "suitID",
+        "suitName"
+      ]
+    }
+  }
+}

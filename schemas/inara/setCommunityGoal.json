@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommunityGoal#",
+  "title": "InaraSetCommunityGoal",
+  "description": "Synchronizes community goal state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommunityGoal"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "communitygoalGameID": {
+          "type": "integer"
+        },
+        "communitygoalName": {
+          "type": "string"
+        },
+        "starsystemName": {
+          "type": "string"
+        },
+        "stationName": {
+          "type": "string"
+        },
+        "goalExpiry": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tierReached": {
+          "type": "integer"
+        },
+        "tierMax": {
+          "type": "integer"
+        },
+        "contributorsNum": {
+          "type": "integer"
+        },
+        "contributionsTotal": {
+          "type": "integer"
+        },
+        "isCompleted": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "communitygoalGameID",
+        "communitygoalName"
+      ]
+    }
+  }
+}

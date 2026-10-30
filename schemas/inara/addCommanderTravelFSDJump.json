@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/addCommanderTravelFSDJump#",
+  "title": "InaraAddCommanderTravelFSDJump",
+  "description": "Logs an FSD hyperspace jump event.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "addCommanderTravelFSDJump"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starsystemName": {
+          "type": "string"
+        },
+        "jumpDistance": {
+          "type": "number"
+        },
+        "fuelUsed": {
+          "type": "number"
+        },
+        "fuelLevel": {
+          "type": "number"
+        },
+        "boostUsed": {
+          "type": "boolean"
+        },
+        "shipType": {
+          "type": "string"
+        },
+        "shipGameID": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "starsystemName"
+      ]
+    }
+  }
+}

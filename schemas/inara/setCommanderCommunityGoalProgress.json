@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/setCommanderCommunityGoalProgress#",
+  "title": "InaraSetCommanderCommunityGoalProgress",
+  "description": "Synchronizes commander contribution to a community goal.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "setCommanderCommunityGoalProgress"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "communitygoalGameID": {
+          "type": "integer"
+        },
+        "contribution": {
+          "type": "integer"
+        },
+        "percentileBand": {
+          "type": "number"
+        },
+        "tierPercentile": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "communitygoalGameID",
+        "contribution"
+      ]
+    }
+  }
+}

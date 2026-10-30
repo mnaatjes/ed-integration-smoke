@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://inara.cz/schemas/events/delCommanderSuitLoadout#",
+  "title": "InaraDelCommanderSuitLoadout",
+  "description": "Deletes a suit loadout.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventName",
+    "eventTimestamp",
+    "eventData"
+  ],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "const": "delCommanderSuitLoadout"
+    },
+    "eventTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eventCustomID": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "suitID": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "suitID"
+      ]
+    }
+  }
+}
