@@ -29,7 +29,7 @@ select = ["E", "F", "W", "I", "B", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [".", "src"]
 
 [tool.mypy]
 python_version = "3.12"

@@ -200,6 +200,15 @@ class MockEddnGateway:
             payload=req.json_payload,
         )
 
+        # Also check for EDDN disallowed properties ($ref to #/definitions/disallowed)
+        desc = self.schema_engine.resolve_descriptor(key)
+        if desc and isinstance(req.json_payload.get("message"), dict):
+            msg_props = desc.schema_definition.get("properties", {}).get("message", {}).get("properties", {})
+            for m_key in req.json_payload["message"]:
+                spec = msg_props.get(m_key)
+                if isinstance(spec, dict) and spec.get("$ref") == "#/definitions/disallowed":
+                    return 400, f"FAIL: Schema validation error: Disallowed property '{m_key}' in message", {"Content-Type": "text/plain"}
+
         if val_result.is_valid:
             return 200, "OK", {"Content-Type": "text/plain"}
 
