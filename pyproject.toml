@@ -1,0 +1,46 @@
+[project]
+name = "ed-integration-smoke"
+version = "0.1.0"
+description = "Fleet-wide integration, smoke testing, and experimental harness for Elite Dangerous libraries"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ed-schema",
+    "ed-transport",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.7.3",
+    "mypy>=1.13.0",
+]
+
+[tool.uv.sources]
+ed-schema = { path = "../ed-schema", editable = true }
+ed-transport = { path = "../ed-transport", editable = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "ed_schema.*",
+    "ed_schema",
+    "ed_transport.*",
+    "ed_transport",
+]
+ignore_missing_imports = true
