@@ -80,3 +80,46 @@ def test_schema_and_transport_interoperability(tmp_path: Path) -> None:
 
     dto = descriptor.model_cls(ship_id=1, ship_type="Anaconda")
     assert dto.ship_type == "Anaconda"
+
+
+def test_eddn_3_tier_recursive_dto_hydration() -> None:
+    from generated_dtos.eddn.journal_v1_0 import (
+        EddnJournalV10DTO,
+        EddnJournalV10HeaderDTO,
+        EddnJournalV10MessageDTO,
+        EddnJournalV10MessageFactionsItemDTO,
+    )
+
+    faction_item = EddnJournalV10MessageFactionsItemDTO(
+        SquadronFaction=None,
+        HappiestSystem=None,
+        HomeSystem=None,
+        MyReputation=None,
+    )
+    assert faction_item.SquadronFaction is None
+
+    message = EddnJournalV10MessageDTO(
+        timestamp="2026-10-30T02:18:00Z",
+        event="FSDJump",
+        StarSystem="Sol",
+        StarPos=[0.0, 0.0, 0.0],
+        SystemAddress=10477373803,
+        Factions=[faction_item],
+    )
+    assert len(message.Factions) == 1
+    assert isinstance(message.Factions[0], EddnJournalV10MessageFactionsItemDTO)
+
+    header = EddnJournalV10HeaderDTO(
+        uploaderID="pilot_alpha",
+        softwareName="EDMarketConnector-Test",
+        softwareVersion="5.1.0",
+    )
+
+    root = EddnJournalV10DTO(
+        schemaRef="https://eddn.edcd.io/schemas/journal/1",
+        header=header,
+        message=message,
+    )
+    assert root.message.StarSystem == "Sol"
+    assert root.message.Factions[0] is faction_item
+
