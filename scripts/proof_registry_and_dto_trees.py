@@ -62,94 +62,116 @@ def _render_dto_tree(cls: type, prefix: str = "", visited: set[type] | None = No
 
 def run_proof() -> None:
     root_dir = Path(__file__).resolve().parent.parent
-    schemas_dir = root_dir / "schemas" / "eddn"
-    generated_dtos_dir = root_dir / "generated_dtos" / "eddn"
+    schemas_root = root_dir / "schemas"
+    generated_dtos_root = root_dir / "generated_dtos"
 
     engine: SchemaEngine = create_schema_engine()
+    namespaces = [d.name for d in sorted(schemas_root.iterdir()) if d.is_dir()]
 
-    # Load compiled DTO modules into sys.modules and index root classes
-    dto_map: dict[str, type] = {}
-    for py_file in sorted(generated_dtos_dir.glob("*.py")):
-        if py_file.stem == "__init__":
-            continue
-        mod_name = f"generated_dtos.eddn.{py_file.stem}"
-        spec = importlib.util.spec_from_file_location(mod_name, py_file)
-        if spec and spec.loader:
-            mod = importlib.util.module_from_spec(spec)
-            sys.modules[mod_name] = mod
-            spec.loader.exec_module(mod)
-            all_classes = getattr(mod, "__all__", ())
-            if all_classes:
-                # The root class is topologically emitted last in __all__
-                root_class_name = all_classes[-1]
-                dto_map[py_file.stem] = getattr(mod, root_class_name)
+    total_endpoints_count = 0
+    namespace_endpoints: dict[str, list[tuple[Path, str, type | None]]] = {}
 
-    # Register each schema file with the SchemaEngine
-    endpoints: list[EndpointContract] = []
-    schema_files = sorted(schemas_dir.glob("*.json"))
+    for ns in namespaces:
+        schemas_dir = schemas_root / ns
+        generated_dtos_dir = generated_dtos_root / ns
+        schema_files = sorted(schemas_dir.glob("*.json"))
 
-    for s_file in schema_files:
-        stem = s_file.stem.replace(".", "_").replace("-", "_")
-        root_dto = dto_map.get(stem)
-        route_name = f"/{s_file.stem}"
-        endpoints.append(
-            EndpointContract(
-                route=route_name,
-                schema_file=s_file.name,
-                model_cls=root_dto,
-                header_contract=HeaderContract(
-                    parameters=(
-                        HeaderParameterContract(
-                            name="Content-Type",
-                            required=True,
-                            regex_pattern=r"^application/json.*$",
-                        ),
-                    )
-                ),
+        # Load compiled DTO modules into sys.modules and index root classes
+        dto_map: dict[str, type] = {}
+        for py_file in sorted(generated_dtos_dir.glob("*.py")):
+            if py_file.stem == "__init__":
+                continue
+            mod_name = f"generated_dtos.{ns}.{py_file.stem}"
+            spec = importlib.util.spec_from_file_location(mod_name, py_file)
+            if spec and spec.loader:
+                mod = importlib.util.module_from_spec(spec)
+                sys.modules[mod_name] = mod
+                spec.loader.exec_module(mod)
+                all_classes = getattr(mod, "__all__", ())
+                if all_classes:
+                    root_class_name = all_classes[-1]
+                    dto_map[py_file.stem] = getattr(mod, root_class_name)
+
+        endpoints: list[EndpointContract] = []
+        ns_records: list[tuple[Path, str, type | None]] = []
+
+        for s_file in schema_files:
+            clean_stem = s_file.stem.replace(".", "_").replace("-", "_").lower()
+            root_dto = dto_map.get(clean_stem)
+            route_name = f"/{s_file.stem}"
+
+            endpoints.append(
+                EndpointContract(
+                    route=route_name,
+                    schema_file=s_file.name,
+                    model_cls=root_dto,
+                    header_contract=HeaderContract(
+                        parameters=(
+                            HeaderParameterContract(
+                                name="Content-Type",
+                                required=True,
+                                regex_pattern=r"^application/json.*$",
+                            ),
+                        )
+                    ),
+                )
             )
-        )
+            ns_records.append((s_file, route_name, root_dto))
 
-    class EddnFullManifest:
-        name = "eddn"
-        schema_dir = schemas_dir
-        endpoints: tuple[EndpointContract, ...] = ()
+        class NamespaceManifest:
+            name = ns
+            schema_dir = schemas_dir
+            endpoints: tuple[EndpointContract, ...] = ()
 
-    EddnFullManifest.endpoints = tuple(endpoints)
-
-    engine.load_manifests([EddnFullManifest])
-
-    print("=" * 80)
-    print("SCHEMA REGISTRY RESOLUTION & RECURSIVE DTO REFLECTION PROOF")
-    print("=" * 80)
-    print(f"Total Registered Endpoints: {len(endpoints)}\n")
-
-    for s_file in schema_files:
-        route_name = f"/{s_file.stem}"
-        key = SchemaKey(namespace="eddn", endpoint=route_name)
-        descriptor = engine.resolve_descriptor(key)
-
-        assert descriptor is not None, f"Failed resolving key: {key}"
-        assert descriptor.schema_definition is not None, "Schema definition not hydrated!"
-        assert descriptor.model_cls is not None, "Model class not bound!"
-
-        schema_id = descriptor.schema_definition.get("id") or descriptor.schema_definition.get("$id") or "N/A"
-        schema_title = descriptor.schema_definition.get("title", s_file.stem)
-        root_cls = descriptor.model_cls
-
-        print(f"┌─ Endpoint: [eddn] {key.endpoint} (Schema: {s_file.name})")
-        print(f"│  ├─ Canonical URI:     {schema_id}")
-        print(f"│  ├─ Schema Title:      {schema_title}")
-        print(f"│  ├─ Raw Schema Keys:   {tuple(descriptor.schema_definition.keys())}")
-        print(f"│  ├─ Bound Root DTO:    {root_cls.__module__}.{root_cls.__name__}")
-        print(f"│  └─ Recursive DTO Type Graph:")
-
-        tree_lines = _render_dto_tree(root_cls, prefix="│     ")
-        for line in tree_lines:
-            print(line)
-        print("└" + "─" * 79 + "\n")
+        NamespaceManifest.endpoints = tuple(endpoints)
+        engine.load_manifests([NamespaceManifest])
+        namespace_endpoints[ns] = ns_records
+        total_endpoints_count += len(endpoints)
 
     print("=" * 80)
-    print("PROOF COMPLETE: All 19 schemas, definitions, and recursive DTO trees verified!")
+    print("MULTI-NAMESPACE SCHEMA REGISTRY RESOLUTION & DTO REFLECTION PROOF")
+    print("=" * 80)
+    print(f"Namespaces: {', '.join(namespaces)}")
+    print(f"Total Registered Endpoints: {total_endpoints_count}\n")
+
+    for ns, records in namespace_endpoints.items():
+        print(f"\n{'#' * 80}")
+        print(f"### NAMESPACE: [{ns}] ({len(records)} Schemas & Registered Endpoints)")
+        print(f"{'#' * 80}\n")
+
+        for s_file, route_name, expected_dto in records:
+            key = SchemaKey(namespace=ns, endpoint=route_name)
+            descriptor = engine.resolve_descriptor(key)
+
+            assert descriptor is not None, f"Failed resolving key: {key}"
+            assert descriptor.schema_definition is not None, "Schema definition not hydrated!"
+            assert descriptor.model_cls is not None, f"Model class not bound for {s_file.name}!"
+
+            schema_id = (
+                descriptor.schema_definition.get("id")
+                or descriptor.schema_definition.get("$id")
+                or "N/A"
+            )
+            schema_title = descriptor.schema_definition.get("title", s_file.stem)
+            root_cls = descriptor.model_cls
+
+            print(f"┌─ Endpoint: [{ns}] {key.endpoint} (Schema: {s_file.name})")
+            print(f"│  ├─ Canonical URI:     {schema_id}")
+            print(f"│  ├─ Schema Title:      {schema_title}")
+            print(f"│  ├─ Raw Schema Keys:   {tuple(descriptor.schema_definition.keys())}")
+            print(f"│  ├─ Bound Root DTO:    {root_cls.__module__}.{root_cls.__name__}")
+            print(f"│  └─ Recursive DTO Type Graph:")
+
+            tree_lines = _render_dto_tree(root_cls, prefix="│     ")
+            for line in tree_lines:
+                print(line)
+            print("└" + "─" * 79 + "\n")
+
+    print("=" * 80)
+    print(
+        f"PROOF COMPLETE: All {total_endpoints_count} schemas across {len(namespaces)} "
+        "namespaces successfully resolved and verified!"
+    )
     print("=" * 80)
 
 
