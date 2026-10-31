@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edastro.com/schemas/gec-poi.json",
+  "title": "EDAstroGecPoi",
+  "description": "Galactic Exploration Catalog (GEC) Point of Interest record formatted according to the EDSM GMP-JSON schema.",
+  "type": "object",
+  "required": ["id", "name", "type", "coordinates"],
+  "properties": {
+    "id": { "type": "integer", "description": "Numeric point of interest identifier." },
+    "source": { "type": "string", "description": "Origin catalog token ('GEC' or 'GMP') present in combined feeds." },
+    "name": { "type": "string", "description": "Designation or title of the point of interest." },
+    "type": { "type": "string", "description": "Primary classification category." },
+    "type2": { "type": ["string", "null"], "description": "Secondary classification category." },
+    "categoryId": { "type": "integer", "description": "Primary category identifier." },
+    "categoryId2": { "type": "integer", "description": "Secondary category identifier." },
+    "region": { "type": ["string", "null"], "description": "Galactic region name." },
+    "galMapSearch": { "type": ["string", "null"], "description": "Galactic map system search string." },
+    "galMapUrl": { "type": ["string", "null"], "description": "Link to EDSM galactic map record." },
+    "coordinates": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "3D spatial coordinates [x, y, z] in light years from Sol."
+    },
+    "summary": { "type": ["string", "null"], "description": "Short summary description." },
+    "descriptionMardown": { "type": ["string", "null"], "description": "Markdown body text." },
+    "descriptionHtml": { "type": ["string", "null"], "description": "HTML rendered body text." },
+    "solDistance": { "type": ["number", "null"], "description": "Distance from Sol in light years." },
+    "id64": { "type": ["integer", "null"], "description": "Frontier 64-bit celestial system token." },
+    "rating": { "type": ["number", "null"], "description": "Community rating score." },
+    "curation": { "type": ["integer", "null"], "description": "Curation status flag." },
+    "avgStars": { "type": ["number", "null"], "description": "Average star rating." },
+    "votes": { "type": ["integer", "null"], "description": "Vote count." },
+    "poiUrl": { "type": ["string", "null"], "description": "Direct URL to POI details page." },
+    "mainImage": { "type": ["string", "null"], "description": "Primary display image path or URL." },
+    "callsign": { "type": ["string", "null"], "description": "Associated fleet carrier or station callsign if applicable." },
+    "rare": { "type": ["integer", "null"], "description": "Rare POI flag (1 for true, 0 for false)." }
+  },
+  "additionalProperties": true
+}

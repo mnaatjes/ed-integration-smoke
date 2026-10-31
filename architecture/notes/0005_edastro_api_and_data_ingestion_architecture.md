@@ -143,3 +143,17 @@ The GEC API returns points of interest formatted in EDSM's GMP-JSON (Galactic Ma
 1. **Strict Client-Side PII Scrubbing:** Clients streaming to `/api/journal` must strip all authentication tokens, Frontier commander names (`Commander`), account IDs, credit balances (`Credits`), and session tokens.
 2. **Dynamic Whitelist Negotiation:** EDAstro periodically updates the whitelist of ingested events (such as adding new exobiology or fleet carrier event types). Companion clients should query or mirror EDAstro's active event interest list rather than transmitting unfiltered journal dumps.
 3. **Adherence to EDSM GMP Interoperability:** Downstream consumers integrating the GEC endpoints must treat `(source, id)` as a composite primary key when reading `/gec/json/combined`, as GEC IDs and EDSM GMP IDs occupy colliding numerical ranges.
+
+---
+
+## 6. EDAstro Contract Surface & Schema Implementation Matrix
+
+The full EDAstro contract surface is formalized in Draft 2020-12 standard JSON schemas under `schemas/edastro/` and compiled into typed Python dataclasses under `generated_dtos/edastro/`:
+
+| Ingestion / Query Plane | Schema Target | Governing Standard / Origin | Complete Field Information Available? | Schema Path |
+|---|---|---|---|---|
+| **Inbound Companion** | `EDAstroJournalSubmission` | 2-element tuple: Header (`appName`, `odyssey`, `system`) + Pruned event payload (`CarrierStats`, `CarrierJumpRequest`, `ScanOrganic`). | **Yes.** Source code in EDMC (`plugins/edastro_core.py`) defines the exact keys and envelope structure. | `schemas/edastro/journal_submission.json` |
+| **Outbound System** | `EDAstroStarSystemResponse` | JSON array or object containing `ID`, `name`, `coords`, `FSSdate`, `barycenters`, `stars`, `planets`. | **Yes.** Live endpoint `https://edastro.com/api/starsystem?q=Sol` returns the full DTO structure. | `schemas/edastro/starsystem.json` |
+| **Outbound GEC Catalog** | `EDAstroGecPoi` | EDSM GMP-JSON schema (`id`, `name`, `type`, `categoryId`, `coordinates`, `summary`, `description`). | **Yes.** Live endpoint `https://edastro.com/gec/json/rare` returns the exact EDSM GMP schema. | `schemas/edastro/gec_poi.json` |
+| **Outbound GEC Combined** | `EDAstroGecCombinedPoi` | Composite GMP schema with `source` string field ("GEC" vs "GMP") and `id` collision handling. | **Yes.** Documented in EDAstro API Details and verified via endpoint. | `schemas/edastro/gec_poi.json` |
+

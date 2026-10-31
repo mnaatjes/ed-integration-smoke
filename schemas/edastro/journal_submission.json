@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edastro.com/schemas/journal-submission.json",
+  "title": "EDAstroJournalSubmission",
+  "description": "2-element tuple envelope containing an app header and a whitelisted, scrubbed Frontier journal entry sent to https://edastro.com/api/journal by companion clients.",
+  "type": "array",
+  "prefixItems": [
+    {
+      "type": "object",
+      "title": "EDAstroAppHeader",
+      "description": "Companion client application identification and session metadata header.",
+      "required": ["appName", "system"],
+      "properties": {
+        "appName": {
+          "type": "string",
+          "description": "Identifier token of the transmitting companion client (e.g. EDAstro / EDMC)."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the active player session is running in Odyssey DLC context."
+        },
+        "system": {
+          "type": "string",
+          "description": "Current localized star system name where the event occurred."
+        }
+      },
+      "additionalProperties": true
+    },
+    {
+      "type": "object",
+      "title": "EDAstroPrunedJournalEvent",
+      "description": "Frontier journal event pruned down to EDAstro whitelisted fields.",
+      "required": ["timestamp", "event"],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 UTC timestamp of the journal event."
+        },
+        "event": {
+          "type": "string",
+          "enum": ["CarrierStats", "CarrierJumpRequest", "ScanOrganic"],
+          "description": "Whitelisted Frontier journal event type."
+        }
+      },
+      "oneOf": [
+        {
+          "title": "CarrierStatsEvent",
+          "properties": {
+            "event": { "const": "CarrierStats" },
+            "Callsign": { "type": "string" },
+            "Name": { "type": "string" },
+            "CarrierID": { "type": "integer" },
+            "AllowNotorious": { "type": "boolean" },
+            "PendingDecommission": { "type": "boolean" },
+            "DockingAccess": { "type": "string" },
+            "FuelLevel": { "type": "integer" },
+            "Crew": { "type": "array" }
+          }
+        },
+        {
+          "title": "CarrierJumpRequestEvent",
+          "properties": {
+            "event": { "const": "CarrierJumpRequest" },
+            "SystemName": { "type": "string" },
+            "SystemAddress": { "type": "integer" },
+            "CarrierID": { "type": "integer" },
+            "Body": { "type": "string" },
+            "BodyID": { "type": "integer" },
+            "DepartureTime": { "type": "string", "format": "date-time" }
+          }
+        },
+        {
+          "title": "ScanOrganicEvent",
+          "properties": {
+            "event": { "const": "ScanOrganic" },
+            "ScanType": { "type": "string" },
+            "Genus": { "type": "string" },
+            "Genus_Localised": { "type": "string" },
+            "Species": { "type": "string" },
+            "Species_Localised": { "type": "string" },
+            "Variant": { "type": "string" },
+            "Variant_Localised": { "type": "string" },
+            "SystemAddress": { "type": "integer" },
+            "Body": { "type": "integer" }
+          }
+        }
+      ]
+    }
+  ],
+  "minItems": 2,
+  "maxItems": 2
+}
