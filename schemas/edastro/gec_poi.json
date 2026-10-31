@@ -29,13 +29,13 @@
     "solDistance": { "type": ["number", "null"], "description": "Distance from Sol in light years." },
     "id64": { "type": ["integer", "null"], "description": "Frontier 64-bit celestial system token." },
     "rating": { "type": ["number", "null"], "description": "Community rating score." },
-    "curation": { "type": ["integer", "null"], "description": "Curation status flag." },
+    "curation": { "type": ["number", "null"], "description": "Curation status or score." },
     "avgStars": { "type": ["number", "null"], "description": "Average star rating." },
     "votes": { "type": ["integer", "null"], "description": "Vote count." },
     "poiUrl": { "type": ["string", "null"], "description": "Direct URL to POI details page." },
     "mainImage": { "type": ["string", "null"], "description": "Primary display image path or URL." },
     "callsign": { "type": ["string", "null"], "description": "Associated fleet carrier or station callsign if applicable." },
-    "rare": { "type": ["integer", "null"], "description": "Rare POI flag (1 for true, 0 for false)." }
+    "rare": { "type": ["boolean", "integer", "null"], "description": "Rare POI flag (boolean or integer flag)." }
   },
   "additionalProperties": true
 }
