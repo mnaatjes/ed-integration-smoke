@@ -64,6 +64,13 @@ EDMC partitions its network interactions into three distinct operational planes:
 
 ### 2.3 Analysis: Breakdown of Inbound Datafiles and EDAstro
 
+| Target Service / Repository | Canonical Remote Location | Ingested Data Contents | Operational Purpose in EDMC / Fleet |
+| :--- | :--- | :--- | :--- |
+| **EDAstro API** | `https://edastro.com/api/journal` | Filtered JSON journal events (`CarrierJumpRequest`, `CarrierStats`, `FSSDiscoveryScan`, `FSSAllBodiesFound`) | Ingests real-time fleet carrier movements, jump schedules, and celestial discovery counts to render galactic traffic heatmaps and carrier route charts. Scrubbed of all personal pilot PII. |
+| **`EDCD/FDevIDs`** | `https://raw.githubusercontent.com/EDCD/FDevIDs/master/{commodity,rare_commodity}.csv` | CSV mapping tables of Frontier internal symbol tokens (e.g., `$grain_name;`) to English display names, category tags, and rare commodity origin stations | Normalizes opaque Frontier internal IDs and localized strings in market dumps into standard trade commodity names for EDDN and Trade Dangerous. |
+| **`EDCD/EDMarketConnector` (Datafiles & Killswitches)** | `https://raw.githubusercontent.com/EDCD/EDMarketConnector/refs/heads/releases/{modules,ships,killswitches_v2}.json` | Static databases of ship hull masses, pad sizes, outfitting module specifications, and dynamic runtime event redaction rules | Provides offline ship mass and outfitting properties required for shipyard/loadout calculations; `killswitches_v2.json` provides an emergency remote killswitch to redact fields or suppress unstable journal events fleet-wide. |
+| **`EDCD/EDMC-Plugin-Registry`** | `https://raw.githubusercontent.com/EDCD/EDMC-Plugin-Registry/refs/heads/main/master_plugin_list.json` | Curated JSON index of community plugins (`pluginName`, `pluginAuthor`, `pluginMainLink`, `pluginHash`, download archives) | Powers EDMC's internal Plugin Browser UI, enabling discovery, automated compatibility checks, and one-click installs of community plugins. |
+
 #### 1. EDAstro Telemetry Egress (`plugins/edastro_core.py`)
 EDAstro accepts a strict whitelist of telemetry events to generate galactic heatmaps and fleet carrier traffic lanes without compromising pilot anonymity:
 * **Ingested Events:** `CarrierJumpRequest`, `CarrierStats`, `FSSDiscoveryScan`, `FSSAllBodiesFound`.
