@@ -9,7 +9,7 @@ from typing import Any
 class SpanshSpanshBeltOrRingSignalsDTO:
     """The signals that can be found within the belt or ring."""
 
-    signals: Any
+    signals: dict[str, Any]
     updateTime: str
 
 

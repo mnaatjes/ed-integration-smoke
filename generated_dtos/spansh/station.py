@@ -18,9 +18,9 @@ class SpanshSpanshStationLandingpadsDTO:
 class SpanshSpanshStationMarketCommoditiesItemDTO:
     """Data transfer object for SpanshSpanshStationMarketCommoditiesItemDTO."""
 
-    name: Any
+    name: str
     symbol: str
-    category: Any
+    category: str
     commodityId: int
     demand: int
     supply: int
@@ -41,7 +41,7 @@ class SpanshSpanshStationMarketDTO:
 class SpanshSpanshStationShipyardShipsItemDTO:
     """Data transfer object for SpanshSpanshStationShipyardShipsItemDTO."""
 
-    name: Any
+    name: str
     symbol: str
     shipId: float
 
@@ -58,12 +58,12 @@ class SpanshSpanshStationShipyardDTO:
 class SpanshSpanshStationOutfittingModulesItemDTO:
     """Data transfer object for SpanshSpanshStationOutfittingModulesItemDTO."""
 
-    name: Any
+    name: str
     symbol: str
     moduleId: float
-    class_: Any
-    rating: Any
-    category: Any
+    class_: int
+    rating: str
+    category: str
     ship: Any | None = None
 
 
@@ -84,17 +84,17 @@ class SpanshSpanshStationDTO:
     updateTime: str
     realName: str | None = None
     carrierName: str | None = None
-    controllingFaction: str | None = None
+    controllingFaction: Any | None = None
     controllingFactionState: Any | None = None
     distanceToArrival: float | None = None
     primaryEconomy: Any | None = None
     secondaryEconomy: Any | None = None
-    economies: Any | None = None
+    economies: dict[str, Any] | None = None
     allegiance: Any | None = None
     government: Any | None = None
-    services: list[Any] | None = None
-    type: Any | None = None
-    state: Any | None = None
+    services: list[str] | None = None
+    type: str | None = None
+    state: str | None = None
     latitude: float | None = None
     longitude: float | None = None
     landingPads: SpanshSpanshStationLandingpadsDTO | None = None

@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/factionstate#",
   "title": "SpanshFactionState",
   "description": "Spansh FactionState contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Blight",

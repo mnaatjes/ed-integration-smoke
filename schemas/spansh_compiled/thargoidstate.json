@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/thargoidstate#",
   "title": "SpanshThargoidState",
   "description": "Spansh ThargoidState contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "None",

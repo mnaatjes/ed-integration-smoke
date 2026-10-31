@@ -6,6 +6,14 @@ from dataclasses import dataclass
 from typing import Any
 
 @dataclass(frozen=True)
+class SpanshSpanshSearchRingSignalsItemDTO:
+    """Data transfer object for SpanshSpanshSearchRingSignalsItemDTO."""
+
+    name: str
+    count: float
+
+
+@dataclass(frozen=True)
 class SpanshSpanshSearchRingDTO:
     """Spansh SearchRing contract."""
 
@@ -14,8 +22,8 @@ class SpanshSpanshSearchRingDTO:
     mass: float
     inner_radius: float
     outer_radius: float
-    signals: Any | None = None
+    signals: list[SpanshSpanshSearchRingSignalsItemDTO] | None = None
     signal_count: int | None = None
     signals_updated_at: str | None = None
 
-__all__ = ('SpanshSpanshSearchRingDTO',)
+__all__ = ('SpanshSpanshSearchRingSignalsItemDTO', 'SpanshSpanshSearchRingDTO')

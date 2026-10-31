@@ -13,7 +13,7 @@ class SpanshSpanshSearchSystemMinorFactionPresencesItemDTO:
     allegiance: Any | None = None
     government: Any | None = None
     state: Any | None = None
-    influence: Any | None = None
+    influence: float | None = None
     active_states: list[Any] | None = None
     pending_states: list[Any] | None = None
     recovering_states: list[Any] | None = None
@@ -31,18 +31,18 @@ class SpanshSpanshSearchSystemPowerConflictProgressItemDTO:
 class SpanshSpanshSearchSystemSynthesisRecipesItemDTO:
     """Data transfer object for SpanshSpanshSearchSystemSynthesisRecipesItemDTO."""
 
-    name: Any
-    level: Any
+    name: str
+    level: str
 
 
 @dataclass(frozen=True)
 class SpanshSpanshSearchSystemBodiesItemLandmarksItemDTO:
     """Data transfer object for SpanshSpanshSearchSystemBodiesItemLandmarksItemDTO."""
 
-    type: Any
+    type: str
     count: int
     value: int
-    subtype: Any | None = None
+    subtype: str | None = None
 
 
 @dataclass(frozen=True)
@@ -52,15 +52,38 @@ class SpanshSpanshSearchSystemBodiesItemDTO:
     id: int
     id64: int
     name: str
-    type: Any
-    is_main_star: bool
+    type: str
+    is_main_star: Any
     distance_to_arrival: float
     estimated_scan_value: int
     estimated_mapping_value: int
     subtype: Any | None = None
-    terraforming_state: Any | None = None
+    terraforming_state: str | None = None
     landmarks: list[SpanshSpanshSearchSystemBodiesItemLandmarksItemDTO] | None = None
     landmark_value: int | None = None
+
+
+@dataclass(frozen=True)
+class SpanshSpanshSearchSystemStationsItemDTO:
+    """Data transfer object for SpanshSpanshSearchSystemStationsItemDTO."""
+
+    market_id: int
+    name: str
+    has_large_pad: bool
+    body_id64: int | None = None
+    body_name: str | None = None
+    distance_to_arrival: float | None = None
+    has_market: bool | None = None
+    has_shipyard: bool | None = None
+    has_outfitting: bool | None = None
+    is_dssa_carrier: bool | None = None
+    large_pads: int | None = None
+    medium_pads: int | None = None
+    small_pads: int | None = None
+    type: str | None = None
+    services: list[str] | None = None
+    controlling_minor_faction: str | None = None
+    controlling_minor_faction_state: str | None = None
 
 
 @dataclass(frozen=True)
@@ -82,10 +105,10 @@ class SpanshSpanshSearchSystemDTO:
     government: Any | None = None
     allegiance: Any | None = None
     state: Any | None = None
-    security: Any | None = None
+    security: str | None = None
     primary_economy: Any | None = None
     secondary_economy: Any | None = None
-    controlling_minor_faction: str | None = None
+    controlling_minor_faction: Any | None = None
     controlling_minor_faction_state: Any | None = None
     is_colonised: bool | None = None
     is_being_colonised: bool | None = None
@@ -100,7 +123,7 @@ class SpanshSpanshSearchSystemDTO:
     synthesis_recipes: list[SpanshSpanshSearchSystemSynthesisRecipesItemDTO] | None = None
     body_count: int | None = None
     bodies: list[SpanshSpanshSearchSystemBodiesItemDTO] | None = None
-    stations: list[Any] | None = None
+    stations: list[SpanshSpanshSearchSystemStationsItemDTO] | None = None
     thargoid_war_state: Any | None = None
     thargoid_war_failure_state: Any | None = None
     thargoid_war_success_state: Any | None = None
@@ -112,4 +135,4 @@ class SpanshSpanshSearchSystemDTO:
     estimated_mapping_value: int | None = None
     landmark_value: int | None = None
 
-__all__ = ('SpanshSpanshSearchSystemMinorFactionPresencesItemDTO', 'SpanshSpanshSearchSystemPowerConflictProgressItemDTO', 'SpanshSpanshSearchSystemSynthesisRecipesItemDTO', 'SpanshSpanshSearchSystemBodiesItemLandmarksItemDTO', 'SpanshSpanshSearchSystemBodiesItemDTO', 'SpanshSpanshSearchSystemDTO')
+__all__ = ('SpanshSpanshSearchSystemMinorFactionPresencesItemDTO', 'SpanshSpanshSearchSystemPowerConflictProgressItemDTO', 'SpanshSpanshSearchSystemSynthesisRecipesItemDTO', 'SpanshSpanshSearchSystemBodiesItemLandmarksItemDTO', 'SpanshSpanshSearchSystemBodiesItemDTO', 'SpanshSpanshSearchSystemStationsItemDTO', 'SpanshSpanshSearchSystemDTO')

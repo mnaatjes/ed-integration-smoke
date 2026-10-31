@@ -10,31 +10,223 @@
       "type": "string"
     },
     "state": {
-      "description": "State of the faction of the system.",
-      "$ref": "#/components/schemas/FactionState"
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Blight",
+        "Boom",
+        "Bust",
+        "Civil Liberty",
+        "Civil Unrest",
+        "Civil War",
+        "Drought",
+        "Election",
+        "Expansion",
+        "Famine",
+        "Infrastructure Failure",
+        "Investment",
+        "Lockdown",
+        "Natural Disaster",
+        "None",
+        "Outbreak",
+        "Pirate Attack",
+        "Public Holiday",
+        "Retreat",
+        "Terrorist Attack",
+        "War"
+      ]
     },
     "allegiance": {
-      "description": "Allegiance of the faction of the system.",
-      "$ref": "#/components/schemas/Allegiance"
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Alliance",
+        "Empire",
+        "Federation",
+        "Frontline Solutions",
+        "Guardian",
+        "Independent",
+        "Pilots Federation",
+        "Thargoid"
+      ]
     },
     "government": {
-      "description": "Government type of the faction of the system.",
-      "$ref": "#/components/schemas/Government"
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Anarchy",
+        "Communism",
+        "Confederacy",
+        "Cooperative",
+        "Corporate",
+        "Democracy",
+        "Dictatorship",
+        "Engineer",
+        "Feudal",
+        "Megaconstruction",
+        "None",
+        "Patronage",
+        "Prison",
+        "Prison Colony",
+        "Private Ownership",
+        "Theocracy"
+      ]
     },
     "influence": {
-      "$ref": "#/components/schemas/Influence"
+      "description": "Influence of the faction.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
     },
     "activeStates": {
-      "description": "Currently active states for this faction.",
-      "$ref": "#/components/schemas/CurrentFactionState"
+      "description": "Current states for a faction.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              null,
+              "Blight",
+              "Boom",
+              "Bust",
+              "Civil Liberty",
+              "Civil Unrest",
+              "Civil War",
+              "Drought",
+              "Election",
+              "Expansion",
+              "Famine",
+              "Infrastructure Failure",
+              "Investment",
+              "Lockdown",
+              "Natural Disaster",
+              "None",
+              "Outbreak",
+              "Pirate Attack",
+              "Public Holiday",
+              "Retreat",
+              "Terrorist Attack",
+              "War"
+            ]
+          },
+          "trend": {
+            "description": "Trend of the state of the faction.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      }
     },
     "pendingStates": {
-      "description": "Pending states for this faction.",
-      "$ref": "#/components/schemas/CurrentFactionState"
+      "description": "Current states for a faction.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              null,
+              "Blight",
+              "Boom",
+              "Bust",
+              "Civil Liberty",
+              "Civil Unrest",
+              "Civil War",
+              "Drought",
+              "Election",
+              "Expansion",
+              "Famine",
+              "Infrastructure Failure",
+              "Investment",
+              "Lockdown",
+              "Natural Disaster",
+              "None",
+              "Outbreak",
+              "Pirate Attack",
+              "Public Holiday",
+              "Retreat",
+              "Terrorist Attack",
+              "War"
+            ]
+          },
+          "trend": {
+            "description": "Trend of the state of the faction.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      }
     },
     "recoveringStates": {
-      "description": "Recovering states for this faction.",
-      "$ref": "#/components/schemas/CurrentFactionState"
+      "description": "Current states for a faction.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              null,
+              "Blight",
+              "Boom",
+              "Bust",
+              "Civil Liberty",
+              "Civil Unrest",
+              "Civil War",
+              "Drought",
+              "Election",
+              "Expansion",
+              "Famine",
+              "Infrastructure Failure",
+              "Investment",
+              "Lockdown",
+              "Natural Disaster",
+              "None",
+              "Outbreak",
+              "Pirate Attack",
+              "Public Holiday",
+              "Retreat",
+              "Terrorist Attack",
+              "War"
+            ]
+          },
+          "trend": {
+            "description": "Trend of the state of the faction.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      }
     }
   },
   "required": [

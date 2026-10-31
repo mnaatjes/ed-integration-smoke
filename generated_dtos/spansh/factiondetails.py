@@ -6,6 +6,30 @@ from dataclasses import dataclass
 from typing import Any
 
 @dataclass(frozen=True)
+class SpanshSpanshFactionDetailsActivestatesItemDTO:
+    """Data transfer object for SpanshSpanshFactionDetailsActivestatesItemDTO."""
+
+    state: Any
+    trend: float | None = None
+
+
+@dataclass(frozen=True)
+class SpanshSpanshFactionDetailsPendingstatesItemDTO:
+    """Data transfer object for SpanshSpanshFactionDetailsPendingstatesItemDTO."""
+
+    state: Any
+    trend: float | None = None
+
+
+@dataclass(frozen=True)
+class SpanshSpanshFactionDetailsRecoveringstatesItemDTO:
+    """Data transfer object for SpanshSpanshFactionDetailsRecoveringstatesItemDTO."""
+
+    state: Any
+    trend: float | None = None
+
+
+@dataclass(frozen=True)
 class SpanshSpanshFactionDetailsDTO:
     """Full faction state"""
 
@@ -13,9 +37,9 @@ class SpanshSpanshFactionDetailsDTO:
     state: Any | None = None
     allegiance: Any | None = None
     government: Any | None = None
-    influence: Any | None = None
-    activeStates: Any | None = None
-    pendingStates: Any | None = None
-    recoveringStates: Any | None = None
+    influence: float | None = None
+    activeStates: list[SpanshSpanshFactionDetailsActivestatesItemDTO] | None = None
+    pendingStates: list[SpanshSpanshFactionDetailsPendingstatesItemDTO] | None = None
+    recoveringStates: list[SpanshSpanshFactionDetailsRecoveringstatesItemDTO] | None = None
 
-__all__ = ('SpanshSpanshFactionDetailsDTO',)
+__all__ = ('SpanshSpanshFactionDetailsActivestatesItemDTO', 'SpanshSpanshFactionDetailsPendingstatesItemDTO', 'SpanshSpanshFactionDetailsRecoveringstatesItemDTO', 'SpanshSpanshFactionDetailsDTO')

@@ -44,7 +44,10 @@
       "type": "object",
       "properties": {
         "signals": {
-          "$ref": "#/components/schemas/ValueMapping"
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
         },
         "updateTime": {
           "description": "The timestamp that the signals were last updated, in UTC.",

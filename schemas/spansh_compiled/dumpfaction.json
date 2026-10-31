@@ -10,12 +10,46 @@
       "type": "string"
     },
     "allegiance": {
-      "description": "Allegiance of the faction.",
-      "$ref": "#/components/schemas/Allegiance"
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Alliance",
+        "Empire",
+        "Federation",
+        "Frontline Solutions",
+        "Guardian",
+        "Independent",
+        "Pilots Federation",
+        "Thargoid"
+      ]
     },
     "government": {
-      "description": "Government type of the faction.",
-      "$ref": "#/components/schemas/Government"
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Anarchy",
+        "Communism",
+        "Confederacy",
+        "Cooperative",
+        "Corporate",
+        "Democracy",
+        "Dictatorship",
+        "Engineer",
+        "Feudal",
+        "Megaconstruction",
+        "None",
+        "Patronage",
+        "Prison",
+        "Prison Colony",
+        "Private Ownership",
+        "Theocracy"
+      ]
     },
     "systems": {
       "description": "Systems which the faction has a presence in.",

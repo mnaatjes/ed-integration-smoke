@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/government#",
   "title": "SpanshGovernment",
   "description": "Spansh Government contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Anarchy",

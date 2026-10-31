@@ -9,7 +9,7 @@ from typing import Any
 class SpanshSpanshSearchStationServicesItemDTO:
     """Data transfer object for SpanshSpanshSearchStationServicesItemDTO."""
 
-    name: Any
+    name: str
 
 
 @dataclass(frozen=True)
@@ -24,28 +24,28 @@ class SpanshSpanshSearchStationEconomiesItemDTO:
 class SpanshSpanshSearchStationExportCommoditiesItemDTO:
     """Data transfer object for SpanshSpanshSearchStationExportCommoditiesItemDTO."""
 
-    name: Any
+    name: str
 
 
 @dataclass(frozen=True)
 class SpanshSpanshSearchStationProhibitedCommoditiesItemDTO:
     """Data transfer object for SpanshSpanshSearchStationProhibitedCommoditiesItemDTO."""
 
-    name: Any
+    name: str
 
 
 @dataclass(frozen=True)
 class SpanshSpanshSearchStationImportCommoditiesItemDTO:
     """Data transfer object for SpanshSpanshSearchStationImportCommoditiesItemDTO."""
 
-    name: Any
+    name: str
 
 
 @dataclass(frozen=True)
 class SpanshSpanshSearchStationShipsItemDTO:
     """Data transfer object for SpanshSpanshSearchStationShipsItemDTO."""
 
-    name: Any
+    name: str
     symbol: str
     price: int | None = None
 
@@ -54,24 +54,24 @@ class SpanshSpanshSearchStationShipsItemDTO:
 class SpanshSpanshSearchStationModulesItemDTO:
     """Data transfer object for SpanshSpanshSearchStationModulesItemDTO."""
 
-    name: Any
-    category: Any
-    class_: Any
-    rating: Any
+    name: str
+    category: str
+    class_: int
+    rating: str
     ed_symbol: str
     mass: int | None = None
     power: int | None = None
     price: int | None = None
-    weapon_mode: Any | None = None
-    ship: Any | None = None
+    weapon_mode: str | None = None
+    ship: str | None = None
 
 
 @dataclass(frozen=True)
 class SpanshSpanshSearchStationMarketItemDTO:
     """Data transfer object for SpanshSpanshSearchStationMarketItemDTO."""
 
-    commodity: Any
-    category: Any
+    commodity: str
+    category: str
     supply: int
     demand: int
     buy_price: int
@@ -104,7 +104,7 @@ class SpanshSpanshSearchStationDTO:
     updated_at: str | None = None
     body_id64: int | None = None
     body_name: str | None = None
-    body_type: Any | None = None
+    body_type: str | None = None
     body_subtype: Any | None = None
     body_gravity: float | None = None
     body_has_atmosphere: bool | None = None
@@ -121,14 +121,14 @@ class SpanshSpanshSearchStationDTO:
     large_pads: int | None = None
     medium_pads: int | None = None
     small_pads: int | None = None
-    type: Any | None = None
-    state: Any | None = None
+    type: str | None = None
+    state: str | None = None
     latitude: float | None = None
     longitude: float | None = None
     distance_to_arrival: float | None = None
     controlling_minor_faction: str | None = None
     controlling_minor_faction_state: str | None = None
-    controlling_minor_faction_influence: Any | None = None
+    controlling_minor_faction_influence: float | None = None
     carrier_docking_access: str | None = None
     primary_economy: Any | None = None
     secondary_economy: Any | None = None
@@ -142,7 +142,7 @@ class SpanshSpanshSearchStationDTO:
     modules: list[SpanshSpanshSearchStationModulesItemDTO] | None = None
     market_updated_at: str | None = None
     market: list[SpanshSpanshSearchStationMarketItemDTO] | None = None
-    material_trader: str | None = None
-    technology_broker: str | None = None
+    material_trader: Any | None = None
+    technology_broker: Any | None = None
 
 __all__ = ('SpanshSpanshSearchStationServicesItemDTO', 'SpanshSpanshSearchStationEconomiesItemDTO', 'SpanshSpanshSearchStationExportCommoditiesItemDTO', 'SpanshSpanshSearchStationProhibitedCommoditiesItemDTO', 'SpanshSpanshSearchStationImportCommoditiesItemDTO', 'SpanshSpanshSearchStationShipsItemDTO', 'SpanshSpanshSearchStationModulesItemDTO', 'SpanshSpanshSearchStationMarketItemDTO', 'SpanshSpanshSearchStationDTO')

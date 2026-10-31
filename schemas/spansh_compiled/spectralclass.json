@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/spectralclass#",
   "title": "SpanshSpectralClass",
   "description": "Stars only.  Spectral class of the star.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "A",

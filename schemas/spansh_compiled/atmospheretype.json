@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/atmospheretype#",
   "title": "SpanshAtmosphereType",
   "description": "Planets only.  Atmosphere type of the planet.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Ammonia",

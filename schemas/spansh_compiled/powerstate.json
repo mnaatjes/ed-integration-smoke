@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/powerstate#",
   "title": "SpanshPowerState",
   "description": "Spansh PowerState contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Exploited",

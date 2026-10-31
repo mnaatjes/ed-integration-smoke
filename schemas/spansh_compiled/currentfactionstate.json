@@ -8,8 +8,34 @@
     "type": "object",
     "properties": {
       "state": {
-        "description": "Actual state of the state.",
-        "$ref": "#/components/schemas/FactionState"
+        "type": [
+          "string",
+          "null"
+        ],
+        "enum": [
+          null,
+          "Blight",
+          "Boom",
+          "Bust",
+          "Civil Liberty",
+          "Civil Unrest",
+          "Civil War",
+          "Drought",
+          "Election",
+          "Expansion",
+          "Famine",
+          "Infrastructure Failure",
+          "Investment",
+          "Lockdown",
+          "Natural Disaster",
+          "None",
+          "Outbreak",
+          "Pirate Attack",
+          "Public Holiday",
+          "Retreat",
+          "Terrorist Attack",
+          "War"
+        ]
       },
       "trend": {
         "description": "Trend of the state of the faction.",

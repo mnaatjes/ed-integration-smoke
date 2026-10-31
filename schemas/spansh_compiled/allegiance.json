@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/allegiance#",
   "title": "SpanshAllegiance",
   "description": "Spansh Allegiance contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Alliance",

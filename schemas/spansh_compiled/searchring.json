@@ -35,7 +35,60 @@
       "minimum": 0
     },
     "signals": {
-      "$ref": "#/components/schemas/RingSignals"
+      "description": "The signals that can be found within the belt or ring.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Type of the signal.",
+            "type": "string",
+            "enum": [
+              "Alexandrite",
+              "Serendibite",
+              "Monazite",
+              "Bromellite",
+              "Low Temperature Diamonds",
+              "Void Opal",
+              "Grandidierite",
+              "Benitoite",
+              "Tritium",
+              "Musgravite",
+              "Rhodplumsite",
+              "Painite",
+              "Platinum",
+              "Bauxite",
+              "Liquid oxygen",
+              "Hydrogen Peroxide",
+              "Water",
+              "Lepidolite",
+              "Uraninite",
+              "Cobalt",
+              "Methane Clathrate",
+              "Rutile",
+              "Lithium Hydroxide",
+              "Coltan",
+              "Gallite",
+              "Indite",
+              "Methanol Monohydrate Crystals",
+              "Praseodymium",
+              "Samarium",
+              "Bertrandite"
+            ]
+          },
+          "count": {
+            "description": "Number of instances of the signal.",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "name",
+          "count"
+        ]
+      },
+      "additionalProperties": false
     },
     "signal_count": {
       "description": "Count of the number of signals on the ring.",

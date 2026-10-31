@@ -3,7 +3,10 @@
   "$id": "https://spansh.co.uk/schemas/economy#",
   "title": "SpanshEconomy",
   "description": "Spansh Economy contract.",
-  "type": "string",
+  "type": [
+    "string",
+    "null"
+  ],
   "enum": [
     null,
     "Agriculture",

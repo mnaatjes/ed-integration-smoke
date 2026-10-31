@@ -22,8 +22,8 @@ class SpanshSpanshBriefSearchStationDTO:
     large_pads: int | None = None
     medium_pads: int | None = None
     small_pads: int | None = None
-    type: Any | None = None
-    services: list[Any] | None = None
+    type: str | None = None
+    services: list[str] | None = None
     controlling_minor_faction: str | None = None
     controlling_minor_faction_state: str | None = None
 
