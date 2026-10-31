@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/moduleweaponmode#",
+  "title": "SpanshModuleWeaponMode",
+  "description": "Weapons only.  Mode of the weapon.",
+  "type": "string",
+  "enum": [
+    "Fixed",
+    "Gimbal",
+    "Turret"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/timestamps#",
+  "title": "SpanshTimestamps",
+  "description": "Update timestamps for individual attributes, mapping attribute to last updated timestamp.",
+  "type": "object"
+}

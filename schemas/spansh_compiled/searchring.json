@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/searchring#",
+  "title": "SpanshSearchRing",
+  "description": "Spansh SearchRing contract.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the ring.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the ring.",
+      "type": "string",
+      "enum": [
+        "Icy",
+        "Metal Rich",
+        "Metallic",
+        "Rocky"
+      ]
+    },
+    "mass": {
+      "description": "Mass of the ring, measured in Megatonnes.",
+      "type": "number",
+      "minimum": 0
+    },
+    "inner_radius": {
+      "description": "Inner radius of the ring, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "outer_radius": {
+      "description": "Outer radius of the ring, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "signals": {
+      "$ref": "#/components/schemas/RingSignals"
+    },
+    "signal_count": {
+      "description": "Count of the number of signals on the ring.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "signals_updated_at": {
+      "description": "The timestamp that the signals were last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "mass",
+    "inner_radius",
+    "outer_radius"
+  ]
+}

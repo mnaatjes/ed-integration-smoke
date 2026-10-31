@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/dump_galaxy#",
+  "title": "SpanshDumpGalaxy",
+  "description": "Full Galaxy files downloaded from https://spansh.co.uk/downloads",
+  "type": "array",
+  "properties": {},
+  "required": [],
+  "items": {
+    "$ref": "#/definitions/DumpSystem"
+  }
+}

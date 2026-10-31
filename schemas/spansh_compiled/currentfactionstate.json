@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/currentfactionstate#",
+  "title": "SpanshCurrentFactionState",
+  "description": "Current states for a faction.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "state": {
+        "description": "Actual state of the state.",
+        "$ref": "#/components/schemas/FactionState"
+      },
+      "trend": {
+        "description": "Trend of the state of the faction.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "state"
+    ],
+    "additionalProperties": false
+  }
+}

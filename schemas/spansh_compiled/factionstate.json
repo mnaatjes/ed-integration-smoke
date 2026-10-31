@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/factionstate#",
+  "title": "SpanshFactionState",
+  "description": "Spansh FactionState contract.",
+  "type": "string",
+  "enum": [
+    null,
+    "Blight",
+    "Boom",
+    "Bust",
+    "Civil Liberty",
+    "Civil Unrest",
+    "Civil War",
+    "Drought",
+    "Election",
+    "Expansion",
+    "Famine",
+    "Infrastructure Failure",
+    "Investment",
+    "Lockdown",
+    "Natural Disaster",
+    "None",
+    "Outbreak",
+    "Pirate Attack",
+    "Public Holiday",
+    "Retreat",
+    "Terrorist Attack",
+    "War"
+  ]
+}

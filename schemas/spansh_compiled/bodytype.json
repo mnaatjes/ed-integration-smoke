@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/bodytype#",
+  "title": "SpanshBodyType",
+  "description": "The type of the body.",
+  "type": "string",
+  "enum": [
+    "Planet",
+    "Star",
+    "Barycentre"
+  ]
+}

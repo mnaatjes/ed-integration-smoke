@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/dumpsystem#",
+  "title": "SpanshDumpSystem",
+  "description": "Spansh DumpSystem contract.",
+  "type": "object",
+  "properties": {
+    "id64": {
+      "description": "ID64 of the system, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "name": {
+      "description": "Name of the system.",
+      "type": "string"
+    },
+    "coords": {
+      "description": "Coordinates of the system.",
+      "type": "object",
+      "properties": {
+        "x": {
+          "description": "X coordinate of the system.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate of the system.",
+          "type": "number"
+        },
+        "z": {
+          "description": "Z coordinate of the system.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "additionalProperties": false
+    },
+    "allegiance": {
+      "description": "Allegiance of the system.",
+      "$ref": "#/components/schemas/Allegiance"
+    },
+    "government": {
+      "description": "Government type of the system.",
+      "$ref": "#/components/schemas/Government"
+    },
+    "primaryEconomy": {
+      "description": "Primary economy for the system.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "secondaryEconomy": {
+      "description": "Secondary economy for the system.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "security": {
+      "description": "Security rating of the system.",
+      "$ref": "#/components/schemas/Security"
+    },
+    "population": {
+      "description": "Population of the system.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "bodyCount": {
+      "description": "Total number of planets and stars in the system.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "date": {
+      "description": "Timestamp of the last update of the system, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "bodies": {
+      "description": "All bodies of the system.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Body"
+      }
+    },
+    "stations": {
+      "description": "All space based stations of the system.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Station"
+      }
+    },
+    "controllingFaction": {
+      "description": "Controlling faction of the system.",
+      "$ref": "#/components/schemas/FactionDetails"
+    },
+    "factions": {
+      "description": "All factions with influence in the system.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/FactionDetails"
+      }
+    },
+    "powerState": {
+      "description": "State of the controlling power of the system.",
+      "$ref": "#/components/schemas/PowerState"
+    },
+    "powerConflictProgress": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "power": {
+            "$ref": "#/components/schemas/Power"
+          },
+          "progress": {
+            "description": "Progress of the power in the conflict.",
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "power",
+          "progress"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "powers": {
+      "description": "Powers with influence in the system.",
+      "type": "array",
+      "items": {
+        "description": "Name of the powers.",
+        "$ref": "#/components/schemas/Power"
+      }
+    },
+    "timestamps": {
+      "$ref": "#/components/schemas/Timestamps"
+    },
+    "controllingPower": {
+      "description": "Name of the controlling power of the system.",
+      "$ref": "#/components/schemas/Power"
+    },
+    "powerStateControlProgress": {
+      "description": "Progress of the controlling power in controlling the system.",
+      "type": "number",
+      "nullable": true
+    },
+    "powerStateReinforcement": {
+      "description": "Progress of the controlling power in reinforcing the system.",
+      "type": "number",
+      "nullable": true,
+      "minimum": 0
+    },
+    "powerStateUndermining": {
+      "description": "Progress of the controlling power in losing the system.",
+      "type": "number",
+      "nullable": true,
+      "minimum": 0
+    },
+    "thargoidWar": {
+      "description": "State of the Thargoid war in this system.",
+      "type": "object",
+      "properties": {
+        "currentState": {
+          "description": "Current Thargoid state in this system.",
+          "$ref": "#/components/schemas/ThargoidState"
+        },
+        "successState": {
+          "description": "Thargoid state in this system if the war is won by the players.",
+          "$ref": "#/components/schemas/ThargoidState"
+        },
+        "failureState": {
+          "description": "Thargoid state in this system if the war is lost by the players.",
+          "$ref": "#/components/schemas/ThargoidState"
+        },
+        "progress": {
+          "description": "Progress of the Thargoid war in this system.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "daysRemaining": {
+          "description": "Days remaining of the Thargoid war in this system.",
+          "type": "number",
+          "minimum": 0
+        },
+        "portsRemaining": {
+          "description": "Posts remaining in the Thargoid war in this system.",
+          "type": "number",
+          "minimum": 0
+        },
+        "successReached": {
+          "description": "Have the players won the Thargoid war in this system.",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": [
+    "id64",
+    "name",
+    "coords",
+    "date",
+    "bodies"
+  ]
+}

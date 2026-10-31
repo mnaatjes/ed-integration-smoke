@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/thargoidstate#",
+  "title": "SpanshThargoidState",
+  "description": "Spansh ThargoidState contract.",
+  "type": "string",
+  "enum": [
+    null,
+    "None",
+    "Thargoid Controlled",
+    "Thargoid Harvest",
+    "Thargoid Probing",
+    "Thargoid Recovery",
+    "Thargoid Stronghold"
+  ]
+}

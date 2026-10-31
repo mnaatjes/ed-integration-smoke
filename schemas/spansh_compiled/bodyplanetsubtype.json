@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/bodyplanetsubtype#",
+  "title": "SpanshBodyPlanetSubType",
+  "description": "Subtype of the bodyi of type Planet.",
+  "type": "string",
+  "enum": [
+    "Ammonia world",
+    "Class I gas giant",
+    "Class II gas giant",
+    "Class III gas giant",
+    "Class IV gas giant",
+    "Class V gas giant",
+    "Earth-like world",
+    "Gas giant with ammonia-based life",
+    "Gas giant with water-based life",
+    "Helium gas giant",
+    "Helium-rich gas giant",
+    "High metal content world",
+    "Icy body",
+    "Metal-rich body",
+    "Rocky Ice world",
+    "Rocky body",
+    "Water giant",
+    "Water world"
+  ]
+}

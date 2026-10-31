@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/stationstate#",
+  "title": "SpanshStationState",
+  "description": "State of the station.",
+  "type": "string",
+  "enum": [
+    "Construction",
+    "Damaged",
+    "DamagedHuman",
+    "UnderAttack",
+    "UnderRepairs"
+  ]
+}

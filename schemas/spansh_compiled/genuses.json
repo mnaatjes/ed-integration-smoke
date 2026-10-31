@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/genuses#",
+  "title": "SpanshGenuses",
+  "description": "Spansh Genuses contract.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Name of the genus.",
+        "type": "string",
+        "enum": [
+          "Aleoids",
+          "Amphora Plants",
+          "Anemones",
+          "Bacterial",
+          "Bark Mounds",
+          "Brain Trees",
+          "Cactoids",
+          "Clypeus",
+          "Conchas",
+          "Crystalline Shards",
+          "Electricae",
+          "Fonticulus",
+          "Fumerolas",
+          "Fungoids",
+          "Osseus",
+          "Recepta",
+          "Shrubs",
+          "Stratum",
+          "Tubers",
+          "Tubus",
+          "Tussocks"
+        ]
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "additionalProperties": false
+  }
+}

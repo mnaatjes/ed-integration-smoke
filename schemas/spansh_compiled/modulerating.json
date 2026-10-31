@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/modulerating#",
+  "title": "SpanshModuleRating",
+  "description": "Rating of the module.",
+  "type": "string",
+  "enum": [
+    "E",
+    "D",
+    "C",
+    "I",
+    "B",
+    "A",
+    "F",
+    "G",
+    "H"
+  ]
+}

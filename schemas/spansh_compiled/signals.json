@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/signals#",
+  "title": "SpanshSignals",
+  "description": "Spansh Signals contract.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Type of the signal.",
+        "type": "string",
+        "enum": [
+          "Geological",
+          "Biological",
+          "Human",
+          "Thargoid",
+          "Guardian",
+          "Other",
+          "Serendibite",
+          "Painite",
+          "Rhodplumsite",
+          "Platinum",
+          "Monazite",
+          "Alexandrite",
+          "Bromellite",
+          "Low Temperature Diamonds",
+          "Musgravite",
+          "Void Opal",
+          "Benitoite",
+          "Grandidierite",
+          "Tritium",
+          "Major Anomaly",
+          "Planetary Mining Location"
+        ]
+      },
+      "count": {
+        "description": "Number of instances of the signal.",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "name",
+      "count"
+    ]
+  }
+}

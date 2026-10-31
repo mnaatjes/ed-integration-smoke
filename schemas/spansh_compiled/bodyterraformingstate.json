@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/bodyterraformingstate#",
+  "title": "SpanshBodyTerraformingState",
+  "description": "Planets only.  Terraforming state of the planet.",
+  "type": "string",
+  "enum": [
+    "Not terraformable",
+    "Terraformable",
+    "Terraformed",
+    "Terraforming"
+  ]
+}

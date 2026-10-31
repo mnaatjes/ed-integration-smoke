@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/searchbelt#",
+  "title": "SpanshSearchBelt",
+  "description": "Spansh SearchBelt contract.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the belt.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the belt.",
+      "type": "string",
+      "enum": [
+        "Icy",
+        "Metal Rich",
+        "Metallic",
+        "Rocky"
+      ]
+    },
+    "mass": {
+      "description": "Mass of the belt, measured in Megatonnes.",
+      "type": "number",
+      "minimum": 0
+    },
+    "inner_radius": {
+      "description": "Inner radius of the belt, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "outer_radius": {
+      "description": "Outer radius of the belt, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "mass",
+    "inner_radius",
+    "outer_radius"
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/searchstation#",
+  "title": "SpanshSearchStation",
+  "description": "Spansh SearchStation contract.",
+  "type": "object",
+  "properties": {
+    "market_id": {
+      "description": "The ID of the station, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "system_name": {
+      "description": "Name of the system.",
+      "type": "string"
+    },
+    "system_id64": {
+      "description": "ID64 of the system, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "system_x": {
+      "description": "X coordinate of the system.",
+      "type": "number"
+    },
+    "system_y": {
+      "description": "Y coordinate of the system.",
+      "type": "number"
+    },
+    "system_z": {
+      "description": "Z coordinate of the system.",
+      "type": "number"
+    },
+    "system_is_colonised": {
+      "description": "Is the system colonised?",
+      "type": "boolean"
+    },
+    "system_is_being_colonised": {
+      "description": "Is the system currently being colonised?",
+      "type": "boolean"
+    },
+    "system_power": {
+      "description": "Powers present in the system.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Power"
+      }
+    },
+    "system_controlling_power": {
+      "description": "Name of the controlling power of the system.",
+      "$ref": "#/components/schemas/Power"
+    },
+    "system_power_state": {
+      "description": "State of the controlling power for this system.",
+      "$ref": "#/components/schemas/PowerState"
+    },
+    "system_primary_economy": {
+      "description": "Primary economy for the system the station is in.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "system_secondary_economy": {
+      "description": "Secondary economy for the system the station is in.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "system_population": {
+      "description": "Population of the system the station is in.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "updated_at": {
+      "description": "The timestamp that the station was last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "body_id64": {
+      "description": "Planetary stations only.  The ID64 of the body the station is on, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "body_name": {
+      "description": "Planetary stations only.  The name of the body the station is on.",
+      "type": "string"
+    },
+    "is_planetary": {
+      "description": "Whether the station is a planetary station or not.",
+      "type": "boolean"
+    },
+    "body_type": {
+      "$ref": "#/components/schemas/BodyType"
+    },
+    "body_subtype": {
+      "$ref": "#/components/schemas/BodySubtype"
+    },
+    "body_gravity": {
+      "description": "Planetetary stationss only.  Gravity of the planet the station is on, as a ratio of the gravity of Earth.",
+      "type": "number",
+      "minimum": 0
+    },
+    "body_has_atmosphere": {
+      "description": "Planetary stations only.  Whether the body the station is on has an atmosphere or not.",
+      "type": "boolean"
+    },
+    "body_has_rings": {
+      "description": "Planetary stations only.  Whether the body the station is on has rings or not.",
+      "type": "boolean"
+    },
+    "name": {
+      "description": "Name of the station.",
+      "type": "string"
+    },
+    "carrier_name": {
+      "description": "Fleet Carriers only.  Carrier name of the station.",
+      "type": "string"
+    },
+    "real_name": {
+      "description": "Real name of the station (for stations under construction for instance).",
+      "type": "string"
+    },
+    "allegiance": {
+      "description": "Allegiance of the station.",
+      "$ref": "#/components/schemas/Allegiance"
+    },
+    "government": {
+      "description": "Government type of the station.",
+      "$ref": "#/components/schemas/Government"
+    },
+    "services": {
+      "description": "Servies provided by the station.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Service"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "has_large_pad": {
+      "description": "Does the station have a large landing pad?",
+      "type": "boolean"
+    },
+    "has_market": {
+      "description": "Does the station have a market?",
+      "type": "boolean"
+    },
+    "has_shipyard": {
+      "description": "Does the station have a shipyard?",
+      "type": "boolean"
+    },
+    "has_outfitting": {
+      "description": "Does the station have a outfitting?",
+      "type": "boolean"
+    },
+    "is_dssa_carrier": {
+      "description": "Is this a DSSA approved player carrier?",
+      "type": "boolean"
+    },
+    "large_pads": {
+      "description": "Numer of large landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "medium_pads": {
+      "description": "Numer of medium landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "small_pads": {
+      "description": "Numer of small landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "description": "Type of the station.",
+      "$ref": "#/components/schemas/StationType"
+    },
+    "state": {
+      "$ref": "#/components/schemas/StationState"
+    },
+    "latitude": {
+      "description": "Planetary stations only.  Latitude of the station.",
+      "type": "number"
+    },
+    "longitude": {
+      "description": "Planetary stations only.  Longitude of the station.",
+      "type": "number"
+    },
+    "distance_to_arrival": {
+      "description": "Distance to the system arrival point of the station, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "controlling_minor_faction": {
+      "description": "Controlling faction of the station.",
+      "type": "string"
+    },
+    "controlling_minor_faction_state": {
+      "description": "State of the controlling faction of the station.",
+      "type": "string"
+    },
+    "controlling_minor_faction_influence": {
+      "$ref": "#/components/schemas/Influence"
+    },
+    "carrier_docking_access": {
+      "description": "Carrier only.  Access control of the station.",
+      "type": "string"
+    },
+    "primary_economy": {
+      "description": "Primary economy for the station.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "secondary_economy": {
+      "description": "Secondary economy for the station.",
+      "$ref": "#/components/schemas/Economy"
+    },
+    "economies": {
+      "description": "All econommies for the station, mapping each economy as a proportion of the stations economies.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Economy"
+          },
+          "share": {
+            "description": "Share of the total economy of the station this economy has.",
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "name",
+          "share"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "export_commodities": {
+      "description": "Commodities which the station exports.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Commodity"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "prohibited_commodities": {
+      "description": "Commodities which are illegal in the station.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Commodity"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "import_commodities": {
+      "description": "Commodities which the station imports.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Commodity"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "shipyard_updated_at": {
+      "description": "The timestamp that the shipyard on the station was last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "ships": {
+      "description": "Ships that can be bought at the station.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Ship"
+          },
+          "symbol": {
+            "description": "Frontier symbol identifier of the ship.",
+            "type": "string"
+          },
+          "price": {
+            "description": "Price of the ship",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "symbol"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "outfitting_updated_at": {
+      "description": "The timestamp that the outfitting on the station was last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "modules": {
+      "description": "Ships that can be bought at the station.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ModuleName"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ModuleCategory"
+          },
+          "class": {
+            "$ref": "#/components/schemas/ModuleClass"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/ModuleRating"
+          },
+          "ed_symbol": {
+            "description": "Frontier symbol identifier of the module.",
+            "type": "string"
+          },
+          "mass": {
+            "description": "Mass of the module",
+            "type": "integer"
+          },
+          "power": {
+            "description": "Power draw of the module",
+            "type": "integer"
+          },
+          "price": {
+            "description": "Price of the module",
+            "type": "integer"
+          },
+          "weapon_mode": {
+            "$ref": "#/components/schemas/ModuleWeaponMode"
+          },
+          "ship": {
+            "$ref": "#/components/schemas/Ship"
+          }
+        },
+        "required": [
+          "name",
+          "category",
+          "class",
+          "rating",
+          "ed_symbol"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "market_updated_at": {
+      "description": "The timestamp that the maret on the station was last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "market": {
+      "description": "Commodity market information about the station.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "commodity": {
+            "$ref": "#/components/schemas/Commodity"
+          },
+          "category": {
+            "$ref": "#/components/schemas/CommodityCategory"
+          },
+          "supply": {
+            "description": "Supply for the commodity.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "demand": {
+            "description": "Demand for the commodity.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "buy_price": {
+            "description": "Price the player can buy the commodity for.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "sell_price": {
+            "description": "Price the player can sell the commodity for.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "is_rare": {
+            "description": "Whether the commodeity is rare or not?",
+            "type": "boolean"
+          },
+          "is_home_station": {
+            "description": "If the commodity is rare, is this station the home station it can be found at?",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "commodity",
+          "category",
+          "supply",
+          "demand",
+          "buy_price",
+          "sell_price"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "material_trader": {
+      "description": "Type of trader that can be found at the station.",
+      "type": "string",
+      "enum": [
+        null,
+        "Encoded",
+        "Manufactured",
+        "Raw"
+      ],
+      "nullable": true
+    },
+    "technology_broker": {
+      "description": "Type of technology broker that can be found at the station.",
+      "type": "string",
+      "enum": [
+        null,
+        "Guardian",
+        "Human"
+      ],
+      "nullable": true
+    }
+  },
+  "required": [
+    "market_id",
+    "system_name",
+    "system_id64",
+    "system_x",
+    "system_y",
+    "system_z",
+    "has_large_pad",
+    "is_planetary",
+    "name"
+  ]
+}

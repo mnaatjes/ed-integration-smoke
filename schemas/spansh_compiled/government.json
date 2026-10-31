@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/government#",
+  "title": "SpanshGovernment",
+  "description": "Spansh Government contract.",
+  "type": "string",
+  "enum": [
+    null,
+    "Anarchy",
+    "Communism",
+    "Confederacy",
+    "Cooperative",
+    "Corporate",
+    "Democracy",
+    "Dictatorship",
+    "Engineer",
+    "Feudal",
+    "Megaconstruction",
+    "None",
+    "Patronage",
+    "Prison",
+    "Prison Colony",
+    "Private Ownership",
+    "Theocracy"
+  ]
+}

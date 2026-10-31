@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/economy#",
+  "title": "SpanshEconomy",
+  "description": "Spansh Economy contract.",
+  "type": "string",
+  "enum": [
+    null,
+    "Agriculture",
+    "Colony",
+    "Extraction",
+    "High Tech",
+    "Industrial",
+    "Military",
+    "None",
+    "Prison",
+    "Private Enterprise",
+    "Refinery",
+    "Repair",
+    "Rescue",
+    "Service",
+    "Terraforming",
+    "Tourism"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/multidumpsystem#",
+  "title": "SpanshMultiDumpSystem",
+  "description": "Dump of multiple full systems with one entry per system.  Pretty printed to show one system per line.",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/DumpSystem"
+  }
+}

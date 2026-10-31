@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/stationtype#",
+  "title": "SpanshStationType",
+  "description": "Type of the station.",
+  "type": "string",
+  "enum": [
+    "Asteroid base",
+    "Coriolis Starport",
+    "Dockable Planet Station",
+    "Dodec Starport",
+    "Drake-Class Carrier",
+    "Mega ship",
+    "Ocellus Starport",
+    "Orbis Starport",
+    "Outpost",
+    "Planetary Construction Depot",
+    "Planetary Outpost",
+    "Planetary Port",
+    "Settlement",
+    "Space Construction Depot",
+    "Surface Settlement"
+  ]
+}

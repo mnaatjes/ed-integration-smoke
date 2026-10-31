@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/synthesisrecipe#",
+  "title": "SpanshSynthesisRecipe",
+  "description": "Name of the synthesis recipe.",
+  "type": "string",
+  "enum": [
+    "SRV Repair",
+    "SRV Ammo",
+    "Plasma Munitions",
+    "Small Calibre Munitions",
+    "SRV Refuel",
+    "Large Calibre Munitions",
+    "Explosive Munitions",
+    "High Velocity Munitions",
+    "AFM Refill",
+    "FSD",
+    "Life Support",
+    "Limpets",
+    "AX Remote Flak Munitions",
+    "Configurable Explosive Munitions",
+    "Configurable Small Calibre Munitions",
+    "Sub-Surface Displacement Munitions",
+    "Seismic Charge Munitions"
+  ]
+}

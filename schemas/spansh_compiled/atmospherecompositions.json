@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/atmospherecompositions#",
+  "title": "SpanshAtmosphereCompositions",
+  "description": "What the atmosphere of the body comprised of.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Name of the composition.",
+        "type": "string",
+        "enum": [
+          "Helium",
+          "Nitrogen",
+          "Hydrogen",
+          "Sulphur dioxide",
+          "Carbon dioxide",
+          "Neon",
+          "Argon",
+          "Methane",
+          "Ammonia",
+          "Oxygen",
+          "Water",
+          "Silicates",
+          "Iron"
+        ]
+      },
+      "share": {
+        "description": "Percentage of the composition that can be found.",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "name",
+      "share"
+    ],
+    "additionalProperties": false
+  }
+}

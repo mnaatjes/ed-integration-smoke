@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/landmarkvariant#",
+  "title": "SpanshLandmarkVariant",
+  "description": "Variant of the landmark.",
+  "type": "string",
+  "enum": [
+    "Amethyst",
+    "Aquamarine",
+    "Blue",
+    "Cobalt",
+    "Cyan",
+    "Emerald",
+    "Gold",
+    "Green",
+    "Grey",
+    "Indigo",
+    "Lime",
+    "Magenta",
+    "Maroon",
+    "Mauve",
+    "Mulberry",
+    "Ocher",
+    "Orange",
+    "Peach",
+    "Red",
+    "Sage",
+    "Teal",
+    "Turquoise",
+    "White",
+    "Yellow"
+  ]
+}

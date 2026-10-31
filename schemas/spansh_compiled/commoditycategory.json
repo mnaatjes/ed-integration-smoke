@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/commoditycategory#",
+  "title": "SpanshCommodityCategory",
+  "description": "Category of the commodity.",
+  "type": "string",
+  "enum": [
+    "Chemicals",
+    "Consumer Items",
+    "Foods",
+    "Industrial Materials",
+    "Legal Drugs",
+    "Machinery",
+    "Medicines",
+    "Metals",
+    "Minerals",
+    "Salvage",
+    "Slavery",
+    "Technology",
+    "Textiles",
+    "Waste",
+    "Weapons"
+  ]
+}

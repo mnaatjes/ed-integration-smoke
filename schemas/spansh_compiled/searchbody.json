@@ -1,0 +1,362 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/searchbody#",
+  "title": "SpanshSearchBody",
+  "description": "Spansh SearchBody contract.",
+  "type": "object",
+  "properties": {
+    "id64": {
+      "description": "ID64 of the body, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "body_id": {
+      "description": "ID of the body in the system, an 8 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "system_name": {
+      "description": "Name of the system.",
+      "type": "string"
+    },
+    "system_region": {
+      "type": "string",
+      "description": "Region the system lies within.",
+      "$ref": "#/components/schemas/Region"
+    },
+    "updated_at": {
+      "description": "The timestamp that the body was last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "system_controlling_power": {
+      "description": "Name of the controlling power of the system.",
+      "$ref": "#/components/schemas/Power"
+    },
+    "system_power_state": {
+      "description": "State of the controlling power for this system.",
+      "$ref": "#/components/schemas/PowerState"
+    },
+    "system_id64": {
+      "description": "ID64 of the system, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "system_x": {
+      "description": "X coordinate of the system.",
+      "type": "number"
+    },
+    "system_y": {
+      "description": "Y coordinate of the system.",
+      "type": "number"
+    },
+    "system_z": {
+      "description": "Z coordinate of the system.",
+      "type": "number"
+    },
+    "name": {
+      "description": "Name of the body.",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/components/schemas/BodyType"
+    },
+    "subtype": {
+      "$ref": "#/components/schemas/BodySubtype"
+    },
+    "terraforming_state": {
+      "$ref": "#/components/schemas/BodyTerraformingState"
+    },
+    "is_main_star": {
+      "description": "Stars only.  Whether this is the main star of the system or not.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "distance_to_arrival": {
+      "description": "Distance to the system arrival point of the body, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "spectral_class": {
+      "$ref": "#/components/schemas/SpectralClass"
+    },
+    "luminosity_class": {
+      "$ref": "#/components/schemas/Luminosity"
+    },
+    "atmosphere": {
+      "$ref": "#/components/schemas/AtmosphereType"
+    },
+    "volcanism_type": {
+      "$ref": "#/components/schemas/VolcanismType"
+    },
+    "reserve_level": {
+      "$ref": "#/components/schemas/ReserveLevel"
+    },
+    "surface_temperature": {
+      "description": "Surface temperature of the body, measured in Kelvin.",
+      "type": "number",
+      "minimum": 0
+    },
+    "age": {
+      "description": "Stars only.  The age of the star, measured in solar years.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "solar_masses": {
+      "description": "Stars only. Mass of the star, as a ratio of the mass of Sol.",
+      "type": "number",
+      "minimum": 0
+    },
+    "solar_radius": {
+      "description": "Stars only. Radius of the star, as a ratio of the radius of Sol.",
+      "type": "number",
+      "minimum": 0
+    },
+    "earth_masses": {
+      "description": "Planets only.  Mass of the planet, as a ratio of the mass of Earth.",
+      "type": "number",
+      "minimum": 0
+    },
+    "radius": {
+      "description": "Planets only.  Radius of the planet, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "gravity": {
+      "description": "Planets only.  Gravity of the planet, as a ratio of the gravity of Earth.",
+      "type": "number",
+      "minimum": 0
+    },
+    "surface_pressure": {
+      "description": "Planets only.  Surface pressure of the planet, measured in atmospheres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "orbital_period": {
+      "description": "The orbital period of the body, measured in days.",
+      "type": "number"
+    },
+    "semi_major_axis": {
+      "description": "The semi major axis of the body, measured in Kilometers.",
+      "type": "number"
+    },
+    "orbital_eccentricity": {
+      "description": "The orbital eccentricity of the body.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "orbital_inclination": {
+      "description": "The orbital inclinction of the body, measured in degrees.",
+      "type": "number"
+    },
+    "arg_of_periapsis": {
+      "description": "The argument of periapsis the body, measured in degrees.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 360
+    },
+    "mean_anomaly": {
+      "description": "The mean of anomaly the body, measured in degrees.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 360
+    },
+    "ascending_node": {
+      "description": "The ascending node of the body, measured in degrees.",
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "rotational_period": {
+      "description": "Rotational period of the body, measured in Days.",
+      "type": "number"
+    },
+    "is_rotational_period_tidally_locked": {
+      "description": "Whether the rotational period of the body is locked to the tides.",
+      "type": "boolean"
+    },
+    "axis_tilt": {
+      "description": "Axial tilt of the body, measured in radians.",
+      "type": "number"
+    },
+    "is_landable": {
+      "description": "Planets only.  Whether the planet is landable or not.",
+      "type": "boolean"
+    },
+    "orbital_synchronicity": {
+      "description": "The absolute difference between the orbital period and the rotational period.",
+      "type": "number",
+      "minimum": 0
+    },
+    "estimated_scan_value": {
+      "description": "Estimated reward from scanning the body.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "estimated_mapping_value": {
+      "description": "Estimated reward from mapping the body.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "materials": {
+      "$ref": "#/components/schemas/Materials"
+    },
+    "synthesis_recipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/SynthesisRecipe"
+          },
+          "level": {
+            "$ref": "#/components/schemas/SynthesisGrade"
+          }
+        },
+        "required": [
+          "name",
+          "level"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "signals": {
+      "$ref": "#/components/schemas/Signals"
+    },
+    "signal_count": {
+      "description": "Count of the number of signals on the body.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "signals_updated_at": {
+      "description": "The timestamp that the signals were last updated, in UTC.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "genuses": {
+      "$ref": "#/components/schemas/Genuses"
+    },
+    "solid_composition": {
+      "$ref": "#/components/schemas/SolidCompositions"
+    },
+    "atmosphere_composition": {
+      "$ref": "#/components/schemas/AtmosphereCompositions"
+    },
+    "rings": {
+      "description": "Rings associated with the body.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SearchRing"
+      }
+    },
+    "belts": {
+      "description": "Belts associated with the body.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SearchBelt"
+      }
+    },
+    "landmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the landmark.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "$ref": "#/components/schemas/LandmarkType"
+          },
+          "subtype": {
+            "$ref": "#/components/schemas/LandmarkSubtype"
+          },
+          "variant": {
+            "$ref": "#/components/schemas/LandmarkVariant"
+          },
+          "latitude": {
+            "description": "Latitude of the landmark.",
+            "type": "number"
+          },
+          "longitude": {
+            "description": "Longitude of the landmark.",
+            "type": "number"
+          },
+          "value": {
+            "description": "Estimated reward from scanning the landmark.",
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "latitude",
+          "longitude",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "landmark_value": {
+      "description": "Total value of all the landmarks on the body.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "parents": {
+      "description": "Parents of the body, mapping each parent body type to it's ID within the system.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Body type of the parent.",
+            "type": "string",
+            "enum": [
+              "Star",
+              "Null",
+              "Planet",
+              "Ring"
+            ]
+          },
+          "id64": {
+            "description": "ID64 of the parent body, a 64 bit unsigned integer.",
+            "type": "integer",
+            "minimum": 0
+          },
+          "subtype": {
+            "$ref": "#/components/schemas/BodySubtype"
+          }
+        },
+        "required": [
+          "type",
+          "id64"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "stations": {
+      "description": "All stations which are known on the body.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/BriefSearchStation"
+      }
+    }
+  },
+  "required": [
+    "id64",
+    "system_id64",
+    "system_name",
+    "system_x",
+    "system_y",
+    "system_z",
+    "name",
+    "type",
+    "distance_to_arrival",
+    "atmosphere",
+    "estimated_scan_value",
+    "estimated_mapping_value"
+  ]
+}

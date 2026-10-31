@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/beltorring#",
+  "title": "SpanshBeltOrRing",
+  "description": "Spansh BeltOrRing contract.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the belt or ring.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the ring or belt.",
+      "type": "string",
+      "enum": [
+        "Icy",
+        "Metal Rich",
+        "Metallic",
+        "Rocky"
+      ]
+    },
+    "mass": {
+      "description": "Mass of the belt or ring, measured in Megatonnes.",
+      "type": "number",
+      "minimum": 0
+    },
+    "innerRadius": {
+      "description": "Inner radius of the belt or ring, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "outerRadius": {
+      "description": "Outer radius of the belt or ring, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "id64": {
+      "description": "ID64 of the belt or ring, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "signals": {
+      "description": "The signals that can be found within the belt or ring.",
+      "type": "object",
+      "properties": {
+        "signals": {
+          "$ref": "#/components/schemas/ValueMapping"
+        },
+        "updateTime": {
+          "description": "The timestamp that the signals were last updated, in UTC.",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "signals",
+        "updateTime"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "mass",
+    "innerRadius",
+    "outerRadius"
+  ]
+}

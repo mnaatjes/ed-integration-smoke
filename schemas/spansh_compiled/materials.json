@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/materials#",
+  "title": "SpanshMaterials",
+  "description": "Spansh Materials contract.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Name of the material.",
+        "type": "string",
+        "enum": [
+          "Iron",
+          "Nickel",
+          "Carbon",
+          "Phosphorus",
+          "Sulphur",
+          "Chromium",
+          "Manganese",
+          "Cadmium",
+          "Zinc",
+          "Germanium",
+          "Vanadium",
+          "Niobium",
+          "Molybdenum",
+          "Selenium",
+          "Tin",
+          "Tungsten",
+          "Mercury",
+          "Tellurium",
+          "Ruthenium",
+          "Yttrium",
+          "Zirconium",
+          "Arsenic",
+          "Antimony",
+          "Technetium",
+          "Polonium"
+        ]
+      },
+      "share": {
+        "description": "Percentage of the material that can be found.",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
+      }
+    },
+    "required": [
+      "name",
+      "share"
+    ],
+    "additionalProperties": false
+  }
+}

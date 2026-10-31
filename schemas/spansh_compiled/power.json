@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/power#",
+  "title": "SpanshPower",
+  "description": "Spansh Power contract.",
+  "type": "string",
+  "enum": [
+    null,
+    "Aisling Duval",
+    "A. Lavigny-Duval",
+    "Archon Delaine",
+    "Denton Patreus",
+    "Edmund Mahon",
+    "Felicia Winters",
+    "Jerome Archer",
+    "Li Yong-Rui",
+    "Nakato Kaine",
+    "Pranav Antal",
+    "Yuri Grom",
+    "Zemina Torval"
+  ]
+}

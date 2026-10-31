@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/synthesisgrade#",
+  "title": "SpanshSynthesisGrade",
+  "description": "Grade of the synthesis recipe.",
+  "type": "string",
+  "enum": [
+    "Basic",
+    "Standard",
+    "Premium"
+  ]
+}

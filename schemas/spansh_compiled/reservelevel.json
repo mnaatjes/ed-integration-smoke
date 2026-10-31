@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/reservelevel#",
+  "title": "SpanshReserveLevel",
+  "description": "Planets only.  Reserve level of the planet.",
+  "type": "string",
+  "enum": [
+    "Common",
+    "Depleted",
+    "Low",
+    "Major",
+    "Pristine"
+  ]
+}

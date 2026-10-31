@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/briefsearchstation#",
+  "title": "SpanshBriefSearchStation",
+  "description": "Spansh BriefSearchStation contract.",
+  "type": "object",
+  "properties": {
+    "market_id": {
+      "description": "The ID of the station, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "body_id64": {
+      "description": "Planetary stations only.  The ID64 of the body the station is on, a 64 bit unsigned integer.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "body_name": {
+      "description": "Planetary stations only.  The name of the body the station is on.",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the station.",
+      "type": "string"
+    },
+    "distance_to_arrival": {
+      "description": "Distance to the system arrival point of the station, measured in Kilometres.",
+      "type": "number",
+      "minimum": 0
+    },
+    "has_large_pad": {
+      "description": "Does the station have a large landing pad?",
+      "type": "boolean"
+    },
+    "has_market": {
+      "description": "Does the station have a market?",
+      "type": "boolean"
+    },
+    "has_shipyard": {
+      "description": "Does the station have a shipyard?",
+      "type": "boolean"
+    },
+    "has_outfitting": {
+      "description": "Does the station have a outfitting?",
+      "type": "boolean"
+    },
+    "is_dssa_carrier": {
+      "description": "Is this a DSSA approved player carrier?",
+      "type": "boolean"
+    },
+    "large_pads": {
+      "description": "Numer of large landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "medium_pads": {
+      "description": "Numer of medium landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "small_pads": {
+      "description": "Numer of small landing pads of the station.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "description": "Type of the station.",
+      "$ref": "#/components/schemas/StationType"
+    },
+    "services": {
+      "description": "Servies provided by the station.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Service"
+      }
+    },
+    "controlling_minor_faction": {
+      "description": "Controlling faction of the station.",
+      "type": "string"
+    },
+    "controlling_minor_faction_state": {
+      "description": "State of the controlling faction of the station.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "market_id",
+    "name",
+    "has_large_pad"
+  ]
+}

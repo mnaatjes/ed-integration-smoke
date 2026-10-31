@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spansh.co.uk/schemas/volcanismtype#",
+  "title": "SpanshVolcanismType",
+  "description": "Planets only.  Volcanism type of the planet.",
+  "type": "string",
+  "enum": [
+    "Carbon Dioxide Geysers",
+    "Major Carbon Dioxide Geysers",
+    "Major Metallic Magma",
+    "Major Rocky Magma",
+    "Major Silicate Vapour Geysers",
+    "Major Water Geysers",
+    "Major Water Magma",
+    "Metallic Magma",
+    "Minor Ammonia Magma",
+    "Minor Carbon Dioxide Geysers",
+    "Minor Metallic Magma",
+    "Minor Methane Magma",
+    "Minor Nitrogen Magma",
+    "Minor Rocky Magma",
+    "Minor Silicate Vapour Geysers",
+    "Minor Water Geysers",
+    "Minor Water Magma",
+    "No volcanism",
+    "Rocky Magma",
+    "Silicate Vapour Geysers",
+    "Water Geysers",
+    "Water Magma"
+  ]
+}
