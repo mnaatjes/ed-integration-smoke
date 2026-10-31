@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/commander_inventory#",
+  "title": "CommanderInventoryResponse",
+  "type": "object",
+  "description": "Commander inventory response returned by  {@link  getCommanderInventory }  request.",
+  "properties": {
+    "cargo": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "qty"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "data": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "type": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "qty"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "materials": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "type": {
+            "type": [
+              "string",
+              "number"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "qty"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": []
+}

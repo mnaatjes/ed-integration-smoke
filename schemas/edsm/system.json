@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/system#",
+  "title": "SystemResponse",
+  "type": "object",
+  "description": "Response of a  {@link  getSystem }  request.",
+  "properties": {
+    "coords": {
+      "additionalProperties": false,
+      "description": "The coordinates of the system. Only present when  {@link  SystemRequestOptions#showCoordinates  }  option is set to 1.",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "type": "object"
+    },
+    "coordsLocked": {
+      "description": "True when exact coords are known. False when position is trilaterated. Only present when  {@link  SystemRequestOptions#showCoordinates  }  option is set to 1",
+      "type": "boolean"
+    },
+    "duplicates": {
+      "description": "The systems ID having the exact same name in the game. Only present when there are duplicated and  {@link  SystemRequestOptions#showId  }  option is set to 1.",
+      "items": {
+        "type": "number"
+      },
+      "type": "array"
+    },
+    "hidden_at": {
+      "description": "The time when the system was hidden. Only present when system is hidden and  {@link  SystemRequestOptions#includeHidden  }  is set to 1",
+      "type": "string"
+    },
+    "id": {
+      "description": "The EDSM ID of the system. Only present when  {@link  SystemRequestOptions#showId  }  option is set to 1.",
+      "type": "number"
+    },
+    "id64": {
+      "description": "The Frontier ID of the system. Only present when  {@link  SystemRequestOptions#showId  }  option is set to 1.",
+      "type": [
+        "number"
+      ]
+    },
+    "information": {
+      "additionalProperties": false,
+      "description": "System information. Only present when  {@link  SystemRequestOptions#showInformation  }  option is set to 1.",
+      "properties": {
+        "allegiance": {
+          "type": "string"
+        },
+        "economy": {
+          "type": "string"
+        },
+        "faction": {
+          "type": "string"
+        },
+        "factionState": {
+          "type": "string"
+        },
+        "government": {
+          "type": "string"
+        },
+        "population": {
+          "type": "number"
+        },
+        "reserve": {
+          "type": "string"
+        },
+        "secondEconomy": {
+          "type": "string"
+        },
+        "security": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "mergedTo": {
+      "description": "The system ID this system was merged to. Only present when system was merged and,   {@link  SystemRequestOptions#includeHidden  }  is set to 1 and  {@link  SystemRequestOptions#showId  }  is also set to 1.",
+      "type": "number"
+    },
+    "name": {
+      "description": "The name of the system.",
+      "type": "string"
+    },
+    "permitName": {
+      "description": "Permit name if any. Only present when  {@link  SystemRequestOptions#showPermit  }  option is set to 1.",
+      "type": "string"
+    },
+    "primaryStar": {
+      "additionalProperties": false,
+      "description": "Information about the primary star if any. Only present when  {@link  SystemRequestOptions#showPrimaryStar  }  option is set to 1.",
+      "properties": {
+        "isScoopable": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "isScoopable"
+      ],
+      "type": "object"
+    },
+    "requirePermit": {
+      "description": "Permit information. Only present when  {@link  SystemRequestOptions#showPermit  }  option is set to 1.",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

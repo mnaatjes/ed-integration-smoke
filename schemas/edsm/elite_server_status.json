@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/elite_server_status#",
+  "title": "EliteServerStatusResponse",
+  "type": "object",
+  "description": "EDSM EliteServerStatusResponse data contract.",
+  "properties": {
+    "lastUpdate": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "status": {
+      "type": "number"
+    },
+    "type": {
+      "enum": [
+        "success",
+        "warning",
+        "danger"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "lastUpdate",
+    "type",
+    "message",
+    "status"
+  ]
+}

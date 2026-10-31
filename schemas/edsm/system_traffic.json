@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/system_traffic#",
+  "title": "SystemTrafficResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system traffic request.",
+  "properties": {
+    "breakdown": {},
+    "discovery": {
+      "additionalProperties": false,
+      "properties": {
+        "commander": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "commander",
+        "date"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "traffic": {
+      "additionalProperties": false,
+      "properties": {
+        "day": {
+          "type": "number"
+        },
+        "total": {
+          "type": "number"
+        },
+        "week": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "total",
+        "week",
+        "day"
+      ],
+      "type": "object"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "url",
+    "discovery",
+    "traffic",
+    "breakdown"
+  ]
+}

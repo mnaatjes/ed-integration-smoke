@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/station_shipyard#",
+  "title": "StationShipyardResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system stations shipyard request.",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "marketId": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sId": {
+      "type": "number"
+    },
+    "sName": {
+      "type": "string"
+    },
+    "ships": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "marketId",
+    "sId",
+    "sName",
+    "url",
+    "ships"
+  ]
+}

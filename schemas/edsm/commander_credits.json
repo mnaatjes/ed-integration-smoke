@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/commander_credits#",
+  "title": "CommanderCreditsResponse",
+  "type": "object",
+  "description": "Commander credits response returned by  {@link  getCommanderCredits }  request.",
+  "properties": {
+    "credits": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "balance": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string"
+          },
+          "loan": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "balance",
+          "loan",
+          "date"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "period": {
+      "description": "Credits period type",
+      "enum": [
+        "7DAY",
+        "1MONTH",
+        "3MONTH",
+        "6MONTH"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "credits"
+  ]
+}

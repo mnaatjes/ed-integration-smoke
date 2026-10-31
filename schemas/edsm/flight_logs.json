@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/flight_logs#",
+  "title": "FlightLogsResponse",
+  "type": "object",
+  "description": "EDSM FlightLogsResponse data contract.",
+  "properties": {
+    "endDateTime": {
+      "type": "string"
+    },
+    "logs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "firstDiscover": {
+            "type": "boolean"
+          },
+          "shipId": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "system": {
+            "type": "string"
+          },
+          "systemId": {
+            "type": "number"
+          },
+          "systemId64": {
+            "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+            "type": [
+              "number"
+            ]
+          }
+        },
+        "required": [
+          "shipId",
+          "system",
+          "firstDiscover",
+          "date"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "startDateTime": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "startDateTime",
+    "endDateTime",
+    "logs"
+  ]
+}

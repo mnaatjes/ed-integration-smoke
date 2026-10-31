@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/system_bodies#",
+  "title": "SystemBodiesResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system bodies request.",
+  "properties": {
+    "bodies": {
+      "items": {
+        "anyOf": [
+          {},
+          {}
+        ],
+        "description": "Body within a system (without system information because its already in the parent object)"
+      },
+      "type": "array"
+    },
+    "bodyCount": {
+      "type": "number"
+    },
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "url",
+    "bodies",
+    "bodyCount"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/discard#",
+  "title": "EdsmDiscardResponse",
+  "type": "object",
+  "description": "List of journal event names that EDSM discards from telemetry ingestion.",
+  "properties": {
+    "discardedEvents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of journal event names to be discarded prior to upload."
+    }
+  },
+  "required": [
+    "discardedEvents"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/journal_upload_response#",
+  "title": "EdsmJournalUploadResponse",
+  "type": "object",
+  "description": "Response envelope returned by EDSM /api-journal-v1 upload endpoint.",
+  "properties": {
+    "msgnum": {
+      "type": "integer",
+      "description": "EDSM response code (100 = success)."
+    },
+    "msg": {
+      "type": "string",
+      "description": "Status or error message."
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "msgnum": {
+            "type": "integer"
+          },
+          "msg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "msgnum",
+          "msg"
+        ]
+      },
+      "description": "Status indicators for each event submitted in the batch."
+    }
+  },
+  "required": [
+    "msgnum",
+    "msg",
+    "events"
+  ]
+}

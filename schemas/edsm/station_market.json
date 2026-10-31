@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/station_market#",
+  "title": "StationMarketResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system stations market request.",
+  "properties": {
+    "commodities": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "buyPrice": {
+            "type": "number"
+          },
+          "demand": {
+            "type": "number"
+          },
+          "id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "sellPrice": {
+            "type": "number"
+          },
+          "stock": {
+            "type": "number"
+          },
+          "stockBracket": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "buyPrice",
+          "stock",
+          "sellPrice",
+          "demand",
+          "stockBracket"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "marketId": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sId": {
+      "type": "number"
+    },
+    "sName": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "marketId",
+    "sId",
+    "sName",
+    "url",
+    "commodities"
+  ]
+}

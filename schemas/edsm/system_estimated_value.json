@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/system_estimated_value#",
+  "title": "SystemEstimatedValueResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system estimated value request.",
+  "properties": {
+    "estimatedValue": {
+      "type": "number"
+    },
+    "estimatedValueMapped": {
+      "type": "number"
+    },
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "valuableBodies": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bodyId": {
+            "type": "number"
+          },
+          "bodyName": {
+            "type": "string"
+          },
+          "distance": {
+            "type": "number"
+          },
+          "valueMax": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "bodyId",
+          "bodyName",
+          "distance",
+          "valueMax"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "url",
+    "estimatedValue",
+    "estimatedValueMapped",
+    "valuableBodies"
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/commander_ranks#",
+  "title": "CommanderRanksResponse",
+  "type": "object",
+  "description": "Commander ranks response returned by  {@link  getCommanderRanks }  request.",
+  "properties": {
+    "progress": {
+      "additionalProperties": false,
+      "properties": {
+        "CQC": {
+          "type": "number"
+        },
+        "Combat": {
+          "type": "number"
+        },
+        "Empire": {
+          "type": "number"
+        },
+        "Exobiologist": {
+          "type": "number"
+        },
+        "Explore": {
+          "type": "number"
+        },
+        "Federation": {
+          "type": "number"
+        },
+        "Soldier": {
+          "type": "number"
+        },
+        "Trade": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "Combat",
+        "Trade",
+        "Explore",
+        "Soldier",
+        "Exobiologist",
+        "CQC",
+        "Federation",
+        "Empire"
+      ],
+      "type": "object"
+    },
+    "ranks": {
+      "additionalProperties": false,
+      "properties": {
+        "CQC": {
+          "type": "number"
+        },
+        "Combat": {
+          "type": "number"
+        },
+        "Empire": {
+          "type": "number"
+        },
+        "Exobiologist": {
+          "type": "number"
+        },
+        "Explore": {
+          "type": "number"
+        },
+        "Federation": {
+          "type": "number"
+        },
+        "Soldier": {
+          "type": "number"
+        },
+        "Trade": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "Combat",
+        "Trade",
+        "Explore",
+        "Soldier",
+        "Exobiologist",
+        "CQC",
+        "Federation",
+        "Empire"
+      ],
+      "type": "object"
+    },
+    "ranksVerbose": {
+      "additionalProperties": false,
+      "properties": {
+        "CQC": {
+          "type": "string"
+        },
+        "Combat": {
+          "type": "string"
+        },
+        "Empire": {
+          "type": "string"
+        },
+        "Exobiologist": {
+          "type": "string"
+        },
+        "Explore": {
+          "type": "string"
+        },
+        "Federation": {
+          "type": "string"
+        },
+        "Soldier": {
+          "type": "string"
+        },
+        "Trade": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Combat",
+        "Trade",
+        "Explore",
+        "Soldier",
+        "Exobiologist",
+        "CQC",
+        "Federation",
+        "Empire"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "ranks",
+    "progress",
+    "ranksVerbose"
+  ]
+}

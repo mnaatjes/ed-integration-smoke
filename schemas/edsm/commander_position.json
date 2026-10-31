@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/commander_position#",
+  "title": "CommanderPositionResponse",
+  "type": "object",
+  "description": "Commander position response returned by  {@link  getCommanderPosition }  request.",
+  "properties": {
+    "coordinates": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "type": "object"
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dateDocked": {
+      "type": "string"
+    },
+    "dateLastActivity": {
+      "type": "string"
+    },
+    "firstDiscover": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "isDocked": {
+      "type": "boolean"
+    },
+    "shipFuel": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "shipId": {
+      "type": "number"
+    },
+    "shipType": {
+      "type": "string"
+    },
+    "station": {
+      "type": "string"
+    },
+    "stationId": {
+      "type": "number"
+    },
+    "system": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "systemId": {
+      "type": "number"
+    },
+    "systemId64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "system",
+    "firstDiscover",
+    "date"
+  ]
+}

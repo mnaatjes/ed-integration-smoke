@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edsm.net/schemas/system_factions#",
+  "title": "SystemFactionsResponse",
+  "type": "object",
+  "description": "Response structure of the EDSM system factions request.",
+  "properties": {
+    "controllingFaction": {
+      "additionalProperties": false,
+      "properties": {
+        "allegiance": {
+          "type": "string"
+        },
+        "government": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "allegiance",
+        "government"
+      ],
+      "type": "object"
+    },
+    "factions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "activeStates": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "activeStatesHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          },
+          "allegiance": {
+            "type": "string"
+          },
+          "government": {
+            "type": "string"
+          },
+          "happiness": {
+            "type": "string"
+          },
+          "happinessHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          },
+          "id": {
+            "type": "number"
+          },
+          "influence": {
+            "type": "number"
+          },
+          "influenceHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          },
+          "isPlayer": {
+            "type": "boolean"
+          },
+          "lastUpdate": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pendingStates": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "type": "string"
+                },
+                "trend": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "pendingStatesHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          },
+          "recoveringStates": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "type": "string"
+                },
+                "trend": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "recoveringStatesHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          },
+          "state": {
+            "type": "string"
+          },
+          "stateHistory": {
+            "anyOf": [
+              {},
+              {
+                "maxItems": 0,
+                "minItems": 0,
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "required": [
+          "activeStates",
+          "allegiance",
+          "government",
+          "happiness",
+          "id",
+          "influence",
+          "isPlayer",
+          "lastUpdate",
+          "name",
+          "pendingStates",
+          "recoveringStates",
+          "state"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "id": {
+      "type": "number"
+    },
+    "id64": {
+      "description": "A 64 bit ID. Can be a `number` if ID does not need more then 53 bit. Must be `bigint` if ID needs more than 53 bit.",
+      "type": [
+        "number"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "id64",
+    "name",
+    "url",
+    "factions"
+  ]
+}
