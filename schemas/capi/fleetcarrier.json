@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://companion.orerve.net/schemas/fleetcarrier#",
+  "title": "CapiFleetCarrierResponse",
+  "description": "Commander-owned Fleet Carrier telemetries, balances, and jump state.",
+  "type": "object",
+  "properties": {
+    "carrierId": {
+      "type": "integer",
+      "description": "Unique Fleet Carrier ID."
+    },
+    "currentStarSystem": {
+      "type": "string",
+      "description": "Current system name."
+    },
+    "balance": {
+      "type": "integer",
+      "description": "Carrier account credit balance."
+    },
+    "fuel": {
+      "type": "integer",
+      "description": "Remaining Tritium fuel count."
+    },
+    "capacity": {
+      "type": "object",
+      "description": "Tonnage capacity distribution.",
+      "properties": {
+        "freeSpace": {
+          "type": "integer"
+        },
+        "usedSpace": {
+          "type": "integer"
+        },
+        "totalSpace": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "freeSpace",
+        "usedSpace",
+        "totalSpace"
+      ]
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "callsign": {
+          "type": "string"
+        },
+        "vanityName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "callsign"
+      ]
+    }
+  },
+  "required": [
+    "carrierId",
+    "currentStarSystem",
+    "balance",
+    "fuel",
+    "capacity",
+    "name"
+  ]
+}

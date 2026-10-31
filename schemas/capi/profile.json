@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://companion.orerve.net/schemas/profile#",
+  "title": "CapiProfileResponse",
+  "description": "Full Commander profile, active ship status, loadout, and starport state.",
+  "type": "object",
+  "properties": {
+    "commander": {
+      "type": "object",
+      "description": "Commander account state, credits, and rank ladders.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "credits": {
+          "type": "integer"
+        },
+        "debt": {
+          "type": "integer"
+        },
+        "currentShipId": {
+          "type": "integer"
+        },
+        "alive": {
+          "type": "boolean"
+        },
+        "docked": {
+          "type": "boolean"
+        },
+        "rank": {
+          "type": "object",
+          "properties": {
+            "combat": {
+              "type": "integer"
+            },
+            "trade": {
+              "type": "integer"
+            },
+            "explore": {
+              "type": "integer"
+            },
+            "cqc": {
+              "type": "integer"
+            },
+            "soldier": {
+              "type": "integer"
+            },
+            "exobiologist": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "combat",
+            "trade",
+            "explore"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "credits",
+        "alive",
+        "docked",
+        "rank"
+      ]
+    },
+    "ship": {
+      "type": "object",
+      "description": "Active ship specifications, health, and equipped modules.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shipName": {
+          "type": "string"
+        },
+        "shipID": {
+          "type": "string"
+        },
+        "free": {
+          "type": "boolean"
+        },
+        "cockpitBreached": {
+          "type": "boolean"
+        },
+        "oxygenRemaining": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "object",
+          "properties": {
+            "hull": {
+              "type": "integer"
+            },
+            "modules": {
+              "type": "integer"
+            },
+            "cargo": {
+              "type": "integer"
+            },
+            "total": {
+              "type": "integer"
+            },
+            "unloaned": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "hull",
+            "modules",
+            "total"
+          ]
+        },
+        "health": {
+          "type": "object",
+          "properties": {
+            "hull": {
+              "type": "integer"
+            },
+            "shield": {
+              "type": "integer"
+            },
+            "shieldUp": {
+              "type": "boolean"
+            },
+            "integrity": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "hull",
+            "shield",
+            "shieldUp",
+            "integrity"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "value",
+        "health",
+        "free"
+      ]
+    },
+    "lastSystem": {
+      "type": "object",
+      "description": "Last recorded star system coordinates and system address.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    },
+    "lastStarport": {
+      "type": "object",
+      "description": "Last visited starport, available facilities, and market services.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "services": {
+          "type": "object",
+          "properties": {
+            "dock": {
+              "type": "boolean"
+            },
+            "autodock": {
+              "type": "boolean"
+            },
+            "commodities": {
+              "type": "boolean"
+            },
+            "contacts": {
+              "type": "boolean"
+            },
+            "exploration": {
+              "type": "boolean"
+            },
+            "rearm": {
+              "type": "boolean"
+            },
+            "refuel": {
+              "type": "boolean"
+            },
+            "repair": {
+              "type": "boolean"
+            },
+            "shipyard": {
+              "type": "boolean"
+            },
+            "outfitting": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ]
+    }
+  },
+  "required": [
+    "commander",
+    "ship",
+    "lastSystem",
+    "lastStarport"
+  ]
+}

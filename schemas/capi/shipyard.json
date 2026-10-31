@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://companion.orerve.net/schemas/shipyard#",
+  "title": "CapiShipyardResponse",
+  "description": "Available starport shipyard purchasing catalog and stored vessels.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Station MarketID."
+    },
+    "name": {
+      "type": "string",
+      "description": "Station shipyard facility name."
+    },
+    "ships": {
+      "type": "object",
+      "description": "Catalog of available ships for purchase.",
+      "properties": {
+        "unavailable_list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}

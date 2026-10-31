@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://companion.orerve.net/schemas/market#",
+  "title": "CapiMarketResponse",
+  "description": "Starport commodity market pricing, supply, demand, and brackets.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Frontier station MarketID."
+    },
+    "name": {
+      "type": "string",
+      "description": "Starport market name."
+    },
+    "commodities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "buyPrice": {
+            "type": "integer"
+          },
+          "sellPrice": {
+            "type": "integer"
+          },
+          "meanPrice": {
+            "type": "integer"
+          },
+          "demandBracket": {
+            "type": "integer"
+          },
+          "stockBracket": {
+            "type": "integer"
+          },
+          "stock": {
+            "type": "integer"
+          },
+          "demand": {
+            "type": "integer"
+          },
+          "categoryname": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "buyPrice",
+          "sellPrice",
+          "demand",
+          "stock"
+        ]
+      },
+      "description": "Array of traded commodity listings."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "commodities"
+  ]
+}
