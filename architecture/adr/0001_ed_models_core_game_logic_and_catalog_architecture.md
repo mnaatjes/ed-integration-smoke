@@ -421,6 +421,39 @@ class TradeDangerousFormatter:
         return "\n".join(lines) + "\n"
 ```
 
+### 4.6 Data Structure Typing & Classification Rules
+
+To prevent arbitrary or ad-hoc modeling decisions, all data structures authored within `ed-models` must strictly adhere to the following deterministic classification matrix and filter rules.
+
+#### 4.6.1 Classification Decision Matrix
+
+| Data Characteristic | Target Python Construct | Governing Criteria / Justification | Elite Dangerous Domain Examples |
+| :--- | :--- | :--- | :--- |
+| **Fixed FDev Canonical Enum** | `enum.StrEnum` (Python 3.11+) | Discrete, bounded set ($\le 50$ items) defined by Frontier. Serializes transparently to native JSON string values without custom serializers. | `Allegiance` (`Federation`, `Empire`), `PadSize` (`S`, `M`, `L`), `StarType`, `BodyType` |
+| **Telemetry Hardware State / Bitmask** | `enum.IntFlag` | Compact integer bitfields where multiple states coexist simultaneously. Requires bitwise operators (`&`, `\|`, `~`). | `StatusFlags` (Telemetry `Flags`), `StatusFlags2` (Odyssey `Flags2`) |
+| **Read-Only Mathematical / Spatial Struct** | `@dataclass(frozen=True, slots=True)` | Immutable numeric coordinates or physics tuples. Zero mutations allowed, value equality semantics, memory-optimized. | `Coordinates3D` (`x, y, z`), `SystemAddress`, bounding boxes |
+| **Dynamic Domain Entity with Identity** | `@dataclass(slots=True)` | Stateful game entity possessing a unique primary key / symbol, attributes, and internal helper methods. | `ShipHull`, `CelestialBody`, `MinorFactionPresence` |
+| **Polymorphic Event / Wire Message** | `@dataclass(kw_only=True)` | Event hierarchy inheriting from base `JournalEvent` (`timestamp`, `event`). `kw_only=True` avoids default-value ordering conflicts. | `FsdJumpEvent`, `ScanEvent`, `MarketBuyEvent`, `LocationEvent` |
+| **Open / Evolving Game Taxonomy** | Canonical String Symbol (`str`) | Vast, expanding catalogs ($> 100$ items) modified by game patches. Enums risk deserialization crashes on unknown items; strings backed by catalog lookups preserve safety. | `CommoditySymbol` (`str`), `ModuleSymbol` (`str`), `EngineeringBlueprintId` |
+
+#### 4.6.2 The Four Deterministic Filter Rules
+
+1. **The Closed-Set Test (Enum vs. String Symbol):**
+   * If Frontier's documentation specifies a fixed, bounded vocabulary that does not change between minor patches $\rightarrow$ **`StrEnum`**.
+   * If Frontier frequently adds new items in content updates (commodities, rare goods, engineering modifications, suits, weapons) $\rightarrow$ **Canonical String Symbol (`str`)** backed by an $O(1)$ catalog lookup dictionary.
+
+2. **The Serialization Test (`StrEnum` vs. Standard `Enum`):**
+   * Standard `Enum` serializes as a complex object and crashes native JSON unmarshaling (`json.dumps`).
+   * All discrete categorical string sets MUST inherit from `StrEnum` so that string comparisons, hashing, and wire serialization function seamlessly without conversion adapters.
+
+3. **The Mutability & Allocation Test (`frozen=True, slots=True` vs. Standard `@dataclass`):**
+   * If an object has no valid state transitions after hydration $\rightarrow$ **`frozen=True, slots=True`** (reduces Python object memory overhead by ~60% and enforces mathematical immutability).
+   * If an object aggregates child state over time (e.g. ship loadout module swapping, station inventory updates) $\rightarrow$ **Standard `@dataclass(slots=True)`**.
+
+4. **The Event Discriminator Test (`kw_only=True` Base Class):**
+   * In standard Python dataclasses, a subclass cannot define fields with defaults if the parent has non-default fields, unless positional ordering is completely decoupled.
+   * All Journal and Status event base classes and derived classes MUST declare **`kw_only=True`** to allow independent default field assignment across the entire event hierarchy.
+
 ---
 
 ## 5. Pros and Cons of the Selected Option
