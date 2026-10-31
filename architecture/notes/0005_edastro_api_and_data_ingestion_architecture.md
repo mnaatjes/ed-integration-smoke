@@ -41,17 +41,17 @@ flowchart TD
         RestAPI["GET /api/starsystem\nGET /gec/json/* (Outbound REST)"]
     end
 
-    Game -->|Journal Events| EDMC
-    Game -->|Journal Events| EDD
+    Game -->|"Journal Events"| EDMC
+    Game -->|"Journal Events"| EDD
 
-    EDMC -->|Market, Outfitting, Journal v1.0| EDDN
-    EDD -->|Market, Outfitting, Journal v1.0| EDDN
-    EDDN -->|Bulk Celestion Stream| BulkListener
-    EDSM -->|Gap Filling Pulls| BulkListener
+    EDMC -->|"Market, Outfitting, Journal v1.0"| EDDN
+    EDD -->|"Market, Outfitting, Journal v1.0"| EDDN
+    EDDN -->|"Bulk Celestial Stream"| BulkListener
+    EDSM -->|"Gap Filling Pulls"| BulkListener
 
-    EDMC -->|Filtered Events (Carrier, Organic)| JournalAPI
-    EDD -->|Filtered Events (Carrier, Organic)| JournalAPI
-    Manual -->|Unsent Logs| JournalAPI
+    EDMC -->|"Filtered Events (Carrier, Organic)"| JournalAPI
+    EDD -->|"Filtered Events (Carrier, Organic)"| JournalAPI
+    Manual -->|"Unsent Logs"| JournalAPI
 
     BulkListener --> CoreDB
     JournalAPI --> CoreDB
