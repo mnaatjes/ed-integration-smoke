@@ -137,6 +137,290 @@ To guarantee a lightweight Python package (under 2 MB distribution footprint and
 | **Factions & Politics** | • `Government`, `Allegiance`, `PowerState` enums.<br>• `MinorFaction` & `Powerplay` models. | • Galaxy-wide BGS influence percentages and current expansion states. | • `MinorFactionPresence`, `PowerplayState`<br>• `Government(StrEnum)`, `Allegiance(StrEnum)`, `PowerState(StrEnum)`<br>• `SecurityLevel(StrEnum)`, `EconomyType(StrEnum)` |
 | **Calculators & Interop** | • Ship mass & jump range formula.<br>• Coriolis JSON & Trade Dangerous `.td` serializers. | • The network requests to Spansh or Inara. | • `ShipLoadout`, `JumpRangeProfile`<br>• `JumpRangeCalculator` (Frontier FSD formula)<br>• `TradeDangerousMarketRecord` & `TradeDangerousFormatter`<br>• `CoriolisLoadoutDTO` & `CoriolisSerializer` |
 
+### 4.5 Codified Python Data Structure Specifications
+
+The following subsections codify the concrete Python implementations for each domain category in `ed-models`.
+
+#### 4.5.1 Star Systems & Celestial Bodies (`ed_models.domain.systems`)
+
+```python
+from dataclasses import dataclass
+from enum import StrEnum
+import math
+
+class StarType(StrEnum):
+    O = "O"
+    B = "B"
+    A = "A"
+    F = "F"
+    G = "G"
+    K = "K"
+    M = "M"
+    NEUTRON = "N"
+    BLACK_HOLE = "H"
+
+class BodyType(StrEnum):
+    STAR = "Star"
+    PLANET = "Planet"
+    MOON = "Moon"
+    ASTEROID_RING = "AsteroidRing"
+
+@dataclass(frozen=True, slots=True)
+class Coordinates3D:
+    x: float
+    y: float
+    z: float
+
+    def distance_to(self, other: "Coordinates3D") -> float:
+        return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2 + (self.z - other.z)**2)
+
+@dataclass(frozen=True, slots=True)
+class CelestialBody:
+    id64: int
+    body_id: int
+    name: str
+    body_type: BodyType
+    distance_to_arrival_ls: float
+    is_landable: bool = False
+    gravity_g: float | None = None
+    earth_masses: float | None = None
+
+@dataclass(frozen=True, slots=True)
+class StarSystem:
+    id64: int
+    name: str
+    coords: Coordinates3D
+    population: int = 0
+    main_star: StarType | None = None
+    bodies: tuple[CelestialBody, ...] = ()
+```
+
+#### 4.5.2 Commodities & Normalization (`ed_models.domain.commodities`)
+
+```python
+from dataclasses import dataclass
+from enum import StrEnum
+
+class CommodityCategory(StrEnum):
+    CHEMICALS = "Chemicals"
+    CONSUMER_ITEMS = "Consumer Items"
+    FOODS = "Foods"
+    INDUSTRIAL_MATERIALS = "Industrial Materials"
+    LEGAL_DRUGS = "Legal Drugs"
+    MACHINERY = "Machinery"
+    MEDICINES = "Medicines"
+    METALS = "Metals"
+    MINERALS = "Minerals"
+    SALVAGE = "Salvage"
+    TECHNOLOGY = "Technology"
+    TEXTILES = "Textiles"
+    WASTE = "Waste"
+    WEAPONS = "Weapons"
+
+@dataclass(frozen=True, slots=True)
+class CommodityEntity:
+    id: int
+    symbol: str
+    category: CommodityCategory
+    name: str
+
+class CommodityNormalizer:
+    def __init__(self, catalog: dict[str, CommodityEntity]):
+        self._lookup = catalog
+
+    def normalize(self, token: str) -> CommodityEntity | None:
+        clean = token.lower().strip("$").removesuffix("_name;").strip()
+        return self._lookup.get(clean)
+```
+
+#### 4.5.3 Ships & Outfitting Modules (`ed_models.domain.ships`)
+
+```python
+from dataclasses import dataclass
+from enum import IntEnum, StrEnum
+
+class PadSize(StrEnum):
+    SMALL = "Small"
+    MEDIUM = "Medium"
+    LARGE = "Large"
+
+class ModuleRating(StrEnum):
+    A = "A"
+    B = "B"
+    C = "C"
+    D = "D"
+    E = "E"
+
+class ModuleClass(IntEnum):
+    ZERO = 0
+    ONE = 1
+    TWO = 2
+    THREE = 3
+    FOUR = 4
+    FIVE = 5
+    SIX = 6
+    SEVEN = 7
+    EIGHT = 8
+
+@dataclass(frozen=True, slots=True)
+class ShipHull:
+    symbol: str
+    name: str
+    manufacturer: str
+    pad_size: PadSize
+    base_hull_mass: float
+
+@dataclass(frozen=True, slots=True)
+class ShipModule:
+    id: int
+    symbol: str
+    name: str
+    class_num: ModuleClass
+    rating: ModuleRating
+    mass_tons: float
+    base_cost_cr: int
+
+class ShipNormalizer:
+    def __init__(self, hulls: dict[str, ShipHull]):
+        self._hulls = hulls
+
+    def normalize(self, internal_slug: str) -> ShipHull | None:
+        return self._hulls.get(internal_slug.lower().strip())
+```
+
+#### 4.5.4 Journal Events, Snapshots & Status Telemetry (`ed_models.domain.events`)
+
+```python
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Any
+
+@dataclass(frozen=True, slots=True)
+class JournalEvent:
+    timestamp: datetime
+    event: str
+
+@dataclass(frozen=True, slots=True)
+class FsdJumpEvent(JournalEvent):
+    star_system: str
+    system_address: int
+    star_pos: tuple[float, float, float]
+    jump_dist: float
+    fuel_used: float
+    fuel_level: float
+
+@dataclass(frozen=True, slots=True)
+class StatusFlags:
+    docked: bool
+    landed: bool
+    landing_gear_down: bool
+    shields_up: bool
+    supercruise: bool
+    flight_assist_off: bool
+    hardpoints_deployed: bool
+    lights_on: bool
+    night_vision: bool
+
+    @classmethod
+    def from_bitfield(cls, flags: int) -> "StatusFlags":
+        return cls(
+            docked=bool(flags & (1 << 0)),
+            landed=bool(flags & (1 << 1)),
+            landing_gear_down=bool(flags & (1 << 2)),
+            shields_up=bool(flags & (1 << 3)),
+            supercruise=bool(flags & (1 << 4)),
+            flight_assist_off=bool(flags & (1 << 5)),
+            hardpoints_deployed=bool(flags & (1 << 6)),
+            lights_on=bool(flags & (1 << 8)),
+            night_vision=bool(flags & (1 << 28)),
+        )
+
+@dataclass(frozen=True, slots=True)
+class ShipStatus:
+    timestamp: datetime
+    flags: StatusFlags
+    pips: tuple[float, float, float]
+    firegroup: int
+    fuel_main_tons: float
+    fuel_reservoir_tons: float
+    gui_focus: int
+```
+
+#### 4.5.5 Factions, Politics & System States (`ed_models.domain.factions`)
+
+```python
+from dataclasses import dataclass
+from enum import StrEnum
+
+class Allegiance(StrEnum):
+    FEDERATION = "Federation"
+    EMPIRE = "Empire"
+    ALLIANCE = "Alliance"
+    INDEPENDENT = "Independent"
+
+class Government(StrEnum):
+    DEMOCRACY = "Democracy"
+    CORPORATE = "Corporate"
+    ANARCHY = "Anarchy"
+    PATRONAGE = "Patronage"
+    COMMUNISM = "Communism"
+
+class PowerState(StrEnum):
+    CONTROL = "Control"
+    EXPLOITED = "Exploited"
+    EXPANSION = "Expansion"
+
+@dataclass(frozen=True, slots=True)
+class MinorFactionPresence:
+    name: str
+    faction_state: str
+    influence: float
+    allegiance: Allegiance
+    government: Government
+```
+
+#### 4.5.6 Calculators & Interop Formats (`ed_models.domain.interop`)
+
+```python
+from dataclasses import dataclass
+from typing import Any
+
+@dataclass(frozen=True, slots=True)
+class JumpRangeProfile:
+    unladen_ly: float
+    laden_ly: float
+    max_single_jump_ly: float
+
+@dataclass(frozen=True, slots=True)
+class TradeDangerousMarketRecord:
+    system_name: str
+    station_name: str
+    market_id: int
+    commodity_name: str
+    sell_price_cr: int
+    buy_price_cr: int
+    demand: int
+    stock: int
+
+class TradeDangerousFormatter:
+    @staticmethod
+    def format_td(records: list[TradeDangerousMarketRecord], timestamp_str: str) -> str:
+        if not records:
+            return ""
+        first = records[0]
+        lines = [
+            "# Trade Dangerous Market Export",
+            f"# Generated at {timestamp_str}",
+            f"@ System: {first.system_name}",
+            f"+ Station: {first.station_name}",
+            f"$ MarketId: {first.market_id}",
+            "# Commodity               Sell        Buy       Demand      Stock",
+        ]
+        for r in records:
+            lines.append(f"{r.commodity_name:<24} {r.sell_price_cr:>8} {r.buy_price_cr:>10} {r.demand:>12} {r.stock:>10}")
+        return "\n".join(lines) + "\n"
+```
+
 ---
 
 ## 5. Pros and Cons of the Selected Option
