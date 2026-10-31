@@ -454,6 +454,34 @@ To prevent arbitrary or ad-hoc modeling decisions, all data structures authored 
    * In standard Python dataclasses, a subclass cannot define fields with defaults if the parent has non-default fields, unless positional ordering is completely decoupled.
    * All Journal and Status event base classes and derived classes MUST declare **`kw_only=True`** to allow independent default field assignment across the entire event hierarchy.
 
+### 4.7 Frontier Developments Official Journal Chapter Structure & Event Decomposition
+
+To prevent arbitrary event bucketing, the internal package hierarchy of `ed_models.events` maps 1:1 to the official numbered chapter taxonomy defined in Frontier Developments' *Player Journal Specification* (v1 through v37, codified by `Lombra/elite-api-docs` and `kayahr/ed-journal`).
+
+#### 4.7.1 Domain Decomposition Matrix
+
+| `ed-models` Subpackage | FDev Spec Chapter | Official FDev Section Name | Scope & Exemplar Events |
+| :--- | :--- | :--- | :--- |
+| `ed_models.events.startup` | Chapter 2 | **Startup** | Session initialization and commander state (`FileHeader`, `Commander`, `LoadGame`, `Materials`, `Rank`, `Progress`) |
+| `ed_models.events.travel` | Chapter 3 | **Travel** | Space navigation, transitions, docking maneuvers (`Location`, `Docked`, `Undocked`, `FSDJump`, `SupercruiseExit`, `StartJump`) |
+| `ed_models.events.combat` | Chapter 4 | **Combat** | Ship engagements, defensive alerts, damage telemetry (`Bounty`, `Died`, `HullDamage`, `HeatDamage`, `Interdicted`, `UnderAttack`) |
+| `ed_models.events.exploration` | Chapter 5 | **Exploration** | Astronomical body scans, DSS, signals, organic data (`Scan`, `FSSDiscoveryScan`, `SAAScanComplete`, `CodexEntry`, `FSSBodySignals`) |
+| `ed_models.events.trade` | Chapter 6 | **Trade** | Commodity exchange transactions, asteroid mining (`MarketBuy`, `MarketSell`, `MiningRefined`, `AsteroidCracked`, `BuyTradeData`) |
+| `ed_models.events.station` | Chapter 7 / 8 | **Station Services** | Starport docking services, shipyard, engineering (`Market`, `Outfitting`, `Shipyard`, `CommunityGoal`, `EngineerCraft`, `EngineerProgress`) |
+| `ed_models.events.powerplay` | Chapter 9 | **Powerplay** | Galactic power alignment, merits, weekly cycles (`PowerplayJoin`, `PowerplayVote`, `PowerplaySalary`, `PowerplayFastTrack`) |
+| `ed_models.events.squadrons` | Chapter 10 | **Squadrons** | Player wings, squadron management (`SquadronStartup`, `SquadronDemotion`, `DisbandedSquadron`) |
+| `ed_models.events.carrier` | Chapter 11 | **Fleet Carriers** | Mobile station operations, crew, jump schedules (`CarrierBuy`, `CarrierJump`, `CarrierStats`, `CarrierCrewServices`, `CarrierDeposit`) |
+| `ed_models.events.odyssey` | Chapter 12 | **New in Odyssey** | On-foot suits, weapons, lockers, planetary EVA (`Backpack`, `ShipLocker`, `BuySuit`, `UpgradeWeapon`, `Disembark`, `ScanOrganic`) |
+| `ed_models.events.other` | Chapter 13 | **Other Events** | Auxiliary telemetry, synthesis, vehicle shutdown (`Status`, `Music`, `Synthesis`, `Cargo`, `SystemsShutdown`, `ModuleInfo`) |
+| `ed_models.types` | Appendix | **Appendix** | Universal enums, star classes, planet classes, legal states (`Allegiance`, `StarType`, `BodyType`, `PadSize`, `LegalState`) |
+
+#### 4.7.2 Game Emission Sources & Specializations
+
+All three game emission file formats are unified within this decomposition structure:
+1. **Journal Files (`Journal.<datestamp>.<part>.log`):** Flat NDJSON stream hydrated into concrete discriminator subclasses (e.g., `FsdJumpEvent`, `MarketEvent`).
+2. **Companion Snapshots (`Market.json`, `Outfitting.json`, `Shipyard.json`, `NavRoute.json`, `Backpack.json`):** Extended snapshot dataclasses extending the corresponding base trigger event (e.g., `ExtendedMarketEvent`, `ExtendedNavRouteEvent`).
+3. **Cockpit Telemetry (`Status.json`):** Modeled under `ed_models.events.other.status` with full 32-bit bitfield flags (`Flags`, `Flags2`) and cockpit instrumentation attributes.
+
 ---
 
 ## 5. Pros and Cons of the Selected Option
