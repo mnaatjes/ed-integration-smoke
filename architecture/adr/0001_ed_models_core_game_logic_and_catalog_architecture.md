@@ -66,34 +66,27 @@ We need a centralized, deterministic domain foundation: the planned **`ed-models
 ```mermaid
 flowchart TD
     subgraph Consumers ["Fleet Consumers"]
-        Telemetry["ed-telemetry\n(Log Parsing)"]
+        Telemetry["ed-telemetry\n(Log Ingestion & Stream)"]
         Connector["ed-connector\n(Desktop Client & Cache)"]
-        Router["ed-router\n(Pathfinding)"]
+        Router["ed-router\n(Pathfinding & Navigation)"]
     end
 
     subgraph EdModels ["ed-models (Pure Domain Library)"]
-        Facade["ModelsFacade (Driving Adapter)"]
+        Facade["facade.py: EliteDomain / ModelsFacade\n(Unified Driving Port)"]
 
-        subgraph CoreDomain ["Core Domain & Events"]
-            Events["Journal Event Models\n(FSDJump, Market, ScanOrganic)"]
-            Entities["Domain Entities\n(Ship, Module, Commodity, System)"]
-            Enums["Domain Enums\n(PadSize, Rating, Economy, Power)"]
-        end
+        Types["types/\n(StrEnum & IntFlag Primitives)"]
+        Core["core/\n(Spatial, Bodies, Ships, Commodities, Factions)"]
+        Catalogs["catalogs/\n(Compiled Static Lookup Dictionaries)"]
+        Events["events/\n(FDev Chapters 2-13 Polymorphic Hierarchy)"]
 
-        subgraph Catalogs ["Compiled Static Catalogs"]
-            CommodityCat["Commodity Catalog & Normalizer"]
-            ShipCat["Ship Hull Specifications Catalog"]
-            ModuleCat["Outfitting Module Catalog"]
-        end
-
-        subgraph Interop ["Local Interop Serializers"]
-            TDSerializer["Trade Dangerous .td Serializer"]
-            CoriolisSerializer["Coriolis Loadout Serializer"]
-        end
-
-        Facade --> CoreDomain
+        Facade --> Types
+        Facade --> Core
         Facade --> Catalogs
-        Facade --> Interop
+        Facade --> Events
+
+        Core --> Types
+        Catalogs --> Core
+        Events --> Types
     end
 
     Consumers -->|Import & Invoke| Facade
@@ -482,6 +475,113 @@ All three game emission file formats are unified within this decomposition struc
 2. **Companion Snapshots (`Market.json`, `Outfitting.json`, `Shipyard.json`, `NavRoute.json`, `Backpack.json`):** Extended snapshot dataclasses extending the corresponding base trigger event (e.g., `ExtendedMarketEvent`, `ExtendedNavRouteEvent`).
 3. **Cockpit Telemetry (`Status.json`):** Modeled under `ed_models.events.other.status` with full 32-bit bitfield flags (`Flags`, `Flags2`) and cockpit instrumentation attributes.
 
+### 4.8 Complete Package Hierarchy & Directory Topology
+
+Synthesizing all domain matrices, data typing rules, and FDev chapter classifications yields the formal filesystem layout for the `ed-models` repository:
+
+```text
+ed_models/
+├── __init__.py                     # Root package exports & facade factory
+├── facade.py                       # Hexagonal facade: EliteDomain / ModelsFacade
+│
+├── types/                          # Shared Enums & Value Objects (FDev Appendix)
+│   ├── __init__.py
+│   ├── allegiance.py               # StrEnum: Federation, Empire, Alliance, Independent, None
+│   ├── bodies.py                   # StrEnum: StarType, PlanetClass, AtmosphereType, Volcanism
+│   ├── economy.py                  # StrEnum: EconomyType, Government, SecurityLevel, State
+│   ├── legal.py                    # StrEnum: LegalState, CrimeType
+│   ├── modules.py                  # StrEnum: PadSize, ModuleRating, ModuleClass
+│   └── ranks.py                    # StrEnum: CombatRank, TradeRank, ExploreRank, ExobiologyRank
+│
+├── core/                           # Pure Domain Entities & In-Memory Logic
+│   ├── __init__.py
+│   ├── spatial/                    # Mathematical & System models (frozen, slots)
+│   │   ├── coordinates.py          # Coordinates3D (x, y, z), bounding boxes
+│   │   └── system.py               # StarSystem (id, name, coords, allegiance)
+│   ├── bodies/                     # Planetary & Stellar bodies (slots)
+│   │   ├── star.py                 # StarBody (solar mass, radius, surface temp)
+│   │   └── planet.py               # PlanetaryBody (mass, gravity, atmosphere, materials)
+│   ├── ships/                      # Ship Hulls & Module Outfitting
+│   │   ├── hull.py                 # ShipHull (name, manufacturer, mass, pad size, slots)
+│   │   ├── module.py               # ShipModule (name, class, rating, mass, power)
+│   │   ├── loadout.py              # ShipLoadout (hull + active equipped modules)
+│   │   └── normalizer.py           # ShipNormalizer (resolves raw FDev symbols)
+│   ├── commodities/                # Trade Goods & Resources
+│   │   ├── commodity.py            # CommodityEntity (id, symbol, category, average price)
+│   │   ├── rare.py                 # RareCommodityEntity (origin system, max allocation)
+│   │   ├── category.py             # StrEnum: CommodityCategory
+│   │   └── normalizer.py           # CommodityNormalizer (resolves localized strings)
+│   ├── factions/                   # Background Simulation (BGS)
+│   │   ├── faction.py              # MinorFaction (name, allegiance, government)
+│   │   └── presence.py             # MinorFactionPresence (influence, active/pending states)
+│   └── interop/                    # Local File Format Converters
+│       └── trade_dangerous.py      # TradeDangerousMarketRecord & .td Formatter
+│
+├── catalogs/                       # Compiled Static Reference Datasets (~1.5 MB total)
+│   ├── __init__.py
+│   ├── ship_catalog.py             # Pre-compiled dict: 48 ShipHull records
+│   ├── module_catalog.py           # Pre-compiled dict: ~800 ShipModule records
+│   ├── commodity_catalog.py        # Pre-compiled dict: ~450 CommodityEntity records
+│   └── systems_seed.py             # Core Sol/Colonia/bubble baseline coordinates
+│
+└── events/                         # Polymorphic Event Models (FDev Chapters 2–13)
+    ├── __init__.py                 # Exports all concrete events & EventUnion
+    ├── base.py                     # JournalEvent base dataclass (timestamp, event, kw_only=True)
+    │
+    ├── startup/                    # Chapter 2: Startup (16 events)
+    │   ├── file_header.py          # FileHeader (part, gameversion, build)
+    │   ├── commander.py            # Commander, NewCommander
+    │   ├── load_game.py            # LoadGame (credits, loan, ship, fid)
+    │   └── ranks.py                # Rank, Progress, Reputation
+    │
+    ├── travel/                     # Chapter 3: Travel (23 events)
+    │   ├── jump.py                 # FsdJump, StartJump, SupercruiseEntry/Exit
+    │   ├── docking.py              # Docked, Undocked, Touchdown, Liftoff
+    │   ├── location.py             # Location, ApproachBody, LeaveBody
+    │   └── nav_route.py            # NavRouteEvent & ExtendedNavRoute (NavRoute.json)
+    │
+    ├── combat/                     # Chapter 4: Combat (18 events)
+    │   ├── damage.py               # HullDamage, HeatDamage, ShieldState
+    │   ├── encounters.py           # Interdicted, Interdiction, EscapeInterdiction
+    │   └── combat_log.py           # Bounty, Died, PVPKill, UnderAttack
+    │
+    ├── exploration/                # Chapter 5: Exploration (26 events)
+    │   ├── scans.py                # Scan (star/planet/belt), NavBeaconScan
+    │   ├── discovery.py            # FSSDiscoveryScan, FSSAllBodiesFound, DiscoveryScan
+    │   └── organic.py              # ScanOrganic, SAASignalsFound, CodexEntry
+    │
+    ├── trade/                      # Chapter 6: Trade (10 events)
+    │   ├── market_ops.py           # MarketBuy, MarketSell, BuyTradeData
+    │   ├── mining.py               # MiningRefined, AsteroidCracked
+    │   └── cargo.py                # CollectCargo, EjectCargo
+    │
+    ├── station/                    # Chapters 7/8: Station Services (42 events)
+    │   ├── market.py               # MarketEvent & ExtendedMarket (Market.json)
+    │   ├── outfitting.py           # OutfittingEvent & ExtendedOutfitting (Outfitting.json)
+    │   ├── shipyard.py             # ShipyardEvent & ExtendedShipyard (Shipyard.json)
+    │   └── engineering.py          # EngineerProgress, EngineerCraft, MaterialTrade
+    │
+    ├── powerplay/                  # Chapter 9: Powerplay (11 events)
+    │   └── powerplay.py            # PowerplayJoin, PowerplayVote, PowerplaySalary
+    │
+    ├── squadrons/                  # Chapter 10: Squadrons (6 events)
+    │   └── squadron.py             # SquadronStartup, SquadronDemotion, Disbanded
+    │
+    ├── carrier/                    # Chapter 11: Fleet Carriers (16 events)
+    │   ├── carrier_ops.py          # CarrierBuy, CarrierJump, CarrierDeposit
+    │   └── carrier_state.py        # CarrierStats, CarrierCrewServices
+    │
+    ├── odyssey/                    # Chapter 12: New in Odyssey (34 events)
+    │   ├── locker.py               # Backpack, ShipLocker & ExtendedBackpack
+    │   ├── equipment.py            # BuySuit, UpgradeSuit, BuyWeapon, UpgradeWeapon
+    │   └── eva.py                  # Disembark, Embark, DropShipDeploy
+    │
+    └── other/                      # Chapter 13: Other Events (32 events)
+        ├── status.py               # StatusFlags (IntFlag) & ShipStatus (Status.json)
+        ├── systems.py              # SystemsShutdown, RebootRepair, Synthesis
+        └── vehicle.py              # Music, FuelScoop, CockpitBreached, JetConeBoost
+```
+
 ---
 
 ## 5. Pros and Cons of the Selected Option
@@ -506,5 +606,5 @@ Before creating the standalone `ed-models` repository:
    - Author a unified verification script in `ed-integration-smoke/scripts/` validating normalization accuracy and domain completeness across all Frontier tokens.
 2. **Repository Bootstrap (`ed-models`):**
    - Scaffold repository under `~/src/github.com/mnaatjes/ed-models`.
-   - Implement hexagonal structure: `core/`, `catalogs/`, `events/`, and `facade/`.
+   - Implement package structure: `facade.py`, `types/`, `core/`, `catalogs/`, and `events/` (Chapters 2–13).
    - Bind existing fleet tests to verify contract compliance.
