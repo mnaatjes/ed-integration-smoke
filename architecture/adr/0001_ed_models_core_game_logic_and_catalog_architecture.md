@@ -71,25 +71,57 @@ flowchart TD
         Router["ed-router\n(Pathfinding & Navigation)"]
     end
 
-    subgraph EdModels ["ed-models (Pure Domain Library)"]
-        Facade["facade.py: EliteDomain / ModelsFacade\n(Unified Driving Port)"]
+    subgraph EdModels ["ed-models (Hexagonal Architecture)"]
+        subgraph DrivingAdapters ["adapters/driving/ (Driving Adapter)"]
+            Facade["facade.py: EliteDomainFacade\n(Implements Driving Ports)"]
+        end
 
-        Types["types/\n(StrEnum & IntFlag Primitives)"]
-        Core["core/\n(Spatial, Bodies, Ships, Commodities, Factions)"]
-        Catalogs["catalogs/\n(Compiled Static Lookup Dictionaries)"]
-        Events["events/\n(FDev Chapters 2-13 Polymorphic Hierarchy)"]
+        subgraph CoreHexagon ["core/ (The Core Domain)"]
+            subgraph DrivingPorts ["core/ports/driving/ (Primary Ports)"]
+                PortCatalog["CatalogLookupPort"]
+                PortNorm["NormalizationPort"]
+                PortEvent["EventParserPort"]
+                PortMech["FlightMechanicsPort"]
+            end
 
-        Facade --> Types
-        Facade --> Core
-        Facade --> Catalogs
-        Facade --> Events
+            subgraph UseCases ["core/use_cases/ (Stateless Interactors)"]
+                UCLookup["LookupShip / LookupModule"]
+                UCNorm["NormalizeTokenUseCase"]
+                UCParse["ParseJournalEventUseCase"]
+                UCJump["CalculateJumpRangeUseCase"]
+            end
 
-        Core --> Types
-        Catalogs --> Core
-        Events --> Types
+            subgraph DomainEntities ["core/domain/ (Pure Entities & Models)"]
+                Entities["Ships, Modules, Commodities, Systems"]
+                Events["Journal Events (FDev Chapters 2-13)"]
+                Types["Value Objects & StrEnums (Appendix)"]
+            end
+
+            subgraph DrivenPorts ["core/ports/driven/ (Secondary Ports)"]
+                PortShipCat["ShipCatalogProviderPort"]
+                PortModCat["ModuleCatalogProviderPort"]
+                PortCommCat["CommodityCatalogProviderPort"]
+            end
+        end
+
+        subgraph DrivenAdapters ["adapters/driven/ (Driven Adapters)"]
+            StaticCatalogs["static_catalogs/\n(In-Memory Compiled Catalogs)"]
+        end
+
+        subgraph Bootstrap ["bootstrap/"]
+            Container["container.py: WireContainer\n(DI Composition Root)"]
+        end
+
+        Facade --> DrivingPorts
+        DrivingPorts --> UseCases
+        UseCases --> DomainEntities
+        UseCases --> DrivenPorts
+        DrivenAdapters -.->|Implements| DrivenPorts
+        Container --> Facade
+        Container --> DrivenAdapters
     end
 
-    Consumers -->|Import & Invoke| Facade
+    Consumers -->|Invoke Facade| Facade
 ```
 
 ### 4.3 Driving Facade Contract (`EliteDomain` / `ModelsFacade`)
@@ -509,109 +541,108 @@ All three game emission file formats are unified within this decomposition struc
 
 ### 4.8 Complete Package Hierarchy & Directory Topology
 
-Synthesizing all domain matrices, data typing rules, and FDev chapter classifications yields the formal filesystem layout for the `ed-models` repository:
+Synthesizing all domain matrices, data typing rules, FDev chapter classifications, and the canonical [`python-hexagonal-template`](https://github.com/mnaatjes/python-hexagonal-template) standards yields the formal filesystem layout for the `ed-models` repository:
 
 ```text
 ed_models/
-├── __init__.py                     # Root package exports & facade factory
-├── facade.py                       # Hexagonal facade: EliteDomain / ModelsFacade
+├── __init__.py                                 # Root package exports & facade factory
 │
-├── types/                          # Shared Enums & Value Objects (FDev Appendix)
+├── core/                                       # Pure Core Layer (HEXA-TRUTH-01, 02)
 │   ├── __init__.py
-│   ├── allegiance.py               # StrEnum: Federation, Empire, Alliance, Independent, None
-│   ├── bodies.py                   # StrEnum: StarType, PlanetClass, AtmosphereType, Volcanism
-│   ├── economy.py                  # StrEnum: EconomyType, Government, SecurityLevel, State
-│   ├── legal.py                    # StrEnum: LegalState, CrimeType
-│   ├── modules.py                  # StrEnum: PadSize, ModuleRating, ModuleClass
-│   └── ranks.py                    # StrEnum: CombatRank, TradeRank, ExploreRank, ExobiologyRank
+│   ├── domain/                                 # Domain Entities, Enums, Value Objects
+│   │   ├── __init__.py
+│   │   ├── exceptions.py                       # DomainError base hierarchy (HEXA-TRUTH-07)
+│   │   ├── types/                              # StrEnum & IntFlag primitives (FDev Appendix)
+│   │   │   ├── __init__.py
+│   │   │   ├── allegiance.py                   # Allegiance, PowerState
+│   │   │   ├── bodies.py                       # StarType, PlanetClass, AtmosphereType, Volcanism
+│   │   │   ├── economy.py                      # EconomyType, Government, SecurityLevel, State
+│   │   │   ├── legal.py                        # LegalState, CrimeType
+│   │   │   ├── modules.py                      # PadSize, ModuleRating, ModuleClass
+│   │   │   └── ranks.py                        # CombatRank, TradeRank, ExploreRank, ExobiologyRank
+│   │   ├── spatial/                            # Coordinates3D (frozen), StarSystem
+│   │   │   ├── __init__.py
+│   │   │   ├── coordinates.py
+│   │   │   └── system.py
+│   │   ├── bodies/                             # StarBody, PlanetaryBody
+│   │   │   ├── __init__.py
+│   │   │   ├── star.py
+│   │   │   └── planet.py
+│   │   ├── ships/                              # ShipHull, ShipModule, ShipLoadout
+│   │   │   ├── __init__.py
+│   │   │   ├── hull.py
+│   │   │   ├── module.py
+│   │   │   └── loadout.py
+│   │   ├── commodities/                        # CommodityEntity, RareCommodityEntity
+│   │   │   ├── __init__.py
+│   │   │   ├── commodity.py
+│   │   │   ├── rare.py
+│   │   │   └── category.py
+│   │   ├── factions/                           # MinorFaction, MinorFactionPresence
+│   │   │   ├── __init__.py
+│   │   │   ├── faction.py
+│   │   │   └── presence.py
+│   │   ├── status/                             # StatusFlags (IntFlag), ShipStatus
+│   │   │   ├── __init__.py
+│   │   │   └── status.py
+│   │   ├── interop/                            # Pure Interop DTOs & Formatters
+│   │   │   ├── __init__.py
+│   │   │   ├── trade_dangerous.py
+│   │   │   └── coriolis.py
+│   │   └── events/                             # FDev Chapters 2-13 Polymorphic Hierarchy
+│   │       ├── __init__.py
+│   │       ├── base.py                         # JournalEvent (timestamp, event, kw_only=True)
+│   │       ├── startup.py                      # Chapter 2: FileHeader, LoadGame, Rank
+│   │       ├── travel.py                       # Chapter 3: FSDJump, Location, Docked
+│   │       ├── combat.py                       # Chapter 4: Bounty, Died, UnderAttack
+│   │       ├── exploration.py                  # Chapter 5: Scan, FSSDiscoveryScan, Organic
+│   │       ├── trade.py                        # Chapter 6: MarketBuy, MarketSell, Mining
+│   │       ├── station.py                      # Chapters 7/8: Market, Outfitting, Shipyard
+│   │       ├── powerplay.py                    # Chapter 9: Powerplay events
+│   │       ├── squadrons.py                    # Chapter 10: Squadron events
+│   │       ├── carrier.py                      # Chapter 11: Fleet Carrier operations
+│   │       ├── odyssey.py                      # Chapter 12: On-foot suits, weapons, lockers
+│   │       └── other.py                        # Chapter 13: Music, Synthesis, Systems
+│   │
+│   ├── ports/                                  # Abstract Interfaces (HEXA-TRUTH-03, 16)
+│   │   ├── __init__.py
+│   │   ├── driving/                            # Primary Driving Ports (Consumer -> Domain)
+│   │   │   ├── __init__.py
+│   │   │   ├── catalog_port.py                 # CatalogLookupPort (Protocol)
+│   │   │   ├── normalization_port.py           # NormalizationPort (Protocol)
+│   │   │   ├── event_parser_port.py            # EventParserPort (Protocol)
+│   │   │   └── mechanics_port.py               # FlightMechanicsPort (Protocol)
+│   │   └── driven/                             # Secondary Driven Ports (Domain -> Catalogs)
+│   │       ├── __init__.py
+│   │       ├── ship_catalog_port.py            # ShipCatalogProviderPort (Protocol)
+│   │       ├── module_catalog_port.py          # ModuleCatalogProviderPort (Protocol)
+│   │       └── commodity_catalog_port.py       # CommodityCatalogProviderPort (Protocol)
+│   │
+│   └── use_cases/                              # Pure Stateless Interactors (HEXA-TRUTH-11, 14)
+│       ├── __init__.py
+│       ├── lookup_ship.py                      # LookupShipUseCase
+│       ├── lookup_module.py                    # LookupModuleUseCase
+│       ├── normalize_token.py                  # NormalizeTokenUseCase
+│       ├── parse_journal_event.py              # ParseJournalEventUseCase
+│       ├── parse_status.py                     # ParseStatusUseCase
+│       └── calculate_jump_range.py             # CalculateJumpRangeUseCase
 │
-├── core/                           # Pure Domain Entities & In-Memory Logic
+├── adapters/                                   # Technology Implementations (HEXA-TRUTH-02)
 │   ├── __init__.py
-│   ├── spatial/                    # Mathematical & System models (frozen, slots)
-│   │   ├── coordinates.py          # Coordinates3D (x, y, z), bounding boxes
-│   │   └── system.py               # StarSystem (id, name, coords, allegiance)
-│   ├── bodies/                     # Planetary & Stellar bodies (slots)
-│   │   ├── star.py                 # StarBody (solar mass, radius, surface temp)
-│   │   └── planet.py               # PlanetaryBody (mass, gravity, atmosphere, materials)
-│   ├── ships/                      # Ship Hulls & Module Outfitting
-│   │   ├── hull.py                 # ShipHull (name, manufacturer, mass, pad size, slots)
-│   │   ├── module.py               # ShipModule (name, class, rating, mass, power)
-│   │   ├── loadout.py              # ShipLoadout (hull + active equipped modules)
-│   │   └── normalizer.py           # ShipNormalizer (resolves raw FDev symbols)
-│   ├── commodities/                # Trade Goods & Resources
-│   │   ├── commodity.py            # CommodityEntity (id, symbol, category, average price)
-│   │   ├── rare.py                 # RareCommodityEntity (origin system, max allocation)
-│   │   ├── category.py             # StrEnum: CommodityCategory
-│   │   └── normalizer.py           # CommodityNormalizer (resolves localized strings)
-│   ├── factions/                   # Background Simulation (BGS)
-│   │   ├── faction.py              # MinorFaction (name, allegiance, government)
-│   │   └── presence.py             # MinorFactionPresence (influence, active/pending states)
-│   └── interop/                    # Local File Format Converters
-│       └── trade_dangerous.py      # TradeDangerousMarketRecord & .td Formatter
+│   ├── driving/                                # Driving Adapters
+│   │   ├── __init__.py
+│   │   └── facade.py                           # EliteDomainFacade (implements driving ports)
+│   └── driven/                                 # Driven Adapters
+│       ├── __init__.py
+│       └── static_catalogs/                    # In-memory pre-compiled catalogs
+│           ├── __init__.py
+│           ├── ships.py                        # StaticShipCatalogAdapter (48 ships)
+│           ├── modules.py                      # StaticModuleCatalogAdapter (~800 modules)
+│           └── commodities.py                  # StaticCommodityCatalogAdapter (~450 commodities)
 │
-├── catalogs/                       # Compiled Static Reference Datasets (~1.5 MB total)
-│   ├── __init__.py
-│   ├── ship_catalog.py             # Pre-compiled dict: 48 ShipHull records
-│   ├── module_catalog.py           # Pre-compiled dict: ~800 ShipModule records
-│   ├── commodity_catalog.py        # Pre-compiled dict: ~450 CommodityEntity records
-│   └── systems_seed.py             # Core Sol/Colonia/bubble baseline coordinates
-│
-└── events/                         # Polymorphic Event Models (FDev Chapters 2–13)
-    ├── __init__.py                 # Exports all concrete events & EventUnion
-    ├── base.py                     # JournalEvent base dataclass (timestamp, event, kw_only=True)
-    │
-    ├── startup/                    # Chapter 2: Startup (16 events)
-    │   ├── file_header.py          # FileHeader (part, gameversion, build)
-    │   ├── commander.py            # Commander, NewCommander
-    │   ├── load_game.py            # LoadGame (credits, loan, ship, fid)
-    │   └── ranks.py                # Rank, Progress, Reputation
-    │
-    ├── travel/                     # Chapter 3: Travel (23 events)
-    │   ├── jump.py                 # FsdJump, StartJump, SupercruiseEntry/Exit
-    │   ├── docking.py              # Docked, Undocked, Touchdown, Liftoff
-    │   ├── location.py             # Location, ApproachBody, LeaveBody
-    │   └── nav_route.py            # NavRouteEvent & ExtendedNavRoute (NavRoute.json)
-    │
-    ├── combat/                     # Chapter 4: Combat (18 events)
-    │   ├── damage.py               # HullDamage, HeatDamage, ShieldState
-    │   ├── encounters.py           # Interdicted, Interdiction, EscapeInterdiction
-    │   └── combat_log.py           # Bounty, Died, PVPKill, UnderAttack
-    │
-    ├── exploration/                # Chapter 5: Exploration (26 events)
-    │   ├── scans.py                # Scan (star/planet/belt), NavBeaconScan
-    │   ├── discovery.py            # FSSDiscoveryScan, FSSAllBodiesFound, DiscoveryScan
-    │   └── organic.py              # ScanOrganic, SAASignalsFound, CodexEntry
-    │
-    ├── trade/                      # Chapter 6: Trade (10 events)
-    │   ├── market_ops.py           # MarketBuy, MarketSell, BuyTradeData
-    │   ├── mining.py               # MiningRefined, AsteroidCracked
-    │   └── cargo.py                # CollectCargo, EjectCargo
-    │
-    ├── station/                    # Chapters 7/8: Station Services (42 events)
-    │   ├── market.py               # MarketEvent & ExtendedMarket (Market.json)
-    │   ├── outfitting.py           # OutfittingEvent & ExtendedOutfitting (Outfitting.json)
-    │   ├── shipyard.py             # ShipyardEvent & ExtendedShipyard (Shipyard.json)
-    │   └── engineering.py          # EngineerProgress, EngineerCraft, MaterialTrade
-    │
-    ├── powerplay/                  # Chapter 9: Powerplay (11 events)
-    │   └── powerplay.py            # PowerplayJoin, PowerplayVote, PowerplaySalary
-    │
-    ├── squadrons/                  # Chapter 10: Squadrons (6 events)
-    │   └── squadron.py             # SquadronStartup, SquadronDemotion, Disbanded
-    │
-    ├── carrier/                    # Chapter 11: Fleet Carriers (16 events)
-    │   ├── carrier_ops.py          # CarrierBuy, CarrierJump, CarrierDeposit
-    │   └── carrier_state.py        # CarrierStats, CarrierCrewServices
-    │
-    ├── odyssey/                    # Chapter 12: New in Odyssey (34 events)
-    │   ├── locker.py               # Backpack, ShipLocker & ExtendedBackpack
-    │   ├── equipment.py            # BuySuit, UpgradeSuit, BuyWeapon, UpgradeWeapon
-    │   └── eva.py                  # Disembark, Embark, DropShipDeploy
-    │
-    └── other/                      # Chapter 13: Other Events (32 events)
-        ├── status.py               # StatusFlags (IntFlag) & ShipStatus (Status.json)
-        ├── systems.py              # SystemsShutdown, RebootRepair, Synthesis
-        └── vehicle.py              # Music, FuelScoop, CockpitBreached, JetConeBoost
+└── bootstrap/                                  # Dependency Injection Composition Root
+    ├── __init__.py
+    └── container.py                            # WireContainer: instantiates Facade with Static Catalogs
 ```
 
 ---
@@ -619,9 +650,10 @@ ed_models/
 ## 5. Pros and Cons of the Selected Option
 
 ### Pros
-* **Ultra-Fast In-Memory Lookups:** Zero runtime disk parsing or JSON unmarshaling for core lookups; operations run at native Python dictionary speeds ($O(1)$).
+* **Full Hexagonal Invariant Conformance:** Upholds `HEXA-TRUTH-01` through `HEXA-TRUTH-17` matching all repos generated by `python-hexagonal-template`.
+* **Ultra-Fast In-Memory Lookups:** Zero runtime disk parsing or JSON unmarshaling; operations run at native Python dictionary speeds ($O(1)$).
 * **Guaranteed Determinism:** All fleet packages operate against identical, strongly typed enum and class definitions.
-* **Complete Offline Safety:** Companion applications function seamlessly in offline environments (e.g. deep-space exploration without internet).
+* **Pluggable Driven Adapters:** Default in-memory compiled catalogs can be swapped for alternative providers without mutating domain use cases.
 * **Clean Architectural Separation:** Isolates game universe mechanics from shifting third-party web API changes.
 
 ### Cons
@@ -637,6 +669,6 @@ Before creating the standalone `ed-models` repository:
    - Collect and cross-reference model definitions from `EDCD/EDMarketConnector` and community sources.
    - Author a unified verification script in `ed-integration-smoke/scripts/` validating normalization accuracy and domain completeness across all Frontier tokens.
 2. **Repository Bootstrap (`ed-models`):**
-   - Scaffold repository under `~/src/github.com/mnaatjes/ed-models`.
-   - Implement package structure: `facade.py`, `types/`, `core/`, `catalogs/`, and `events/` (Chapters 2–13).
+   - Scaffold repository under `~/src/github.com/mnaatjes/ed-models` using `python-hexagonal-template`.
+   - Implement hexagonal directory layout: `core/domain/`, `core/ports/`, `core/use_cases/`, `adapters/`, and `bootstrap/`.
    - Bind existing fleet tests to verify contract compliance.
