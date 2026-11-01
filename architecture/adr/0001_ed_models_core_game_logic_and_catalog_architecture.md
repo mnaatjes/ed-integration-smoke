@@ -92,9 +92,9 @@ flowchart TD
     Consumers -->|Import & Invoke| Facade
 ```
 
-### 4.3 Driving Facade Contract
+### 4.3 Driving Facade Contract (`EliteDomain` / `ModelsFacade`)
 
-`ed-models` exposes a unified entry point:
+`ed-models` exposes a unified driving interface (`ModelsFacade` / `EliteDomain`) implemented in `ed_models.facade`. It acts as an in-memory port for lookups, normalization, mechanics calculations, and event deserialization.
 
 ```python
 from ed_models import ModelsFacade, create_models_facade
@@ -103,9 +103,9 @@ facade: ModelsFacade = create_models_facade()
 
 # 1. Deterministic Token Normalization (FDevIDs)
 commodity = facade.normalize_commodity("$grain_name;")
-# -> Commodity(symbol="Grain", category=CommodityCategory.FOODS, id=128049102)
+# -> CommodityEntity(symbol="Grain", category=CommodityCategory.FOODS, id=128049102)
 
-# 2. Static Domain Catalog Lookups
+# 2. Static Domain Catalog Lookups (O(1))
 hull_spec = facade.get_ship_spec("anaconda")
 # -> ShipHull(symbol="Anaconda", base_mass=400.0, pad_size=PadSize.LARGE)
 
@@ -114,8 +114,40 @@ module_spec = facade.get_module_spec(128049382)
 
 # 3. Strongly Typed Journal Event Deserialization
 event = facade.parse_journal_event(raw_json_dict)
-# -> FSDJumpEvent(...)
+# -> FsdJumpEvent(...)
+
+# 4. Pure Mathematical Mechanics
+distance = facade.calculate_distance(coords_a, coords_b)
+# -> 42.15 (light years)
 ```
+
+#### 4.3.1 Behaviors & Actions Strictly PERMITTED in `ed-models` Facade
+
+The facade functions exclusively as an in-memory computational engine, catalog lookup provider, and deserializer:
+
+1. **In-Memory Static Catalog Lookups ($O(1)$):**
+   * Direct dictionary retrieval of pre-compiled game assets: `get_ship(symbol: str) -> ShipHull | None`, `get_module(module_id: int) -> ShipModule | None`, and `get_commodity(symbol_or_id: str | int) -> CommodityEntity | None`.
+2. **Deterministic Token & Symbol Normalization:**
+   * Sanitizing internal FDev tokens (`$symbol;`) and localized strings into canonical objects: `normalize_commodity(token: str) -> CommodityEntity | None` and `normalize_ship(slug: str) -> ShipHull | None`.
+3. **Event Deserialization & Polymorphic Routing:**
+   * Instantiating validated JSON dictionaries into concrete typed dataclasses: `parse_journal_event(payload: dict[str, Any]) -> JournalEvent` and `parse_status(payload: dict[str, Any]) -> ShipStatus` (with full 32-bit `Flags` and `Flags2` bitfield unpacking).
+4. **Pure Mathematical & Game Universe Mechanics:**
+   * Calculating spatial relationships and flight physics without external dependencies: `calculate_distance(a: Coordinates3D, b: Coordinates3D) -> float` and `calculate_jump_range(loadout: ShipLoadout, cargo_mass: float, fuel_mass: float) -> JumpRangeProfile`.
+5. **Interop File Serializers (Pure String Generation):**
+   * Converting internal domain structures into third-party interop text without touching the disk: `to_trade_dangerous(records: list[TradeDangerousMarketRecord], timestamp: datetime) -> str` and `to_coriolis_json(loadout: ShipLoadout) -> str`.
+
+#### 4.3.2 Behaviors & Actions Strictly OMITTED from `ed-models` Facade
+
+Any behavior introducing system I/O, external network dependencies, or dynamic persistence is strictly prohibited:
+
+| Omitted Action / Behavior | Governing Architectural Boundary | Designated Fleet Home Package |
+| :--- | :--- | :--- |
+| **Filesystem I/O & File Watching** (`open()`, `inotify`, reading `Journal.*.log`) | `ed-models` is a pure in-memory library; it must never touch local disks, poll directories, or manage OS file handles. | **`ed-telemetry`**: Owns tailing, stream positioning, and file discovery. |
+| **Network Requests & HTTP Transport** (`urllib`, `requests`, `httpx`) | Zero external socket or web dependencies allowed. | **`ed-transport`**: Owns HTTP clients, retries, rate-limiting, and headers. |
+| **JSON Schema Validation** (`jsonschema`, Draft 2020-12) | Structural wire validation must be decoupled from Python object instantiation. | **`ed-schema`**: Owns wire contract validation before passing clean dicts to `ed-models`. |
+| **Galaxy-Scale Database Queries** (searching 200M systems, spatial routing) | Cannot bloat a lightweight library with 50 GB SQLite dumps or Spansh spatial queries. | **`ed-router`** & **`ed-connector`**: Own spatial indexing (R-trees/k-d trees) and Spansh API integration. |
+| **Live Market Price / Stock Cache** (persisting starport quotes) | Dynamic market states change hourly and require relational storage. | **`ed-connector`**: Owns local SQLite/Redis price caching and EDDN subscriptions. |
+| **Companion API (CAPI) OAuth & Decryption** | Frontier authentication involves OAuth2 tokens, refresh cycles, and machine keys. | **`ed-transport` / `ed-connector`**: Owns credentials and session lifecycle. |
 
 ### 4.4 Domain Area Scope & Storage Boundary Matrix
 
