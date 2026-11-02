@@ -115,6 +115,7 @@ name = "ed-integration-smoke"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "ed-models" },
     { name = "ed-schema" },
     { name = "ed-transport" },
 ]
@@ -130,6 +131,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "ed-models", git = "https://github.com/mnaatjes/ed-models.git?tag=v0.2.0" },
     { name = "ed-schema", git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.1.0" },
     { name = "ed-transport", git = "https://github.com/mnaatjes/ed-transport.git?branch=main" },
     { name = "jsonschema", marker = "extra == 'dev'", specifier = ">=4.20.0" },
@@ -139,6 +141,11 @@ requires-dist = [
     { name = "types-jsonschema", marker = "extra == 'dev'", specifier = ">=4.20.0" },
 ]
 provides-extras = ["dev"]
+
+[[package]]
+name = "ed-models"
+version = "0.2.0"
+source = { git = "https://github.com/mnaatjes/ed-models.git?tag=v0.2.0#3129758eba062f7a49a7e5d198f2a4c7f16596d8" }
 
 [[package]]
 name = "ed-schema"
