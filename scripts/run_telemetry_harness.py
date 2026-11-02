@@ -91,18 +91,33 @@ def create_chapter_table(summary: dict[str, Any]) -> Panel:
     )
 
 
-def create_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
-    """Render bounded ring buffer of recent achievements, events, and mismatches."""
+def create_game_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
+    """Render right-side live stream of in-game journal actions."""
     table = Table(box=None, expand=True, show_header=False)
-    table.add_column("Timestamp", style="dim", width=10)
-    table.add_column("Level", width=10)
+    table.add_column("Timestamp", style="dim", width=9)
+    table.add_column("Event", style="bold cyan", width=16)
+    table.add_column("Detail", ratio=1)
+
+    for ts, ev_name, detail in reversed(events_log):
+        table.add_row(ts, ev_name, detail)
+
+    return Panel(
+        table,
+        title="[bold white]Live In-Game Events Stream[/bold white]",
+        border_style="cyan",
+    )
+
+
+def create_audit_panel(audit_log: deque[tuple[str, str, str]]) -> Panel:
+    """Render bottom full-width feed for targets achieved, mismatches, and audits."""
+    table = Table(box=None, expand=True, show_header=False)
+    table.add_column("Timestamp", style="dim", width=9)
+    table.add_column("Type", width=10)
     table.add_column("Message", ratio=1)
 
-    for ts, lvl, msg in reversed(events_log):
+    for ts, lvl, msg in reversed(audit_log):
         if lvl == "ACHIEVED":
             style_lvl = Text("ACHIEVED", style="bold green")
-        elif lvl == "EVENT":
-            style_lvl = Text("EVENT", style="bold cyan")
         elif lvl == "MISMATCH":
             style_lvl = Text("MISMATCH", style="bold red")
         elif lvl == "AUDIT":
@@ -113,9 +128,9 @@ def create_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
 
     return Panel(
         table,
-        title="[bold white]Live Notifications & Achievements[/bold white]",
+        title="[bold white]Target Achievements, Mismatches & Service Audits[/bold white]",
         border_style="green",
-        height=12,
+        height=8,
     )
 
 
@@ -126,14 +141,29 @@ def generate_dashboard(
     summary: dict[str, Any],
     processed_count: int,
     events_log: deque[tuple[str, str, str]],
+    audit_log: deque[tuple[str, str, str]],
 ) -> Layout:
-    """Compose full dashboard layout."""
+    """Compose 3-pane dashboard layout: Header top, [Chapters | Events] middle, Audits bottom."""
     layout = Layout()
+
+    # Split into 3 vertical tiers
     layout.split_column(
-        Layout(create_header(connected, base_url, db_path, summary, processed_count), size=4),
-        Layout(create_chapter_table(summary), ratio=1),
-        Layout(create_events_panel(events_log), size=13),
+        Layout(name="header", size=4),
+        Layout(name="middle", ratio=1),
+        Layout(name="bottom", size=9),
     )
+
+    # Split middle tier horizontally into Chapters (left) and Live Events (right)
+    layout["middle"].split_row(
+        Layout(name="chapters", ratio=1),
+        Layout(name="events", ratio=1),
+    )
+
+    layout["header"].update(create_header(connected, base_url, db_path, summary, processed_count))
+    layout["middle"]["chapters"].update(create_chapter_table(summary))
+    layout["middle"]["events"].update(create_game_events_panel(events_log))
+    layout["bottom"].update(create_audit_panel(audit_log))
+
     return layout
 
 
@@ -166,11 +196,12 @@ async def run_harness(
     processed_count = 0
     last_event_id = 0
     is_connected = False
-    events_log: deque[tuple[str, str, str]] = deque(maxlen=12)
+    events_log: deque[tuple[str, str, str]] = deque(maxlen=25)
+    audit_log: deque[tuple[str, str, str]] = deque(maxlen=15)
 
     # Initial summary
     summary = storage.get_coverage_summary()
-    events_log.append(
+    audit_log.append(
         (
             datetime.now(UTC).strftime("%H:%M:%S"),
             "INFO",
@@ -179,7 +210,9 @@ async def run_harness(
     )
 
     with Live(
-        generate_dashboard(is_connected, base_url, db_path, summary, processed_count, events_log),
+        generate_dashboard(
+            is_connected, base_url, db_path, summary, processed_count, events_log, audit_log
+        ),
         refresh_per_second=4,
         screen=True,
     ) as live:
@@ -195,7 +228,7 @@ async def run_harness(
                     res = pipeline.process_envelope(status)
                     processed_count += 1
                     if res.is_mismatch:
-                        events_log.append(
+                        audit_log.append(
                             (now_str, "MISMATCH", f"Telemetry mismatch: {res.error_message}")
                         )
                 else:
@@ -210,11 +243,11 @@ async def run_harness(
                     processed_count += 1
 
                     if res.is_audit:
-                        events_log.append(
+                        audit_log.append(
                             (now_str, "AUDIT", f"{res.target_id}: {res.error_message}")
                         )
                     elif res.is_mismatch:
-                        events_log.append(
+                        audit_log.append(
                             (now_str, "MISMATCH", f"{res.target_id}: {res.error_message}")
                         )
                     elif res.success:
@@ -229,9 +262,10 @@ async def run_harness(
                             detail = f"({event_payload['MusicTrack']})"
                         elif "StationName" in event_payload:
                             detail = f"at {event_payload['StationName']}"
+                        elif "ScanType" in event_payload:
+                            detail = f"({event_payload['ScanType']})"
 
-                        event_msg = f"{ev_name} {detail}".strip()
-                        events_log.append((now_str, "EVENT", event_msg))
+                        events_log.append((now_str, ev_name, detail))
 
                 # Check if new targets achieved
                 summary = storage.get_coverage_summary()
@@ -242,12 +276,18 @@ async def run_harness(
                         f"Total: {summary['achieved_targets']}/{summary['total_targets']} "
                         f"({summary['percentage']:.2f}%)"
                     )
-                    events_log.append((now_str, "ACHIEVED", achieved_msg))
+                    audit_log.append((now_str, "ACHIEVED", achieved_msg))
 
                 # Refresh in-place layout
                 live.update(
                     generate_dashboard(
-                        is_connected, base_url, db_path, summary, processed_count, events_log
+                        is_connected,
+                        base_url,
+                        db_path,
+                        summary,
+                        processed_count,
+                        events_log,
+                        audit_log,
                     )
                 )
 
