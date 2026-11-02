@@ -24,23 +24,51 @@ class TelemetryIngressClient:
         self.base_url = base_url.rstrip("/")
         self.transport = transport or create_async_transport_client()
 
-    async def fetch_current_status(self) -> dict[str, Any] | None:
-        """Query remote status snapshot."""
-        url = f"{self.base_url}/status"
+    async def fetch_game_status(self) -> dict[str, Any] | None:
+        """Query active cockpit Status.json snapshot via /api/v1/status/game."""
+        url = f"{self.base_url}/api/v1/status/game"
         request = HttpRequestDTO(method="GET", url=url)
         try:
             response = await self.transport.send_async(request)
             if response.status_code == 200:
-                data: dict[str, Any] = json.loads(response.body.decode("utf-8"))
-                return data
+                wrapper: dict[str, Any] = json.loads(response.body.decode("utf-8"))
+                raw_payload = wrapper.get("raw_payload")
+                if isinstance(raw_payload, str):
+                    parsed: dict[str, Any] = json.loads(raw_payload)
+                    return parsed
+                elif isinstance(raw_payload, dict):
+                    return raw_payload
         except Exception as exc:
-            logger.error("Failed to query remote status from %s: %s", url, exc)
+            logger.error("Failed to query game status from %s: %s", url, exc)
         return None
+
+    async def fetch_recent_events(self, since_id: int = 0) -> list[dict[str, Any]]:
+        """Query recent journal events via /api/v1/events."""
+        url = f"{self.base_url}/api/v1/events?since_id={since_id}&limit=100"
+        request = HttpRequestDTO(method="GET", url=url)
+        try:
+            response = await self.transport.send_async(request)
+            if response.status_code == 200:
+                items: list[dict[str, Any]] = json.loads(response.body.decode("utf-8"))
+                results: list[dict[str, Any]] = []
+                for item in items:
+                    raw = item.get("payload") or item.get("raw_payload")
+                    if isinstance(raw, str):
+                        try:
+                            results.append(json.loads(raw))
+                        except json.JSONDecodeError:
+                            pass
+                    elif isinstance(raw, dict):
+                        results.append(raw)
+                return results
+        except Exception as exc:
+            logger.error("Failed to query events from %s: %s", url, exc)
+        return []
 
     async def poll_stream(self, interval_seconds: float = 1.0) -> AsyncIterator[dict[str, Any]]:
         """Poll remote telemetry endpoint at regular intervals."""
         while not self.transport.is_closed():
-            status = await self.fetch_current_status()
+            status = await self.fetch_game_status()
             if status:
                 yield status
             await asyncio.sleep(interval_seconds)

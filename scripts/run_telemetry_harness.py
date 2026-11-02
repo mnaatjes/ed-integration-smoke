@@ -79,10 +79,12 @@ async def run_harness(
             pass
 
     processed_count = 0
+    last_event_id = 0
 
     try:
         while not stop_event.is_set():
-            status = await client.fetch_current_status()
+            # 1. Ingest Cockpit Telemetry
+            status = await client.fetch_game_status()
             if status:
                 res = pipeline.process_envelope(status)
                 processed_count += 1
@@ -90,20 +92,31 @@ async def run_harness(
                     logger.warning(
                         "Mismatch on target '%s': %s", res.target_id, res.error_message
                     )
-                else:
-                    logger.debug(
-                        "Processed envelope #%d: target '%s'", processed_count, res.target_id
+
+            # 2. Ingest New Journal Events
+            events = await client.fetch_recent_events(since_id=last_event_id)
+            for event_payload in events:
+                res = pipeline.process_envelope(event_payload)
+                processed_count += 1
+                if res.is_mismatch:
+                    logger.warning(
+                        "Mismatch on target '%s': %s", res.target_id, res.error_message
                     )
 
-                if processed_count % 20 == 0:
-                    summary = storage.get_coverage_summary()
-                    logger.info(
-                        "Progress: %d/%d targets achieved (%.2f%%) | Envelopes: %d",
-                        summary["achieved_targets"],
-                        summary["total_targets"],
-                        summary["percentage"],
-                        processed_count,
-                    )
+            if events:
+                # Advance since_id bookmark assuming events are chronologically ordered
+                last_event_id += len(events)
+
+            if processed_count > 0 and processed_count % 10 == 0:
+                summary = storage.get_coverage_summary()
+                logger.info(
+                    "Progress: %d/%d targets achieved (%.2f%%) | Envelopes: %d",
+                    summary["achieved_targets"],
+                    summary["total_targets"],
+                    summary["percentage"],
+                    processed_count,
+                )
+
             await asyncio.sleep(poll_interval)
     finally:
         await client.aclose()
