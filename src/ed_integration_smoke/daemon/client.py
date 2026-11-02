@@ -42,24 +42,29 @@ class TelemetryIngressClient:
             logger.error("Failed to query game status from %s: %s", url, exc)
         return None
 
-    async def fetch_recent_events(self, since_id: int = 0) -> list[dict[str, Any]]:
-        """Query recent journal events via /api/v1/events."""
+    async def fetch_recent_events(self, since_id: int = 0) -> list[tuple[int, dict[str, Any]]]:
+        """Query recent journal events via /api/v1/events returning (event_id, payload) tuples."""
         url = f"{self.base_url}/api/v1/events?since_id={since_id}&limit=100"
         request = HttpRequestDTO(method="GET", url=url)
         try:
             response = await self.transport.send_async(request)
             if response.status_code == 200:
                 items: list[dict[str, Any]] = json.loads(response.body.decode("utf-8"))
-                results: list[dict[str, Any]] = []
+                results: list[tuple[int, dict[str, Any]]] = []
                 for item in items:
-                    raw = item.get("payload") or item.get("raw_payload")
+                    item_id = int(item.get("id", 0))
+                    raw = (
+                        item.get("payload_json")
+                        or item.get("payload")
+                        or item.get("raw_payload")
+                    )
                     if isinstance(raw, str):
                         try:
-                            results.append(json.loads(raw))
+                            results.append((item_id, json.loads(raw)))
                         except json.JSONDecodeError:
                             pass
                     elif isinstance(raw, dict):
-                        results.append(raw)
+                        results.append((item_id, raw))
                 return results
         except Exception as exc:
             logger.error("Failed to query events from %s: %s", url, exc)

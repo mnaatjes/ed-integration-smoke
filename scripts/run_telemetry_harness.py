@@ -197,18 +197,16 @@ async def run_harness(
                     is_connected = False
 
                 # 2. Ingest New Journal Events
-                events = await client.fetch_recent_events(since_id=last_event_id)
-                for event_payload in events:
+                event_tuples = await client.fetch_recent_events(since_id=last_event_id)
+                for item_id, event_payload in event_tuples:
                     is_connected = True
+                    last_event_id = max(last_event_id, item_id)
                     res = pipeline.process_envelope(event_payload)
                     processed_count += 1
                     if res.is_mismatch:
                         events_log.append(
                             (now_str, "MISMATCH", f"{res.target_id}: {res.error_message}")
                         )
-
-                if events:
-                    last_event_id += len(events)
 
                 # Check if new targets achieved
                 summary = storage.get_coverage_summary()
