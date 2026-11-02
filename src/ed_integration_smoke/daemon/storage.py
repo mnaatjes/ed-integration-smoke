@@ -270,3 +270,14 @@ class TelemetryStorageEngine:
                 )
                 for row in cursor.fetchall()
             ]
+
+    def checkpoint_wal(self) -> None:
+        """Truncate and checkpoint SQLite WAL file."""
+        with self._get_connection() as conn:
+            conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+
+    def vacuum_database(self) -> None:
+        """Reclaim unused database disk space via VACUUM."""
+        with self._get_connection() as conn:
+            conn.execute("VACUUM;")
+

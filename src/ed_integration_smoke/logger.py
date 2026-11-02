@@ -5,7 +5,6 @@ from __future__ import annotations
 import datetime
 import json
 import logging
-import sys
 from typing import Any
 
 
@@ -38,7 +37,7 @@ class StructuredJsonLogger:
     ) -> dict[str, Any]:
         """Constructs, journals, and formats an RFC 0001 structured log event."""
         timestamp = (
-            datetime.datetime.now(datetime.timezone.utc)
+            datetime.datetime.now(datetime.UTC)
             .isoformat()
             .replace("+00:00", "Z")
         )

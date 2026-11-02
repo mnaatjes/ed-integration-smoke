@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import traceback
+from collections import defaultdict
 from typing import Any
 
 import ed_models
@@ -25,9 +26,14 @@ class TelemetryPipeline:
         self,
         storage: TelemetryStorageEngine,
         facade: EliteDomainFacade | None = None,
+        max_exemplars_per_event: int = 25,
     ) -> None:
         self.storage = storage
         self.facade = facade or ed_models.create_domain_facade()
+        self.max_exemplars_per_event = max_exemplars_per_event
+        self._last_status_signature: tuple[int, int, int, str] | None = None
+        self._event_sample_counts: dict[str, int] = defaultdict(int)
+        self._event_seen_keysets: dict[str, set[frozenset[str]]] = defaultdict(set)
 
     def process_envelope(self, payload: dict[str, Any]) -> ProcessingResult:
         """Process an arbitrary incoming telemetry or journal event payload."""
@@ -75,7 +81,15 @@ class TelemetryPipeline:
 
     def _process_journal_event(self, event_name: str, payload: dict[str, Any]) -> ProcessingResult:
         """Hydrate journal event via ed-models facade."""
-        self.storage.record_raw_event(event_name, payload)
+        # Exemplar reservoir gating: record raw if under quota or presents new property keys
+        payload_keys = frozenset(payload.keys())
+        current_count = self._event_sample_counts[event_name]
+        is_novel_keyset = payload_keys not in self._event_seen_keysets[event_name]
+
+        if current_count < self.max_exemplars_per_event or is_novel_keyset:
+            self.storage.record_raw_event(event_name, payload)
+            self._event_sample_counts[event_name] = current_count + 1
+            self._event_seen_keysets[event_name].add(payload_keys)
 
         try:
             hydrated = self.facade.parse_journal_event(payload)
@@ -134,10 +148,16 @@ class TelemetryPipeline:
 
     def _process_telemetry_status(self, payload: dict[str, Any]) -> ProcessingResult:
         """Parse status.json telemetry snapshot and unpack active bitfield flags."""
-        self.storage.record_raw_event("StatusTelemetry", payload)
+        raw_flags = int(payload.get("Flags", 0))
+        raw_flags2 = int(payload.get("Flags2", 0))
+        raw_focus = int(payload.get("GuiFocus", 0))
+        legal_state = str(payload.get("LegalState", "Clean"))
 
-        raw_flags = payload.get("Flags", 0)
-        raw_flags2 = payload.get("Flags2", 0)
+        current_sig = (raw_flags, raw_flags2, raw_focus, legal_state)
+        if current_sig != self._last_status_signature:
+            self.storage.record_raw_event("StatusTelemetry", payload)
+            self._last_status_signature = current_sig
+
         pips_raw = payload.get("Pips", [4, 4, 4])
         pips_tuple = (
             (int(pips_raw[0]), int(pips_raw[1]), int(pips_raw[2]))

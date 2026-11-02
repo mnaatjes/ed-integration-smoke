@@ -128,3 +128,89 @@ def test_domain_mismatch_recording(
     assert len(mismatches) == 1
     assert mismatches[0].target_id == "NonExistentFrontierEvent"
     assert "NonExistentFrontierEvent" in mismatches[0].raw_payload
+
+
+def test_telemetry_status_delta_gating(
+    pipeline: TelemetryPipeline, storage: TelemetryStorageEngine
+) -> None:
+    payload: dict[str, Any] = {
+        "timestamp": "2026-11-02T00:00:01Z",
+        "Flags": 1,
+        "Flags2": 0,
+        "GuiFocus": 0,
+        "LegalState": "Clean",
+    }
+    # Initial status packet - should persist raw record
+    res1 = pipeline.process_envelope(payload)
+    assert res1.success is True
+
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            "SELECT COUNT(*) FROM raw_journal_events WHERE event_name = 'StatusTelemetry'"
+        )
+        count1 = cursor.fetchone()[0]
+    assert count1 == 1
+
+    # Identical status packet (next 1s poll tick) - should NOT persist new raw record
+    res2 = pipeline.process_envelope(payload)
+    assert res2.success is True
+
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            "SELECT COUNT(*) FROM raw_journal_events WHERE event_name = 'StatusTelemetry'"
+        )
+        count2 = cursor.fetchone()[0]
+    assert count2 == 1
+
+    # Transitioned status packet (e.g. gear deployed) - should persist new raw record
+    payload_transitioned = dict(payload, Flags=3)
+    res3 = pipeline.process_envelope(payload_transitioned)
+    assert res3.success is True
+
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            "SELECT COUNT(*) FROM raw_journal_events WHERE event_name = 'StatusTelemetry'"
+        )
+        count3 = cursor.fetchone()[0]
+    assert count3 == 2
+
+
+def test_exemplar_reservoir_gating(
+    storage: TelemetryStorageEngine
+) -> None:
+    pipeline = TelemetryPipeline(storage=storage, max_exemplars_per_event=2)
+    base_payload = {
+        "timestamp": "2026-11-02T00:00:00Z",
+        "event": "Music",
+        "MusicTrack": "NoTrack",
+    }
+
+    # Packet 1 (sample 1 of 2) -> persisted
+    pipeline.process_envelope(base_payload)
+    # Packet 2 (sample 2 of 2) -> persisted
+    pipeline.process_envelope(base_payload)
+    # Packet 3 (quota exceeded, identical schema keys) -> not persisted
+    pipeline.process_envelope(base_payload)
+
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            "SELECT COUNT(*) FROM raw_journal_events WHERE event_name = 'Music'"
+        )
+        count = cursor.fetchone()[0]
+    assert count == 2
+
+    # Packet 4 (quota exceeded, but NOVEL schema key present) -> persisted as new exemplar
+    novel_payload = dict(base_payload, ExtraDiagnosticField="NewValue")
+    pipeline.process_envelope(novel_payload)
+
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            "SELECT COUNT(*) FROM raw_journal_events WHERE event_name = 'Music'"
+        )
+        count_after_novel = cursor.fetchone()[0]
+    assert count_after_novel == 3
+
+    # All 4 packets still contributed to target hit count
+    summary = storage.get_coverage_summary()
+    assert summary["total_hits"] >= 4
+
