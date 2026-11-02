@@ -8,6 +8,7 @@ dependencies = [
     "ed-schema",
     "ed-transport",
     "ed-models",
+    "rich>=13.0.0",
 ]
 
 [project.optional-dependencies]
