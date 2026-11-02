@@ -101,6 +101,8 @@ def create_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
     for ts, lvl, msg in reversed(events_log):
         if lvl == "ACHIEVED":
             style_lvl = Text("ACHIEVED", style="bold green")
+        elif lvl == "EVENT":
+            style_lvl = Text("EVENT", style="bold cyan")
         elif lvl == "MISMATCH":
             style_lvl = Text("MISMATCH", style="bold red")
         elif lvl == "AUDIT":
@@ -113,7 +115,7 @@ def create_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
         table,
         title="[bold white]Live Notifications & Achievements[/bold white]",
         border_style="green",
-        height=10,
+        height=12,
     )
 
 
@@ -130,7 +132,7 @@ def generate_dashboard(
     layout.split_column(
         Layout(create_header(connected, base_url, db_path, summary, processed_count), size=4),
         Layout(create_chapter_table(summary), ratio=1),
-        Layout(create_events_panel(events_log), size=11),
+        Layout(create_events_panel(events_log), size=13),
     )
     return layout
 
@@ -164,7 +166,7 @@ async def run_harness(
     processed_count = 0
     last_event_id = 0
     is_connected = False
-    events_log: deque[tuple[str, str, str]] = deque(maxlen=8)
+    events_log: deque[tuple[str, str, str]] = deque(maxlen=12)
 
     # Initial summary
     summary = storage.get_coverage_summary()
@@ -206,6 +208,7 @@ async def run_harness(
                     last_event_id = max(last_event_id, item_id)
                     res = pipeline.process_envelope(event_payload)
                     processed_count += 1
+
                     if res.is_audit:
                         events_log.append(
                             (now_str, "AUDIT", f"{res.target_id}: {res.error_message}")
@@ -214,6 +217,21 @@ async def run_harness(
                         events_log.append(
                             (now_str, "MISMATCH", f"{res.target_id}: {res.error_message}")
                         )
+                    elif res.success:
+                        # Extract concise event summary detail
+                        ev_name = event_payload.get("event", "Event")
+                        detail = ""
+                        if "StarSystem" in event_payload:
+                            detail = f"-> {event_payload['StarSystem']}"
+                        elif "BodyName" in event_payload:
+                            detail = f"-> {event_payload['BodyName']}"
+                        elif "MusicTrack" in event_payload:
+                            detail = f"({event_payload['MusicTrack']})"
+                        elif "StationName" in event_payload:
+                            detail = f"at {event_payload['StationName']}"
+
+                        event_msg = f"{ev_name} {detail}".strip()
+                        events_log.append((now_str, "EVENT", event_msg))
 
                 # Check if new targets achieved
                 summary = storage.get_coverage_summary()
