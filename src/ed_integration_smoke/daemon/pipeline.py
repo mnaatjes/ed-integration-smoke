@@ -35,6 +35,22 @@ class TelemetryPipeline:
         if "Flags" in payload or "Pips" in payload:
             return self._process_telemetry_status(payload)
 
+        # Check if internal service audit event (e.g. action="selected", "part_rollover")
+        if "action" in payload and "event" not in payload:
+            action_name = str(payload.get("action", "audit"))
+            self.storage.record_raw_event(f"Audit_{action_name}", payload)
+            target_path = str(payload.get("target_path", ""))
+            detail = payload.get("detail", "")
+            msg = f"{action_name} -> {target_path} {detail}".strip()
+            return ProcessingResult(
+                success=True,
+                target_id=f"audit.{action_name}",
+                chapter="audit",
+                error_message=msg,
+                is_mismatch=False,
+                is_audit=True,
+            )
+
         # Standard Frontier Journal Event
         event_name = payload.get("event")
         if not event_name or not isinstance(event_name, str):

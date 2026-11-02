@@ -103,6 +103,8 @@ def create_events_panel(events_log: deque[tuple[str, str, str]]) -> Panel:
             style_lvl = Text("ACHIEVED", style="bold green")
         elif lvl == "MISMATCH":
             style_lvl = Text("MISMATCH", style="bold red")
+        elif lvl == "AUDIT":
+            style_lvl = Text("AUDIT", style="bold yellow")
         else:
             style_lvl = Text("INFO", style="dim")
         table.add_row(ts, style_lvl, msg)
@@ -203,7 +205,11 @@ async def run_harness(
                     last_event_id = max(last_event_id, item_id)
                     res = pipeline.process_envelope(event_payload)
                     processed_count += 1
-                    if res.is_mismatch:
+                    if res.is_audit:
+                        events_log.append(
+                            (now_str, "AUDIT", f"{res.target_id}: {res.error_message}")
+                        )
+                    elif res.is_mismatch:
                         events_log.append(
                             (now_str, "MISMATCH", f"{res.target_id}: {res.error_message}")
                         )

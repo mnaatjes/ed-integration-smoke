@@ -61,3 +61,4 @@ class ProcessingResult:
     hydrated_object: Any | None = None
     error_message: str | None = None
     is_mismatch: bool = False
+    is_audit: bool = False
