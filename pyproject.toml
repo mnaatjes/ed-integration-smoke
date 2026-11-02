@@ -9,6 +9,7 @@ dependencies = [
     "ed-transport",
     "ed-models",
     "rich>=13.0.0",
+    "plotext>=5.2.8",
 ]
 
 [project.optional-dependencies]
@@ -49,5 +50,8 @@ module = [
     "ed_transport",
     "ed_models.*",
     "ed_models",
+    "plotext",
+    "plotext.*",
 ]
 ignore_missing_imports = true
+
