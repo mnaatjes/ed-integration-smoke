@@ -139,11 +139,12 @@ async def run_harness(
     host: str,
     port: int,
     db_path: Path,
+    mismatches_path: Path,
     poll_interval: float,
 ) -> None:
     """Run async ingestion loop updating rich Live dashboard in place."""
     base_url = f"http://{host}:{port}"
-    storage = TelemetryStorageEngine(db_path)
+    storage = TelemetryStorageEngine(db_path, mismatches_path=mismatches_path)
     storage.seed_targets(build_all_targets())
     pipeline = TelemetryPipeline(storage=storage)
     client = TelemetryIngressClient(base_url=base_url)
@@ -267,6 +268,12 @@ def main() -> None:
         help="Path to local SQLite persistence database",
     )
     parser.add_argument(
+        "--mismatches-file",
+        type=Path,
+        default=Path("data/domain_mismatches.jsonl"),
+        help="Path to JSON Lines file recording domain mismatches for later investigation",
+    )
+    parser.add_argument(
         "--poll-interval",
         type=float,
         default=1.0,
@@ -281,7 +288,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.summary:
-        storage = TelemetryStorageEngine(args.db)
+        storage = TelemetryStorageEngine(args.db, mismatches_path=args.mismatches_file)
         storage.seed_targets(build_all_targets())
         print_cli_summary(storage)
         sys.exit(0)
@@ -292,6 +299,7 @@ def main() -> None:
                 host=args.host,
                 port=args.port,
                 db_path=args.db,
+                mismatches_path=args.mismatches_file,
                 poll_interval=args.poll_interval,
             )
         )

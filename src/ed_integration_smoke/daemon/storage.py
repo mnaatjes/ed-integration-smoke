@@ -19,9 +19,19 @@ from ed_integration_smoke.daemon.models import (
 class TelemetryStorageEngine:
     """Thread-safe SQLite storage engine for raw telemetry, coverage, and mismatches."""
 
-    def __init__(self, db_path: Path | str) -> None:
+    def __init__(
+        self,
+        db_path: Path | str,
+        mismatches_path: Path | str | None = None,
+    ) -> None:
         self.db_path = Path(db_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.mismatches_path = (
+            Path(mismatches_path)
+            if mismatches_path is not None
+            else self.db_path.parent / "domain_mismatches.jsonl"
+        )
+        self.mismatches_path.parent.mkdir(parents=True, exist_ok=True)
         self._init_db()
 
     def _get_connection(self) -> sqlite3.Connection:
@@ -114,7 +124,7 @@ class TelemetryStorageEngine:
             )
 
     def record_mismatch(self, mismatch: DomainMismatchRecord) -> int:
-        """Record domain hydration failure or unhandled event."""
+        """Record domain hydration failure or unhandled event to SQLite and JSONL."""
         now = mismatch.occurred_at or datetime.now(UTC).isoformat()
         with self._get_connection() as conn:
             cursor = conn.execute(
@@ -133,7 +143,30 @@ class TelemetryStorageEngine:
                     mismatch.raw_payload,
                 ),
             )
-            return int(cursor.lastrowid or 0)
+            row_id = int(cursor.lastrowid or 0)
+
+        # Append to human-readable JSONL ledger
+        try:
+            try:
+                parsed_payload = json.loads(mismatch.raw_payload)
+            except json.JSONDecodeError:
+                parsed_payload = mismatch.raw_payload
+
+            jsonl_entry = {
+                "id": row_id,
+                "occurred_at": now,
+                "target_id": mismatch.target_id,
+                "error_class": mismatch.error_class,
+                "error_message": mismatch.error_message,
+                "payload": parsed_payload,
+                "traceback": mismatch.traceback,
+            }
+            with open(self.mismatches_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps(jsonl_entry, default=str) + "\n")
+        except OSError:
+            pass
+
+        return row_id
 
     def get_coverage_summary(self) -> dict[str, Any]:
         """Calculate overall and per-chapter target coverage metrics."""
