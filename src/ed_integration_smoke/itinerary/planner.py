@@ -100,10 +100,13 @@ TARGET_KNOWLEDGE_BASE: dict[str, dict[str, Any]] = {
     # Phase 2: Local Flight Dynamics (Cockpit toggles in current system)
     "NIGHT_VISION": {
         "phase": "2. Cockpit Flight Dynamics",
-        "title": "Toggle Night Vision",
-        "instruction": "Activate Night Vision HUD mode while in cockpit.",
-        "waypoint_type": WaypointType.COCKPIT,
-        "action_hint": "Default Keybind or Right Cockpit Panel -> Ship -> Night Vision",
+        "title": "Toggle Night Vision (In Flight)",
+        "instruction": (
+            "Activate Night Vision while undocked in space or on surface "
+            "(Frontier suppresses NV bitflag while docked)."
+        ),
+        "waypoint_type": WaypointType.LOCAL_SPACE,
+        "action_hint": "Undock -> Default Keybind or Right Panel -> Ship -> Night Vision",
         "priority": 30,
     },
     "LIGHTS_ON": {
@@ -325,6 +328,15 @@ class ItineraryPlanner:
                     ship_name = data_s.get("ShipName", "")
                 except json.JSONDecodeError:
                     pass
+
+        # Overlay real-time session state variables (bypasses exemplar sampling caps)
+        system = self.storage.get_session_state("active_system", system)
+        station = self.storage.get_session_state("active_station", station)
+        body = self.storage.get_session_state("active_body", body)
+        carrier_name = self.storage.get_session_state("carrier_name", carrier_name)
+        carrier_callsign = self.storage.get_session_state("carrier_callsign", carrier_callsign)
+        ship_type = self.storage.get_session_state("active_ship_type", ship_type)
+        ship_name = self.storage.get_session_state("active_ship_name", ship_name)
 
         return PlayerContext(
             system=system,

@@ -74,8 +74,39 @@ class TelemetryStorageEngine:
                     raw_payload TEXT NOT NULL
                 );
                 CREATE INDEX IF NOT EXISTS idx_mismatches_target ON domain_mismatches(target_id);
+
+                CREATE TABLE IF NOT EXISTS player_session_state (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
                 """
             )
+
+    def set_session_state(self, key: str, value: str) -> None:
+        """Upsert dynamic player session state variable."""
+        now = datetime.now(UTC).isoformat()
+        with self._get_connection() as conn:
+            conn.execute(
+                """
+                INSERT INTO player_session_state (key, value, updated_at)
+                VALUES (?, ?, ?)
+                ON CONFLICT(key) DO UPDATE SET
+                    value = excluded.value,
+                    updated_at = excluded.updated_at;
+                """,
+                (key, value, now),
+            )
+
+    def get_session_state(self, key: str, default: str = "") -> str:
+        """Retrieve dynamic player session state variable."""
+        with self._get_connection() as conn:
+            cursor = conn.execute(
+                "SELECT value FROM player_session_state WHERE key = ?;",
+                (key,),
+            )
+            row = cursor.fetchone()
+            return str(row["value"]) if row else default
 
     def seed_targets(self, targets: Sequence[TargetDefinition]) -> None:
         """Seed target registry without overriding existing hit counts."""

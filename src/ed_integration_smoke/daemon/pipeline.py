@@ -91,6 +91,40 @@ class TelemetryPipeline:
             self._event_sample_counts[event_name] = current_count + 1
             self._event_seen_keysets[event_name].add(payload_keys)
 
+        # Continually track player flight state independently of raw exemplar quotas
+        if event_name in ("ShipyardSwap", "ShipyardBuy", "ShipyardNew"):
+            ship = (
+                payload.get("ShipType_Localised")
+                or payload.get("ShipType")
+                or payload.get("Ship")
+            )
+            if ship:
+                self.storage.set_session_state("active_ship_type", str(ship))
+        elif event_name == "Loadout":
+            ship = payload.get("Ship")
+            ship_name = payload.get("ShipName", "")
+            if ship:
+                self.storage.set_session_state("active_ship_type", str(ship))
+            if ship_name:
+                self.storage.set_session_state("active_ship_name", str(ship_name))
+        elif event_name in ("Location", "FSDJump", "Docked", "SupercruiseEntry"):
+            sys_name = payload.get("StarSystem")
+            st_name = payload.get("StationName")
+            body_name = payload.get("Body")
+            if sys_name:
+                self.storage.set_session_state("active_system", str(sys_name))
+            if st_name is not None:
+                self.storage.set_session_state("active_station", str(st_name))
+            if body_name is not None:
+                self.storage.set_session_state("active_body", str(body_name))
+        elif event_name == "CarrierStats":
+            c_name = payload.get("Name")
+            c_call = payload.get("Callsign")
+            if c_name:
+                self.storage.set_session_state("carrier_name", str(c_name))
+            if c_call:
+                self.storage.set_session_state("carrier_callsign", str(c_call))
+
         try:
             hydrated = self.facade.parse_journal_event(payload)
             # Flag fallback to generic base JournalEvent as uncataloged mismatch
