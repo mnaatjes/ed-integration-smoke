@@ -112,12 +112,47 @@ def create_itinerary_queue_table(steps: list[ItineraryStep]) -> Panel:
     )
 
 
+def create_recent_achieved_panel(storage: TelemetryStorageEngine) -> Panel:
+    """Render list of most recently completed targets for immediate confirmation."""
+    with storage._get_connection() as conn:
+        cursor = conn.execute(
+            """
+            SELECT target_id, chapter, last_seen_at FROM target_coverage
+            WHERE hit_count > 0 AND last_seen_at IS NOT NULL
+              AND target_id NOT IN ('Status', 'IN_MAIN_SHIP', 'SHIELDS_UP', 'LIGHTS_ON')
+            ORDER BY last_seen_at DESC LIMIT 4
+            """
+        )
+        recent = cursor.fetchall()
+
+    table = Table(box=None, expand=True, show_header=False, pad_edge=False)
+    table.add_column("Status", width=4)
+    table.add_column("Target", style="bold green", width=22)
+    table.add_column("Chapter", style="cyan", width=14)
+    table.add_column("Time", style="dim", ratio=1)
+
+    for row in recent:
+        seen = str(row["last_seen_at"])
+        ts = seen.split("T")[-1].split(".")[0] if "T" in seen else ""
+        table.add_row("✔", row["target_id"], row["chapter"], ts)
+
+    return Panel(
+        table,
+        title="[bold green]Recent Target Completions[/bold green]",
+        border_style="green",
+    )
+
+
 def make_layout() -> Layout:
     layout = Layout(name="root")
     layout.split_column(
         Layout(name="header", size=4),
         Layout(name="active_objective", size=9),
-        Layout(name="queue", ratio=1),
+        Layout(name="lower", ratio=1),
+    )
+    layout["lower"].split_row(
+        Layout(name="queue", ratio=3),
+        Layout(name="recent", ratio=2),
     )
     return layout
 
@@ -155,6 +190,7 @@ async def run_copilot(db_path: Path) -> None:
                     create_active_objective_panel(current_step, step_idx, total_steps)
                 )
                 layout["queue"].update(create_itinerary_queue_table(steps))
+                layout["recent"].update(create_recent_achieved_panel(storage))
 
                 await asyncio.sleep(0.5)
         finally:

@@ -306,19 +306,23 @@ class ItineraryPlanner:
                 except json.JSONDecodeError:
                     pass
 
-            # 3. Ship Loadout
-            row_loadout = conn.execute(
+            # 3. Active Ship Resolution (Loadout or ShipyardSwap)
+            row_ship = conn.execute(
                 """
-                SELECT payload_json FROM raw_journal_events
-                WHERE event_name = 'Loadout'
+                SELECT event_name, payload_json FROM raw_journal_events
+                WHERE event_name IN ('Loadout', 'ShipyardSwap', 'ShipyardBuy', 'ShipyardNew')
                 ORDER BY id DESC LIMIT 1
                 """
             ).fetchone()
-            if row_loadout:
+            if row_ship:
                 try:
-                    data_l = json.loads(row_loadout["payload_json"])
-                    ship_type = data_l.get("Ship", ship_type)
-                    ship_name = data_l.get("ShipName", ship_name)
+                    data_s = json.loads(row_ship["payload_json"])
+                    ship_type = (
+                        data_s.get("ShipType_Localised")
+                        or data_s.get("ShipType")
+                        or data_s.get("Ship", ship_type)
+                    )
+                    ship_name = data_s.get("ShipName", "")
                 except json.JSONDecodeError:
                     pass
 
