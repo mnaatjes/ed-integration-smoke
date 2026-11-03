@@ -179,18 +179,18 @@ def test_exemplar_reservoir_gating(
     storage: TelemetryStorageEngine
 ) -> None:
     pipeline = TelemetryPipeline(storage=storage, max_exemplars_per_event=2)
-    base_payload = {
-        "timestamp": "2026-11-02T00:00:00Z",
-        "event": "Music",
-        "MusicTrack": "NoTrack",
-    }
 
     # Packet 1 (sample 1 of 2) -> persisted
-    pipeline.process_envelope(base_payload)
+    p1 = {"timestamp": "2026-11-02T00:00:01Z", "event": "Music", "MusicTrack": "NoTrack"}
+    pipeline.process_envelope(p1)
+
     # Packet 2 (sample 2 of 2) -> persisted
-    pipeline.process_envelope(base_payload)
+    p2 = {"timestamp": "2026-11-02T00:00:02Z", "event": "Music", "MusicTrack": "NoTrack"}
+    pipeline.process_envelope(p2)
+
     # Packet 3 (quota exceeded, identical schema keys) -> not persisted
-    pipeline.process_envelope(base_payload)
+    p3 = {"timestamp": "2026-11-02T00:00:03Z", "event": "Music", "MusicTrack": "NoTrack"}
+    pipeline.process_envelope(p3)
 
     with storage._get_connection() as conn:
         cursor = conn.execute(
@@ -200,7 +200,12 @@ def test_exemplar_reservoir_gating(
     assert count == 2
 
     # Packet 4 (quota exceeded, but NOVEL schema key present) -> persisted as new exemplar
-    novel_payload = dict(base_payload, ExtraDiagnosticField="NewValue")
+    novel_payload = {
+        "timestamp": "2026-11-02T00:00:04Z",
+        "event": "Music",
+        "MusicTrack": "NoTrack",
+        "ExtraDiagnosticField": "NewValue",
+    }
     pipeline.process_envelope(novel_payload)
 
     with storage._get_connection() as conn:
@@ -210,7 +215,7 @@ def test_exemplar_reservoir_gating(
         count_after_novel = cursor.fetchone()[0]
     assert count_after_novel == 3
 
-    # All 4 packets still contributed to target hit count
+    # All 4 distinct packets contributed to target hit count
     summary = storage.get_coverage_summary()
     assert summary["total_hits"] >= 4
 

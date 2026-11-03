@@ -194,7 +194,8 @@ async def run_harness(
             pass
 
     processed_count = 0
-    last_event_id = 0
+    # Resume watermark from session state to prevent historical replay across restarts
+    last_event_id = int(storage.get_session_state("last_ingested_event_id", "0"))
     is_connected = False
     events_log: deque[tuple[str, str, str]] = deque(maxlen=25)
     audit_log: deque[tuple[str, str, str]] = deque(maxlen=15)
@@ -238,7 +239,9 @@ async def run_harness(
                 event_tuples = await client.fetch_recent_events(since_id=last_event_id)
                 for item_id, event_payload in event_tuples:
                     is_connected = True
-                    last_event_id = max(last_event_id, item_id)
+                    if item_id > last_event_id:
+                        last_event_id = item_id
+                        storage.set_session_state("last_ingested_event_id", str(last_event_id))
                     res = pipeline.process_envelope(event_payload)
                     processed_count += 1
 

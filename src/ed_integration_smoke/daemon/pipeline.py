@@ -34,6 +34,7 @@ class TelemetryPipeline:
         self._last_status_signature: tuple[int, int, int, str] | None = None
         self._event_sample_counts: dict[str, int] = defaultdict(int)
         self._event_seen_keysets: dict[str, set[frozenset[str]]] = defaultdict(set)
+        self._last_seen_event_timestamps: dict[str, str] = {}
 
     def process_envelope(self, payload: dict[str, Any]) -> ProcessingResult:
         """Process an arbitrary incoming telemetry or journal event payload."""
@@ -150,7 +151,13 @@ class TelemetryPipeline:
                     is_mismatch=True,
                 )
 
-            self.storage.record_target_hit(event_name)
+            # De-duplicate target hits if identical historical event is re-read
+            event_ts = str(payload.get("timestamp", ""))
+            if not event_ts or self._last_seen_event_timestamps.get(event_name) != event_ts:
+                self.storage.record_target_hit(event_name)
+                if event_ts:
+                    self._last_seen_event_timestamps[event_name] = event_ts
+
             logger.debug("Successfully hydrated journal event: %s", event_name)
             return ProcessingResult(
                 success=True,
