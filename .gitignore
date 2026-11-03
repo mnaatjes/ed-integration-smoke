@@ -51,3 +51,7 @@ reports/
 Thumbs.db
 .idea/
 .vscode/
+
+# Local database and domain mismatch telemetry artifacts
+data/
+
