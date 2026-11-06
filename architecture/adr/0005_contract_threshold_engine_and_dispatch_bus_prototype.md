@@ -2,13 +2,13 @@
 title: "ADR 0005: Contract Threshold Engine and Event Bus Prototype"
 tags: ["adr", "telemetry", "architecture", "eddn", "ed-schema", "event-bus", "accumulator", "throttling"]
 created_at: "2026-11-03"
-last_updated_at: "2026-11-03"
+last_updated_at: "2026-11-06"
 ---
 
 # ADR 0005: Contract Threshold Engine and Event Bus Prototype
 
 * Status: Accepted
-* Date: 2026-11-03
+* Date: 2026-11-03 (Updated 2026-11-06)
 
 ## Context and Problem Statement
 
@@ -23,11 +23,12 @@ Furthermore:
 1. Target APIs require self-regulation: redundant or rapid duplicate packages (e.g., repeatedly opening station services while docked) must be throttled.
 2. The system requires an event bus to observe when thresholds are met, when packages are dispatched, or when payloads fail validation without tightly coupling network transport to ingestion.
 3. Optional schema properties (e.g., coordinates, body names, game versions) must be opportunistically collected from the ambient state without blocking dispatch.
+4. When `AmbientTelemetryFacade` (ADR 0004) operates in an unseeded cold-start scenario, its getters may return `None`. The accumulator must perform explicit null checks to differentiate between missing data that can be siphoned vs. unhydrated state requiring staging buffers to hold.
 
 ## Decision Drivers
 
 * **Schema-Driven Threshold Detection:** Leverage `ed-schema` data models and JSON Schema introspection to detect when all required properties for a target contract are fulfilled.
-* **Ambient Context Siphoning:** Missing required and optional properties must be opportunistically hydrated from the Ambient Telemetry Facade (ADR 0004).
+* **Ambient Context Siphoning with Null Gating:** Missing required and optional properties must be opportunistically hydrated from `AmbientTelemetryFacade` (ADR 0004), safely handling nullable returns (`Snapshot | None`).
 * **Self-Regulation and Deduplication:** Implement semantic hashing and cooldown guards to prevent spamming destination endpoints.
 * **Decoupled Observability:** Provide a lightweight, typed Pub/Sub event bus allowing audit loggers, UI visualizers, and network dispatchers to monitor the lifecycle of outbound packages.
 * **Prototype Sandbox Boundary:** Evaluate the engine within `ed-integration-smoke` before permanent architectural placement across `ed-schema`, `ed-transport`, or an upstream dispatch daemon.
@@ -50,13 +51,14 @@ Chosen option: **Option 3: Contract Threshold Accumulator with Event Bus**.
                                   +---------------------------------------+
                                                       |
                                                       | (Opportunistic Context Siphon)
+                                                      | [Explicit Null Checks]
                                                       v
 +------------------------+        +-----------------------------------------------+
 | Ingress Event Stream   | -----> |       Contract Threshold Accumulator          |
 | (Market, Outfitting,   |        |                                               |
 |  Journal Events)       |        |  1. Introspect Target Contract (ed-schema)   |
 +------------------------+        |  2. Check Required Fields Fulfillment         |
-                                  |  3. Siphon Missing Context from Facade        |
+                                  |  3. Siphon Context if Snapshot != None        |
                                   |  4. Validate Payload against Target Schema    |
                                   +-----------------------------------------------+
                                                       |
@@ -93,11 +95,14 @@ Each API target contract (e.g., `CommodityV3Contract`, `OutfittingV2Contract`, `
 * `required_properties`: Property keys strictly required before dispatch is permissible.
 * `optional_properties`: Property keys to query opportunistically from `AmbientTelemetryFacade` (e.g., `star_pos`, `system_address`, `body`).
 
-#### 2. Threshold Fulfillment & Context Siphoning
+#### 2. Threshold Fulfillment, Context Siphoning & Null Gating
 Upon receiving a trigger event:
 1. The accumulator stores the event payload in the active contract staging buffer.
 2. It evaluates missing required fields.
-3. If missing fields match ambient properties provided by `AmbientTelemetryFacade` (`get_location()`, `get_vessel()`), the accumulator pulls those values into the buffer.
+3. If missing fields can be satisfied by `AmbientTelemetryFacade` (`get_location()`, `get_vessel()`):
+   * The accumulator queries the facade.
+   * **Explicit Null Check:** If the facade returns `None` (unseeded cold start), the required properties remain unfulfilled. The buffer holds the package in staging until an incoming milestone event hydrates the facade.
+   * If the facade returns a valid snapshot, properties are extracted (`star_pos = snapshot.coordinates`, `system_address = snapshot.system_address`) and merged into the buffer.
 4. When all `required_properties` are populated, the payload is instantiated and validated against `target_schema_cls`.
 
 #### 3. Deduplication and Rate Guard
@@ -118,8 +123,9 @@ A typed in-memory event bus broadcasts the complete lifecycle of outbound packag
 * Fully eliminates premature transmission of incomplete telemetry to external APIs.
 * Integrates `ed-schema` models directly as the authoritative validation gate.
 * Solves the missing coordinate problem without requiring continuous coupling between journal events.
+* Safe handling of cold-start unseeded windows via explicit null gating against ADR 0004 getters.
 * Provides full observability into outbound data dispatch via the event bus.
 
 ### Negative / Trade-offs
-* If a player docks at an outpost without system coordinates previously emitted in the current session, dispatch must wait until an ambient location event is received or proceed with coordinates omitted (if optional).
-* Memory management: Staging buffers must have TTL expiry to avoid unbounded growth if a required property is never emitted.
+* If a player docks at an outpost without system coordinates previously emitted in the current session and backward journal scan yields no milestones, dispatch is held until an ambient location event is received or proceeds with coordinates omitted (if optional).
+* Memory management: Staging buffers must enforce TTL eviction to avoid unbounded growth if a required property is never emitted.
