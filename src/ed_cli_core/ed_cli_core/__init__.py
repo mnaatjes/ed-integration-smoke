@@ -18,6 +18,7 @@ from .options import (
     TelemetryServerParams,
     VerboseOption,
 )
+from .snapshots import SnapshotTarget, render_snapshot_tables
 from .tail import TailEventLine, TailLineFormatter
 from .tui import BaseTelemetryTUIApp, MetricCardWidget
 
@@ -32,6 +33,7 @@ __all__ = [
     "OutputFormat",
     "PortOption",
     "SingleScreenDashboard",
+    "SnapshotTarget",
     "TailEventLine",
     "TailLineFormatter",
     "TelemetryServerParams",
@@ -40,4 +42,5 @@ __all__ = [
     "render_connection_pill",
     "render_key_value_table",
     "render_metric_grid",
+    "render_snapshot_tables",
 ]
