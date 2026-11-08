@@ -142,19 +142,27 @@ def render_market_table(payload: dict[str, Any], limit: int = 50) -> Table:
 
 def render_shipyard_table(payload: dict[str, Any]) -> Table:
     """Render shipyard ships catalog and pricing."""
-    station = payload.get("StationName", "Unknown Station")
-    system = payload.get("StarSystem", "Unknown System")
+    station = str(payload.get("StationName", "Unknown Station"))
+    system = str(payload.get("StarSystem", "Unknown System"))
     price_list = payload.get("PriceList", [])
 
+    # Fleet carriers typically use 3-alphanumeric dash 3-alphanumeric
+    # registration callsigns (e.g. V4X-N6J)
+    import re
+
+    is_carrier = bool(re.fullmatch(r"[A-Z0-9]{3}-[A-Z0-9]{3}", station.strip()))
+    context_desc = "Stored Ships & Valuations" if is_carrier else "Ships for Sale"
+    price_col_header = "Ship Valuation (CR)" if is_carrier else "Base Price (CR)"
+
     table = Table(
-        title=f"Shipyard: {station} ({system}) - {len(price_list)} Ships for Sale",
+        title=f"Shipyard: {station} ({system}) - {len(price_list)} {context_desc}",
         border_style="bright_blue",
         header_style="bold bright_blue",
         show_lines=False,
     )
     table.add_column("Ship Model", style="bold white")
     table.add_column("Type ID", style="dim white")
-    table.add_column("Base Price (CR)", justify="right", style="bold yellow")
+    table.add_column(price_col_header, justify="right", style="bold yellow")
 
     for ship in sorted(price_list, key=lambda s: int(s.get("ShipPrice", 0)), reverse=True):
         name = ship.get("ShipType_Localised") or ship.get("ShipType", "")
