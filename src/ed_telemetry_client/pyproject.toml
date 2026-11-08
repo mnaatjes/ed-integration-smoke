@@ -1,0 +1,13 @@
+[project]
+name = "ed-telemetry-client"
+version = "0.1.0"
+description = "Reusable ed-transport client and metadata hydration middleware for ed-telemetry REST endpoints"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ed-transport",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
