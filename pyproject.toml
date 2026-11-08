@@ -1,44 +1,48 @@
 [project]
 name = "ed-integration-smoke"
-version = "0.1.0"
+version = "0.2.0"
 description = "Fleet-wide integration, smoke testing, and experimental harness for Elite Dangerous libraries"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "ed-schema",
     "ed-transport",
     "ed-models",
+    "ed-resolver",
+    "ed-telemetry",
     "rich>=13.0.0",
-    "plotext>=5.2.8,<6.0.0",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0.0",
-    "ruff>=0.7.3",
-    "mypy>=1.13.0",
-    "jsonschema>=4.20.0",
-    "types-jsonschema>=4.20.0",
-]
+[tool.uv.workspace]
+members = ["src/*"]
 
 [tool.uv.sources]
 ed-schema = { git = "https://github.com/mnaatjes/ed-schema.git", tag = "v1.1.0" }
-ed-transport = { git = "https://github.com/mnaatjes/ed-transport.git", branch = "main" }
-ed-models = { git = "https://github.com/mnaatjes/ed-models.git", tag = "v0.2.1" }
+ed-transport = { git = "https://github.com/mnaatjes/ed-transport.git", tag = "v0.1.0" }
+ed-models = { git = "https://github.com/mnaatjes/ed-models.git", rev = "v0.2.1" }
+ed-resolver = { git = "https://github.com/mnaatjes/ed-resolver.git", tag = "v0.2.0" }
+ed-telemetry = { git = "https://github.com/mnaatjes/ed-telemetry.git", tag = "v0.9.0" }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.7.3",
+    "mypy>=1.13.0",
+]
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py313"
+exclude = [
+    "generated_dtos",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = [".", "src"]
-
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 strict = true
 warn_unused_configs = true
 
@@ -50,8 +54,9 @@ module = [
     "ed_transport",
     "ed_models.*",
     "ed_models",
-    "plotext",
-    "plotext.*",
+    "ed_resolver.*",
+    "ed_resolver",
+    "ed_telemetry.*",
+    "ed_telemetry",
 ]
 ignore_missing_imports = true
-

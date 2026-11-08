@@ -1,7 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://spansh.co.uk/schemas/valuemapping#",
-  "title": "SpanshValueMapping",
-  "description": "Spansh ValueMapping contract.",
-  "type": "object"
-}
