@@ -135,8 +135,26 @@ def main(
                     continue
 
                 # Check for duplicate payload hash if no ETag
-                payload_raw = response_dto.raw_payload
-                current_hash = hashlib.sha256(payload_raw).hexdigest()[:16]
+                if isinstance(response_dto.data, dict):
+                    content_key = (
+                        response_dto.data.get("raw_hash")
+                        or response_dto.data.get("event_id")
+                        or response_dto.data.get("state_sequence")
+                    )
+                    if content_key is not None:
+                        current_hash = str(content_key)
+                    else:
+                        stable_dict = {
+                            k: v
+                            for k, v in response_dto.data.items()
+                            if k not in ("created_at", "timestamp")
+                        }
+                        current_hash = hashlib.sha256(
+                            json.dumps(stable_dict, sort_keys=True).encode()
+                        ).hexdigest()[:16]
+                else:
+                    current_hash = hashlib.sha256(response_dto.raw_payload).hexdigest()[:16]
+
                 if follow_deltas_only and last_etag is None and current_hash == last_payload_hash:
                     time.sleep(interval)
                     continue
