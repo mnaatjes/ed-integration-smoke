@@ -77,20 +77,36 @@ class TailLineFormatter:
         if event.latency_ms is not None:
             row.append(f" ({event.latency_ms:.1f}ms)", style="dim green")
 
-        # Inline summary of top attributes if payload is a dict
-        if isinstance(event.payload, Mapping):
-            summaries: list[str] = []
-            for k, v in list(event.payload.items())[:4]:
-                if k in ("event", "timestamp"):
-                    continue
-                summaries.append(f"{k}={v}")
-            if summaries:
-                row.append(f"  [{', '.join(summaries)}]", style="dim italic")
-        elif isinstance(event.payload, str) and event.payload:
-            clean_str = event.payload.strip().replace("\n", " ")
-            if len(clean_str) > 60:
-                clean_str = f"{clean_str[:57]}..."
-            row.append(f"  {clean_str}", style="dim")
+        # Suppress inline preview if expand_json is active
+        if not self.expand_json:
+            if isinstance(event.payload, Mapping):
+                summaries: list[str] = []
+                for k, v in event.payload.items():
+                    if k in ("event", "timestamp", "payload_json", "raw_payload", "created_at"):
+                        continue
+                    if isinstance(v, (str, int, float, bool)) or v is None:
+                        val_str = str(v)
+                        if len(val_str) > 30:
+                            val_str = f"...{val_str[-27:]}"
+                        summaries.append(f"{k}={val_str}")
+                    elif isinstance(v, Mapping):
+                        if "event" in v:
+                            summaries.append(f"{k}={v['event']}")
+                        elif "exists" in v:
+                            mode = "live" if v.get("is_live_session") else "idle"
+                            summaries.append(f"{k}={mode}")
+                        else:
+                            summaries.append(f"{k}={len(v)}")
+                    if len(summaries) >= 4:
+                        break
+
+                if summaries:
+                    row.append(f"  [{', '.join(summaries)}]", style="dim italic")
+            elif isinstance(event.payload, str) and event.payload:
+                clean_str = event.payload.strip().replace("\n", " ")
+                if len(clean_str) > 60:
+                    clean_str = f"{clean_str[:57]}..."
+                row.append(f"  {clean_str}", style="dim")
 
         if not self.expand_json or not isinstance(event.payload, Mapping):
             return row
