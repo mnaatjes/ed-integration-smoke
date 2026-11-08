@@ -12,6 +12,7 @@ dependencies = [
     "ed-telemetry",
     "ed-telemetry-client",
     "ed-cli-core",
+    "ed-hydrator",
     "rich>=13.0.0",
     "typer>=0.15.0",
     "textual>=1.0.0",
@@ -21,6 +22,7 @@ dependencies = [
 members = ["src/*"]
 
 [tool.uv.sources]
+ed-hydrator = { workspace = true }
 ed-cli-core = { workspace = true }
 ed-telemetry-client = { workspace = true }
 ed-schema = { git = "https://github.com/mnaatjes/ed-schema.git", tag = "v1.1.0" }
