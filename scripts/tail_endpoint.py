@@ -7,7 +7,7 @@ import hashlib
 import json
 import time
 from datetime import UTC, datetime
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 from rich.console import Console
@@ -144,11 +144,18 @@ def main(
                     if content_key is not None:
                         current_hash = str(content_key)
                     else:
-                        stable_dict = {
-                            k: v
-                            for k, v in response_dto.data.items()
-                            if k not in ("created_at", "timestamp")
-                        }
+                        def _strip_transient(obj: Any) -> Any:
+                            if isinstance(obj, dict):
+                                return {
+                                    k: _strip_transient(v)
+                                    for k, v in obj.items()
+                                    if k not in ("created_at", "timestamp")
+                                }
+                            if isinstance(obj, list):
+                                return [_strip_transient(item) for item in obj]
+                            return obj
+
+                        stable_dict = _strip_transient(response_dto.data)
                         current_hash = hashlib.sha256(
                             json.dumps(stable_dict, sort_keys=True).encode()
                         ).hexdigest()[:16]
