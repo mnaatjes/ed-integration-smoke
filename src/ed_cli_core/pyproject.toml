@@ -1,0 +1,15 @@
+[project]
+name = "ed-cli-core"
+version = "0.1.0"
+description = "Modular CLI & TUI library framework using Typer, Rich, and Textual for Elite Dangerous inspection tools"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "typer>=0.15.0",
+    "rich>=13.0.0",
+    "textual>=1.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
