@@ -94,7 +94,7 @@ class TelemetryStreamMonitor:
         Optionally filters deltas by target filename (e.g. {"ModulesInfo.json", "Status.json"}).
         """
         normalized_targets: set[str] | None = (
-            {t.lower().removesuffix(".json") for t in filter_targets}
+            {t.lower().removesuffix(".json").removesuffix(".log") for t in filter_targets}
             if filter_targets is not None
             else None
         )
@@ -105,8 +105,13 @@ class TelemetryStreamMonitor:
 
             target_name = msg.data.get("target", "")
             if normalized_targets is not None:
-                norm_name = target_name.lower().removesuffix(".json")
-                if norm_name not in normalized_targets:
+                norm_name = target_name.lower().removesuffix(".json").removesuffix(".log")
+                # Direct match or generic 'journal' match against Journal.*.log
+                is_match = (
+                    norm_name in normalized_targets
+                    or ("journal" in normalized_targets and target_name.startswith("Journal."))
+                )
+                if not is_match:
                     continue
 
             yield FileDeltaDTO.from_dict(msg.data)

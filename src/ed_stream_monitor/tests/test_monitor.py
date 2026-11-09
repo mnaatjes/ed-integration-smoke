@@ -50,6 +50,25 @@ def test_listen_deltas_parses_stream_and_filters() -> None:
         assert deltas[0].raw_hash == "hash123"
 
 
+def test_listen_deltas_handles_journal_rollover() -> None:
+    chunk = (
+        b'data: {"topic":"telemetry.file_delta","target":"Journal.2026-11-09T010000.02.log",'
+        b'"action":"rollover","raw_hash":"","timestamp":"2026-11-09T03:45:00Z"}\n\n'
+    )
+    sample_stream = io.BytesIO(chunk)
+    monitor = TelemetryStreamMonitor()
+
+    with patch("ed_stream_monitor.monitor.urlopen") as mock_urlopen:
+        mock_resp = MagicMock()
+        mock_resp.__enter__.return_value = sample_stream
+        mock_urlopen.return_value = mock_resp
+
+        deltas = list(monitor.listen_deltas(filter_targets={"journal"}))
+        assert len(deltas) == 1
+        assert deltas[0].target == "Journal.2026-11-09T010000.02.log"
+        assert deltas[0].action == "rollover"
+
+
 def test_listen_raw_parses_messages() -> None:
     line = (
         b'data: {"topic":"telemetry.journal","timestamp":"2026-11-09T00:20:00Z",'

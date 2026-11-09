@@ -71,10 +71,16 @@ def main(
         for delta in monitor.listen_deltas(filter_targets=filter_set):
             line = Text()
             line.append(f"[{delta.timestamp.strftime('%H:%M:%S.%f')[:-3]}] ", style="dim")
-            line.append(" DELTA ", style="bold black on bright_yellow")
-            line.append(f" {delta.target:22} ", style="bold white")
+            if delta.action == "rollover":
+                line.append(" ROLLOVER ", style="bold black on bright_magenta")
+            elif delta.action == "created":
+                line.append(" CREATED  ", style="bold black on bright_cyan")
+            else:
+                line.append(" DELTA    ", style="bold black on bright_yellow")
+            line.append(f" {delta.target:32} ", style="bold white")
             line.append(f"({delta.action}) ", style="cyan")
-            line.append(f"hash={delta.raw_hash[:16]}", style="dim green")
+            if delta.raw_hash:
+                line.append(f"hash={delta.raw_hash[:16]}", style="dim green")
             console.print(line)
     except KeyboardInterrupt:
         console.print("\n[yellow]Terminated stream monitor.[/yellow]")
