@@ -147,7 +147,7 @@ def test_telemetry_http_client_convenience_endpoints() -> None:
 
     # 3. Status
     client.get_status()
-    assert mock_transport.get.call_args.kwargs["url"] == "http://192.168.1.214:8080/api/v1/status/game"
+    assert mock_transport.get.call_args.kwargs["url"] == "http://192.168.1.214:8080/api/v1/status"
 
     # 4. Snapshots map
     client.get_snapshots()
@@ -166,6 +166,38 @@ def test_telemetry_http_client_convenience_endpoints() -> None:
         mock_transport.get.call_args.kwargs["url"]
         == "http://192.168.1.214:8080/api/v1/journal/latest"
     )
+
+    # 7. Journal events query
+    client.get_journal_events(topic="FSDJump", limit=50)
+    assert (
+        mock_transport.get.call_args.kwargs["url"]
+        == "http://192.168.1.214:8080/api/v1/journal/events"
+    )
+    assert mock_transport.get.call_args.kwargs["params"] == {
+        "limit": "50",
+        "order": "asc",
+        "topic": "FSDJump",
+    }
+
+    # 8. Unified events query
+    client.query_events(topic="telemetry.file_delta", limit=20)
+    assert (
+        mock_transport.get.call_args.kwargs["url"]
+        == "http://192.168.1.214:8080/api/v1/events/query"
+    )
+    assert mock_transport.get.call_args.kwargs["params"] == {
+        "limit": "20",
+        "order": "asc",
+        "topic": "telemetry.file_delta",
+    }
+
+    # 9. Drain events queue
+    client.drain_events_queue(limit=10)
+    assert (
+        mock_transport.get.call_args.kwargs["url"]
+        == "http://192.168.1.214:8080/api/v1/events/queue"
+    )
+    assert mock_transport.get.call_args.kwargs["params"] == {"limit": "10"}
 
 
 def test_middleware_handles_non_json_cleanly() -> None:

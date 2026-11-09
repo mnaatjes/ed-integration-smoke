@@ -21,7 +21,7 @@ from ed_telemetry_client import TelemetryConnectionConfig, TelemetryHttpClient
 
 app = typer.Typer(
     name="watch-file-deltas",
-    help="Monitor real-time telemetry.file_delta notifications across /api/v1/stream.",
+    help="Monitor real-time telemetry.file_delta notifications across /api/v1/events/stream.",
     add_completion=False,
 )
 console = Console()

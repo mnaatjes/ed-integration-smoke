@@ -21,7 +21,7 @@ class TelemetryStreamMonitor:
     def __init__(
         self,
         config: TelemetryConnectionConfig | None = None,
-        stream_path: str = "/api/v1/stream",
+        stream_path: str = "/api/v1/events/stream",
     ) -> None:
         self.config = config or TelemetryConnectionConfig()
         self.stream_path = stream_path

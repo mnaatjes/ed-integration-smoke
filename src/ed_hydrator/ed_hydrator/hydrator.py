@@ -178,7 +178,13 @@ class TelemetryDomainHydrator:
     def hydrate_response(
         self,
         response_dto: TelemetryResponseDTO[Any],
-    ) -> HydratedTelemetryState | HydratedEventRecord | StatusTelemetry | None:
+    ) -> (
+        HydratedTelemetryState
+        | HydratedEventRecord
+        | tuple[HydratedEventRecord, ...]
+        | StatusTelemetry
+        | None
+    ):
         """Universal dispatcher inspecting response metadata plane and hydrating appropriately."""
         plane = getattr(response_dto.metadata, "plane", None)
         plane_str = getattr(plane, "value", str(plane))
@@ -189,7 +195,26 @@ class TelemetryDomainHydrator:
         if plane_str == "status":
             return self.hydrate_status(response_dto.data)
 
-        if plane_str == "journal":
+        # Handle list of events (from /journal/events or /events/query)
+        if isinstance(response_dto.data, (list, tuple)):
+            records: list[HydratedEventRecord] = []
+            for item in response_dto.data:
+                if isinstance(item, Mapping):
+                    ev = self.hydrate_event(item)
+                    if ev is not None:
+                        records.append(
+                            HydratedEventRecord(
+                                event_id=item.get("event_id") or item.get("id"),
+                                topic=str(item.get("topic", "telemetry.journal")),
+                                timestamp=item.get("timestamp", ""),
+                                event=ev,
+                                raw_hash=item.get("raw_hash"),
+                                metadata=response_dto.metadata,
+                            )
+                        )
+            return tuple(records)
+
+        if plane_str in ("journal", "events"):
             event = self.hydrate_event(response_dto.data)
             if event is None:
                 return None
@@ -219,3 +244,4 @@ class TelemetryDomainHydrator:
                     )
 
         return None
+

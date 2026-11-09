@@ -37,7 +37,7 @@ class FileDeltaDTO:
 
 @dataclass(frozen=True, slots=True)
 class StreamMessageDTO:
-    """Generic envelope for any message emitted across /api/v1/stream."""
+    """Generic envelope for any message emitted across /api/v1/events/stream."""
 
     topic: str
     timestamp: datetime

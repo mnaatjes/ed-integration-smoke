@@ -23,6 +23,11 @@ def test_file_delta_dto_from_dict() -> None:
     assert dto.timestamp.year == 2026
 
 
+def test_monitor_default_stream_url() -> None:
+    monitor = TelemetryStreamMonitor()
+    assert monitor.stream_url == "http://192.168.1.214:8080/api/v1/events/stream"
+
+
 def test_listen_deltas_parses_stream_and_filters() -> None:
     chunk1 = b'data: {"event":"connected"}\n\n'
     chunk2 = b'data: {"topic":"telemetry.journal","payload":"{\\"event\\":\\"Docked\\"}"}\n\n'

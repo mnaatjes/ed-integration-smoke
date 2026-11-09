@@ -91,8 +91,8 @@ class TelemetryHttpClient:
         return self.request("/api/v1/state/heartbeat", if_none_match=if_none_match)
 
     def get_status(self) -> TelemetryResponseDTO[Any]:
-        """Retrieves cockpit game status from GET /api/v1/status/game."""
-        return self.request("/api/v1/status/game")
+        """Retrieves cockpit game status from GET /api/v1/status."""
+        return self.request("/api/v1/status")
 
     def get_snapshots(self) -> TelemetryResponseDTO[Any]:
         """Retrieves all registered snapshots map from GET /api/v1/snapshots."""
@@ -105,6 +105,40 @@ class TelemetryHttpClient:
     def get_latest_journal(self) -> TelemetryResponseDTO[Any]:
         """Retrieves latest journal event from GET /api/v1/journal/latest."""
         return self.request("/api/v1/journal/latest")
+
+    def get_journal_events(
+        self,
+        topic: str | None = None,
+        since_id: int | None = None,
+        limit: int = 100,
+        order: str = "asc",
+    ) -> TelemetryResponseDTO[Any]:
+        """Queries historical Frontier journal events from GET /api/v1/journal/events."""
+        params: dict[str, str] = {"limit": str(limit), "order": order}
+        if topic is not None:
+            params["topic"] = topic
+        if since_id is not None:
+            params["since_id"] = str(since_id)
+        return self.request("/api/v1/journal/events", params=params)
+
+    def query_events(
+        self,
+        topic: str | None = None,
+        since_id: int | None = None,
+        limit: int = 100,
+        order: str = "asc",
+    ) -> TelemetryResponseDTO[Any]:
+        """Queries the unified multi-topic event store from GET /api/v1/events/query."""
+        params: dict[str, str] = {"limit": str(limit), "order": order}
+        if topic is not None:
+            params["topic"] = topic
+        if since_id is not None:
+            params["since_id"] = str(since_id)
+        return self.request("/api/v1/events/query", params=params)
+
+    def drain_events_queue(self, limit: int = 100) -> TelemetryResponseDTO[Any]:
+        """Drains uncommitted events from outbound ring buffer via GET /api/v1/events/queue."""
+        return self.request("/api/v1/events/queue", params={"limit": str(limit)})
 
     def get_system_health(self) -> TelemetryResponseDTO[Any]:
         """Retrieves service health status from GET /api/v1/system/health."""
