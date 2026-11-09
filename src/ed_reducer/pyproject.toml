@@ -1,0 +1,13 @@
+[project]
+name = "ed-reducer"
+version = "0.1.0"
+description = "Pure-functional event-driven state reducer engine for materialized Elite Dangerous telemetry projections"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ed-models",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
