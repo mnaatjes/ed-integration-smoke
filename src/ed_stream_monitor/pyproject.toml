@@ -1,0 +1,14 @@
+[project]
+name = "ed-stream-monitor"
+version = "0.1.0"
+description = "Client-side SSE streaming monitor and file-delta event tracker for ed-telemetry"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ed-transport",
+    "ed-telemetry-client",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
