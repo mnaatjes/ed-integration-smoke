@@ -13,6 +13,7 @@ from typing import Any, TypeVar
 
 from ed_hydrator.hydrator import TelemetryDomainHydrator
 from ed_models import JournalEvent, StatusTelemetry
+from ed_services.navigation import NavigationService
 
 from ed_dispatcher import DispatchResult, EventHandler, Subscription, TelemetryEventDispatcher
 from ed_reducer import ClientStateProjection, TelemetryStateEngine
@@ -51,6 +52,12 @@ class EliteDangerousClient:
         self._hydrator = TelemetryDomainHydrator()
         self._state_engine = TelemetryStateEngine()
         self._dispatcher = TelemetryEventDispatcher()
+
+        # Mount Domain Services
+        self.nav = NavigationService(
+            state_accessor=lambda: self.state,
+            dispatcher=self._dispatcher,
+        )
 
         # Lifecycle synchronization
         self._running = False

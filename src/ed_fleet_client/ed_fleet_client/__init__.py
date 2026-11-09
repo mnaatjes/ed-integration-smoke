@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from ed_services.models import NavBearingUpdated, NavDistanceUpdated
+
 from ed_dispatcher import DispatchResult, EventHandler, Subscription
 from ed_reducer import (
     ClientStateProjection,
@@ -18,6 +20,8 @@ __all__ = [
     "EliteDangerousClient",
     "EventHandler",
     "LocationProjection",
+    "NavBearingUpdated",
+    "NavDistanceUpdated",
     "SessionProjection",
     "ShipProjection",
     "Subscription",

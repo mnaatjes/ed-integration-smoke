@@ -17,6 +17,7 @@ dependencies = [
     "ed-reducer",
     "ed-dispatcher",
     "ed-fleet-client",
+    "ed-services",
     "rich>=13.0.0",
     "typer>=0.15.0",
     "textual>=1.0.0",
@@ -26,6 +27,7 @@ dependencies = [
 members = ["src/*"]
 
 [tool.uv.sources]
+ed-services = { workspace = true }
 ed-fleet-client = { workspace = true }
 ed-dispatcher = { workspace = true }
 ed-reducer = { workspace = true }
@@ -73,3 +75,8 @@ module = [
     "ed_telemetry",
 ]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ed_services.models"
+disallow_subclassing_any = false
+
