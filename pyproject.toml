@@ -16,6 +16,7 @@ dependencies = [
     "ed-stream-monitor",
     "ed-reducer",
     "ed-dispatcher",
+    "ed-fleet-client",
     "rich>=13.0.0",
     "typer>=0.15.0",
     "textual>=1.0.0",
@@ -25,6 +26,7 @@ dependencies = [
 members = ["src/*"]
 
 [tool.uv.sources]
+ed-fleet-client = { workspace = true }
 ed-dispatcher = { workspace = true }
 ed-reducer = { workspace = true }
 ed-stream-monitor = { workspace = true }
