@@ -1,0 +1,18 @@
+[project]
+name = "ed-fleet-client"
+version = "0.1.0"
+description = "Unified reactive client SDK and state facade for Elite Dangerous telemetry services"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ed-models",
+    "ed-telemetry-client",
+    "ed-stream-monitor",
+    "ed-hydrator",
+    "ed-reducer",
+    "ed-dispatcher",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
