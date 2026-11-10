@@ -101,3 +101,68 @@ def test_navigation_service_pattern_2_reactive_stream_pipe() -> None:
     assert ev.bearing_deg == 90.0  # due east on equator
     assert ev.heading_deg == 90.0
     assert ev.deflection_deg == 0.0  # steering directly on course
+
+
+def test_ship_targeting_and_route_progress() -> None:
+    from ed_models.core.domain.events import FSDJump, FSDTarget, ShipTargeted
+    from ed_services.models import RouteProgressUpdated, TargetLockedUpdated
+
+    dispatcher = TelemetryEventDispatcher()
+    current_state = ClientStateProjection()
+    nav = NavigationService(
+        state_accessor=lambda: current_state,
+        dispatcher=dispatcher,
+    )
+
+    captured_targets: list[TargetLockedUpdated] = []
+    captured_routes: list[RouteProgressUpdated] = []
+
+    dispatcher.subscribe(TargetLockedUpdated, lambda e: captured_targets.append(e))
+    dispatcher.subscribe(RouteProgressUpdated, lambda e: captured_routes.append(e))
+
+    # 1. Target a vessel
+    target_ev = ShipTargeted(
+        timestamp="2026-11-09T05:35:00Z",
+        event="ShipTargeted",
+        TargetLocked=True,
+        Ship="anaconda",
+        Ship_Localised="Anaconda",
+        PilotName="CMDR Jameson",
+        ShieldHealth=0.85,
+        HullHealth=1.0,
+        LegalStatus="Clean",
+    )
+    dispatcher.dispatch(target_ev)
+
+    assert len(captured_targets) == 1
+    assert captured_targets[0].locked is True
+    assert captured_targets[0].ship_model == "Anaconda"
+    assert nav.locked_ship is not None
+    assert nav.locked_ship["pilot_name"] == "CMDR Jameson"
+    assert nav.locked_ship["shield_health"] == 0.85
+
+    # 2. Plan hyperspace route
+    fsd_target = FSDTarget(
+        timestamp="2026-11-09T05:36:00Z",
+        event="FSDTarget",
+        Name="Sol",
+        RemainingJumpsInRoute=3,
+        StarClass="G",
+    )
+    dispatcher.dispatch(fsd_target)
+
+    assert len(captured_routes) == 1
+    assert captured_routes[0].destination_system == "Sol"
+    assert captured_routes[0].remaining_jumps == 3
+    assert nav.hyperspace_route is not None
+    assert nav.hyperspace_route["remaining_jumps"] == 3
+
+    # 3. Complete jump
+    jump_ev = FSDJump(
+        timestamp="2026-11-09T05:37:00Z",
+        event="FSDJump",
+        StarSystem="Alpha Centauri",
+    )
+    dispatcher.dispatch(jump_ev)
+    assert nav.hyperspace_route is not None
+    assert nav.hyperspace_route["remaining_jumps"] == 2

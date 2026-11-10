@@ -237,32 +237,86 @@ class LiveShipDashboardApp:
             )
 
         # Reactive Navigation Service Telemetry (Pattern 1 Pull)
-        dest_name = self.client.nav.target_name
+        dest_obj = self.client.nav.destination_name
+        settlement_target = self.client.nav.target_name
         bearing = self.client.nav.bearing_to_target()
         dist_km = self.client.nav.distance_to_target_km()
-        if dest_name and (bearing is not None or dist_km is not None):
-            table.add_row(Text(""), Text(""))
+        ship_tgt = self.client.nav.locked_ship
+        fsd_route = self.client.nav.hyperspace_route
+
+        table.add_row(Text(""), Text(""))
+
+        # 1. Hyperspace Route Progress
+        if fsd_route:
+            dest_sys = fsd_route["destination_system"]
+            star_cls = fsd_route["star_class"]
+            jumps = fsd_route["remaining_jumps"]
+            route_str = f"{dest_sys} ({star_cls}) - {jumps} jumps"
             table.add_row(
-                Text("Nav Target: ", style="bold bright_cyan"),
-                Text(dest_name, style="bold bright_white"),
+                Text("Hyperspace Route: ", style="bold bright_cyan"),
+                Text(route_str, style="bold bright_yellow"),
             )
-            if bearing is not None:
-                hdg = ship.telemetry.heading if ship.telemetry else None
-                deflection_str = ""
-                if hdg is not None:
-                    deflection = (bearing - hdg + 540.0) % 360.0 - 180.0
-                    turn_dir = "R" if deflection > 0 else "L"
-                    deflection_str = f" (Δ {abs(deflection):.0f}° {turn_dir})"
-                table.add_row(
-                    Text("Target Bearing: ", style="bold bright_cyan"),
-                    Text(f"{bearing:.1f}°{deflection_str}", style="bold yellow"),
-                )
-            if dist_km is not None:
-                dist_fmt = f"{dist_km:.1f} km" if dist_km < 1000 else f"{dist_km:,.0f} km"
-                table.add_row(
-                    Text("Target Distance: ", style="bold bright_cyan"),
-                    Text(dist_fmt, style="bold green"),
-                )
+
+        # 2. In-System Destination Object
+        table.add_row(
+            Text("Locked Object: ", style="bold bright_cyan"),
+            Text(
+                dest_obj or "None (Cockpit Target Lock)",
+                style="bold bright_white" if dest_obj else "dim",
+            ),
+        )
+
+        # 3. Targeted Vessel Profile
+        if ship_tgt:
+            pilot = ship_tgt["pilot_name"] or "Unknown"
+            vessel_info = f"{ship_tgt['ship_model']} [{pilot}] - {ship_tgt['legal_status']}"
+            health_parts = []
+            if ship_tgt["shield_health"] is not None:
+                health_parts.append(f"Shield: {ship_tgt['shield_health'] * 100:.0f}%")
+            if ship_tgt["hull_health"] is not None:
+                health_parts.append(f"Hull: {ship_tgt['hull_health'] * 100:.0f}%")
+            if health_parts:
+                vessel_info += f" ({', '.join(health_parts)})"
+            table.add_row(
+                Text("Target Vessel: ", style="bold bright_red"),
+                Text(vessel_info, style="bold white"),
+            )
+
+        # 4. Planetary Surface Waypoint & Great-Circle Vector
+        table.add_row(
+            Text("Surface Target: ", style="bold bright_cyan"),
+            Text(
+                settlement_target or "None (Requires Settlement Lock)",
+                style="bold bright_white" if settlement_target else "dim",
+            ),
+        )
+
+        hdg = ship.telemetry.heading if ship.telemetry else None
+        deflection_str = ""
+        if bearing is not None and hdg is not None:
+            deflection = (bearing - hdg + 540.0) % 360.0 - 180.0
+            turn_dir = "R" if deflection > 0 else "L"
+            deflection_str = f" (Δ {abs(deflection):.0f}° {turn_dir})"
+
+        bearing_display = (
+            f"{bearing:.1f}°{deflection_str}"
+            if bearing is not None
+            else "N/A (Orbit / Surface Lock Required)"
+        )
+        table.add_row(
+            Text("Target Bearing: ", style="bold bright_cyan"),
+            Text(bearing_display, style="bold yellow" if bearing is not None else "dim"),
+        )
+
+        dist_display = (
+            (f"{dist_km:.1f} km" if dist_km < 1000 else f"{dist_km:,.0f} km")
+            if dist_km is not None
+            else "N/A"
+        )
+        table.add_row(
+            Text("Target Distance: ", style="bold bright_cyan"),
+            Text(dist_display, style="bold green" if dist_km is not None else "dim"),
+        )
 
         return Panel(table, title="Spatial Navigation & Vessel Profile", border_style="magenta")
 

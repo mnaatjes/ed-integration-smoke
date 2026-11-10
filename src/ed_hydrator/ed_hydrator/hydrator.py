@@ -8,6 +8,8 @@ from typing import Any
 
 from ed_models import (
     JournalEvent,
+    StatusFlags,
+    StatusFlags2,
     StatusTelemetry,
     create_domain_facade,
     parse_journal_event,
@@ -59,20 +61,50 @@ class TelemetryDomainHydrator:
 
         fuel = data.get("Fuel", {})
         fuel_main = float(fuel.get("FuelMain", 0.0)) if isinstance(fuel, dict) else 0.0
-        fuel_reservoir = (
-            float(fuel.get("FuelReservoir", 0.0)) if isinstance(fuel, dict) else 0.0
-        )
+        fuel_reservoir = float(fuel.get("FuelReservoir", 0.0)) if isinstance(fuel, dict) else 0.0
         cargo = int(data.get("Cargo", 0))
         legal_state = str(data.get("LegalState", "Clean"))
 
-        return self._facade.parse_telemetry(
-            flags=flags,
-            flags2=flags2,
+        lat = (
+            float(data["Latitude"]) if "Latitude" in data and data["Latitude"] is not None else None
+        )
+        lon = (
+            float(data["Longitude"])
+            if "Longitude" in data and data["Longitude"] is not None
+            else None
+        )
+        alt = (
+            float(data["Altitude"]) if "Altitude" in data and data["Altitude"] is not None else None
+        )
+        hdg = float(data["Heading"]) if "Heading" in data and data["Heading"] is not None else None
+        radius = (
+            float(data["PlanetRadius"])
+            if "PlanetRadius" in data and data["PlanetRadius"] is not None
+            else None
+        )
+        body_name = (
+            str(data["BodyName"]) if "BodyName" in data and data["BodyName"] is not None else None
+        )
+
+        additional: dict[str, Any] = {}
+        if "Destination" in data and isinstance(data["Destination"], dict):
+            additional["Destination"] = dict(data["Destination"])
+
+        return StatusTelemetry(
+            flags=StatusFlags(flags),
+            flags2=StatusFlags2(flags2),
             pips=pips,
             fuel_main=fuel_main,
             fuel_reservoir=fuel_reservoir,
             cargo=cargo,
             legal_state=legal_state,
+            latitude=lat,
+            longitude=lon,
+            altitude=alt,
+            heading=hdg,
+            planet_radius=radius,
+            body_name=body_name,
+            additional_fields=additional,
         )
 
     def hydrate_event(self, payload: Mapping[str, Any] | str) -> JournalEvent | None:
@@ -244,4 +276,3 @@ class TelemetryDomainHydrator:
                     )
 
         return None
-

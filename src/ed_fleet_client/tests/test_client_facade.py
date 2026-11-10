@@ -43,7 +43,7 @@ def test_client_reactive_listener_and_state_reduction() -> None:
 
     result = client._ingest_event(jump)
     assert result.event_name == "FSDJump"
-    assert result.executed_count == 1
+    assert result.executed_count >= 1
     assert len(received_jumps) == 1
     assert client.state.location.star_system == "Sol"
     assert client.state.location.population == 22800000000

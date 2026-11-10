@@ -5,15 +5,21 @@ from __future__ import annotations
 import math
 import threading
 from collections.abc import Callable
+from typing import Any
 
 from ed_models import StatusTelemetry
-from ed_models.core.domain.events import ApproachSettlement
+from ed_models.core.domain.events import ApproachSettlement, FSDJump, FSDTarget, ShipTargeted
 
 from ed_dispatcher import Subscription, TelemetryEventDispatcher
 from ed_reducer import ClientStateProjection
 
 from .base import TelemetryService
-from .models import NavBearingUpdated, NavDistanceUpdated
+from .models import (
+    NavBearingUpdated,
+    NavDistanceUpdated,
+    RouteProgressUpdated,
+    TargetLockedUpdated,
+)
 
 
 def calculate_great_circle_bearing(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -48,7 +54,7 @@ def calculate_surface_distance_km(
 
 
 class NavigationService(TelemetryService):
-    """Provides geodetic navigation calculations and reactive stream derivation."""
+    """Provides geodetic navigation calculations, entity targeting, and route tracking."""
 
     def __init__(
         self,
@@ -56,10 +62,30 @@ class NavigationService(TelemetryService):
         dispatcher: TelemetryEventDispatcher,
     ) -> None:
         self._lock = threading.RLock()
+        # Surface waypoint target
         self._target_name: str | None = None
         self._target_lat: float | None = None
         self._target_lon: float | None = None
         self._target_radius_km: float = 6371.0
+
+        # General destination (station, celestial body, star system) from Status.Destination
+        self._destination_name: str | None = None
+        self._destination_system_address: int | None = None
+        self._destination_body_id: int | None = None
+
+        # Vessel / entity target from ShipTargeted
+        self._target_locked: bool = False
+        self._target_ship_model: str = ""
+        self._target_pilot_name: str = ""
+        self._target_shield_health: float | None = None
+        self._target_hull_health: float | None = None
+        self._target_legal_status: str = ""
+
+        # Hyperspace Route from FSDTarget
+        self._fsd_target_system: str | None = None
+        self._fsd_star_class: str = ""
+        self._fsd_remaining_jumps: int = 0
+
         self._subscriptions: list[Subscription] = []
         super().__init__(state_accessor, dispatcher)
 
@@ -97,6 +123,39 @@ class NavigationService(TelemetryService):
         """Returns the currently targeted destination settlement name, if set."""
         with self._lock:
             return self._target_name
+
+    @property
+    def destination_name(self) -> str | None:
+        """Returns the active locked destination name from cockpit Status telemetry."""
+        with self._lock:
+            return self._destination_name
+
+    @property
+    def locked_ship(self) -> dict[str, Any] | None:
+        """Returns locked vessel attributes or None if no vessel is targeted."""
+        with self._lock:
+            if not self._target_locked or not self._target_ship_model:
+                return None
+            return {
+                "locked": self._target_locked,
+                "ship_model": self._target_ship_model,
+                "pilot_name": self._target_pilot_name,
+                "shield_health": self._target_shield_health,
+                "hull_health": self._target_hull_health,
+                "legal_status": self._target_legal_status,
+            }
+
+    @property
+    def hyperspace_route(self) -> dict[str, Any] | None:
+        """Returns active hyperspace jump route progress or None if unrouted."""
+        with self._lock:
+            if not self._fsd_target_system:
+                return None
+            return {
+                "destination_system": self._fsd_target_system,
+                "star_class": self._fsd_star_class,
+                "remaining_jumps": self._fsd_remaining_jumps,
+            }
 
     def bearing_to_target(self) -> float | None:
         """Calculates initial great-circle bearing to destination, or None if inputs unavailable."""
@@ -197,11 +256,17 @@ class NavigationService(TelemetryService):
             self._dispatcher.dispatch(distance_ev)
 
     def attach(self) -> None:
-        """Subscribes to StatusTelemetry and ApproachSettlement to drive derivation."""
+        """Subscribes to StatusTelemetry and journal events to drive derivations."""
         if self._attached:
             return
 
         def _on_status(event: StatusTelemetry) -> None:
+            dest = event.additional_fields.get("Destination")
+            if isinstance(dest, dict):
+                with self._lock:
+                    self._destination_name = dest.get("Name")
+                    self._destination_system_address = dest.get("System")
+                    self._destination_body_id = dest.get("Body")
             self._evaluate_and_dispatch()
 
         def _on_settlement(event: ApproachSettlement) -> None:
@@ -215,9 +280,71 @@ class NavigationService(TelemetryService):
                     self._target_lon = float(lon)
                     self._evaluate_and_dispatch()
 
+        def _on_ship_targeted(event: ShipTargeted) -> None:
+            locked = bool(getattr(event, "TargetLocked", False))
+            with self._lock:
+                self._target_locked = locked
+                if locked:
+                    self._target_ship_model = getattr(event, "Ship_Localised", "") or getattr(
+                        event, "Ship", ""
+                    )
+                    self._target_pilot_name = getattr(event, "PilotName_Localised", "") or getattr(
+                        event, "PilotName", ""
+                    )
+                    self._target_shield_health = getattr(event, "ShieldHealth", None)
+                    self._target_hull_health = getattr(event, "HullHealth", None)
+                    self._target_legal_status = getattr(event, "LegalStatus", "")
+                else:
+                    self._target_ship_model = ""
+                    self._target_pilot_name = ""
+                    self._target_shield_health = None
+                    self._target_hull_health = None
+                    self._target_legal_status = ""
+
+                target_ev = TargetLockedUpdated(
+                    locked=locked,
+                    target_type="Ship" if locked else "None",
+                    target_name=self._target_ship_model,
+                    pilot_name=self._target_pilot_name,
+                    ship_model=self._target_ship_model,
+                    shield_health=self._target_shield_health,
+                    hull_health=self._target_hull_health,
+                    legal_status=self._target_legal_status,
+                )
+            self._dispatcher.dispatch(target_ev)
+
+        def _on_fsd_target(event: FSDTarget) -> None:
+            system_name = getattr(event, "Name", "")
+            remaining = int(getattr(event, "RemainingJumpsInRoute", 1))
+            star_class = getattr(event, "StarClass", "")
+            with self._lock:
+                self._fsd_target_system = system_name
+                self._fsd_remaining_jumps = remaining
+                self._fsd_star_class = star_class
+                route_ev = RouteProgressUpdated(
+                    destination_system=system_name,
+                    star_class=star_class,
+                    remaining_jumps=remaining,
+                )
+            self._dispatcher.dispatch(route_ev)
+
+        def _on_fsd_jump(event: FSDJump) -> None:
+            with self._lock:
+                if self._fsd_remaining_jumps > 0:
+                    self._fsd_remaining_jumps -= 1
+                    if self._fsd_remaining_jumps == 0:
+                        self._fsd_target_system = None
+                self.clear_destination()
+
         sub_status = self._dispatcher.subscribe(StatusTelemetry, _on_status)
         sub_settlement = self._dispatcher.subscribe(ApproachSettlement, _on_settlement)
-        self._subscriptions.extend([sub_status, sub_settlement])
+        sub_ship_targeted = self._dispatcher.subscribe(ShipTargeted, _on_ship_targeted)
+        sub_fsd_target = self._dispatcher.subscribe(FSDTarget, _on_fsd_target)
+        sub_fsd_jump = self._dispatcher.subscribe(FSDJump, _on_fsd_jump)
+
+        self._subscriptions.extend(
+            [sub_status, sub_settlement, sub_ship_targeted, sub_fsd_target, sub_fsd_jump]
+        )
         self._attached = True
 
     def detach(self) -> None:
