@@ -99,6 +99,9 @@ flowchart TD
 [`ed_hydrator`](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/src/ed_hydrator) converts raw journal JSON dictionaries into strongly typed Pydantic models from `ed-models`.
 
 **Opportunities & Implications:**
+* **Snapshot Extended DTO Hydration:**
+  * When a companion event arrives (e.g. `Market`, `Shipyard`, `Outfitting`, `NavRoute`, `ModuleInfo`, `FCMaterials`), automatically read and hydrate the corresponding extended snapshot file (`ExtendedMarket`, `ExtendedShipyard`, `ExtendedOutfitting`, etc.).
+  * This elevates minimal notification events into complete, rich domain models populated with all nested market items, ship prices, and module lists.
 * **Schema Key Indexing & Cross-Referencing:**
   * Leverage the 8 primary Hub Keys (`MarketID`, `SystemAddress`, `StarSystem`, `BodyID`, `CarrierID`, `StationName`, `ShipID`, `Body`) to automatically correlate disparate event models.
   * When hydrating a trade event (such as `MarketBuy`), the hydrator can automatically bind the event to the most recently hydrated `Docked` model sharing the same `MarketID`.
@@ -111,12 +114,27 @@ flowchart TD
 [`ed_stream_monitor`](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/src/ed_stream_monitor) monitors the Frontier journal log directory for newly written lines and status updates.
 
 **Opportunities & Implications:**
+* **Companion Snapshot File Inotify / Polling:**
+  * Frontier writes snapshot files (`Market.json`, `Cargo.json`, etc.) by completely overwriting them in place rather than appending lines.
+  * `ed_stream_monitor` can attach filesystem watches (`IN_CLOSE_WRITE` / `IN_MODIFY`) specifically to the 9 known snapshot filenames, emitting snapshot update notifications directly into the fleet ingestion pipeline.
 * **Edge-Triggered Log Polling:**
   * Knowing that `StatusFlags.DOCKED` transitions reliably lead `Docked` journal entries by $15\text{ ms}$, the stream monitor can dynamically increase journal polling frequency immediately after a status edge is detected, minimizing read latency for crucial events.
 
 ---
 
-### 6. `src/ed_services` (Domain Service Layer)
+### 6. `src/ed_cli_core` (Rich Console & Table Renderers)
+
+**Current Architecture:**
+[`ed_cli_core`](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/src/ed_cli_core) renders interactive tables and terminal views for snapshots and fleet states.
+
+**Opportunities & Implications:**
+* **Deterministic Snapshot Routing & Duality Handling:**
+  * Implement table rendering routines that map directly to the discovered snapshot trigger matrix.
+  * Apply [RES-0001](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/architecture/research/RES-0001-fleet-carrier-shipyard-snapshot-duality.md) carrier duality logic: dynamically render `Shipyard.json` as stored fleet inventory whenever docked at a carrier, and as retail stock when docked at a starport.
+
+---
+
+### 7. `src/ed_services` (Domain Service Layer)
 
 **Current Architecture:**
 [`ed_services`](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/src/ed_services) provides specialized domain logic (navigation calculations, trade route planning, and exploration logging).
@@ -124,3 +142,5 @@ flowchart TD
 **Opportunities & Implications:**
 * **Causal Progress Tracking:**
   * Navigation and route-planning services can track the exact stage of a multi-jump trip by observing the jump sequence transitions, accurately calculating estimated time of arrival (ETA) based on the empirical jump intervals ($\sim 32\text{ seconds}$ per jump cycle).
+* **Automated NavRoute Ingestion:**
+  * Automatically ingest `NavRoute.json` when the `NavRoute` event triggers, enabling instant hop-by-hop route visualization without requiring manual galaxy map re-queries.

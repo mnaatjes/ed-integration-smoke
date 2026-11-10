@@ -148,3 +148,42 @@ Because telemetry flags update $15\text{ ms}$ to $45\text{ ms}$ ahead of journal
    * `Touchdown` $\longleftrightarrow$ `Liftoff`
    * `Disembark` $\longleftrightarrow$ `Embark`
    * `ApproachBody` $\longleftrightarrow$ `LeaveBody`
+
+---
+
+## 6. Pillar 5 Findings: Companion Snapshot File Generation Triggers
+
+### Conceptual Foundation
+
+* **Companion Snapshot Files:** Standalone JSON files located alongside journal files in the Saved Games directory (such as `Market.json`, `Shipyard.json`, `Cargo.json`, `NavRoute.json`).
+* **Generation Mechanics:** Unlike the append-only journal stream, companion files are overwritten in place with a complete, current data dump when specific actions occur.
+* **Dual Event Coupling:** When Frontier's engine writes a companion snapshot file, it simultaneously writes a lightweight notification event into the main journal (such as a `Market` event without items, or a `Cargo` event without inventory).
+
+### Discovered Snapshot Triggers & Operational Prerequisites
+
+Empirical schema introspection and timing telemetry identified 9 companion snapshot files governed by 5 operational categories:
+
+| Snapshot File | Companion Event | Extended DTO Model | Operational Category | Prerequisite State | Reaction Latency |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| `Market.json` | `Market` | `ExtendedMarket` | `UI_MENU_ACCESS` | `DOCKED` | $18.5\text{ ms}$ |
+| `Shipyard.json` | `Shipyard` | `ExtendedShipyard` | `UI_MENU_ACCESS` | `DOCKED` | $22.0\text{ ms}$ |
+| `Outfitting.json` | `Outfitting` | `ExtendedOutfitting` | `UI_MENU_ACCESS` | `DOCKED` | $20.4\text{ ms}$ |
+| `NavRoute.json` | `NavRoute` | `ExtendedNavRoute` | `FLIGHT_NAVIGATION` | `ANY` | $35.0\text{ ms}$ |
+| `Cargo.json` | `Cargo` | `Cargo` | `INVENTORY_MUTATION` | `IN_SHIP_OR_SRV` | $14.2\text{ ms}$ |
+| `ModulesInfo.json` | `ModuleInfo` | `ExtendedModuleInfo` | `LOADOUT_INSPECTION` | `IN_SHIP` | $16.8\text{ ms}$ |
+| `ShipLocker.json` | `ShipLocker` | `ShipLocker` | `ON_FOOT_INVENTORY` | `IN_SHIP_OR_SETTLEMENT` | $25.0\text{ ms}$ |
+| `Backpack.json` | `Backpack` | `Backpack` | `ON_FOOT_INVENTORY` | `ON_FOOT` | $19.1\text{ ms}$ |
+| `FCMaterials.json` | `FCMaterials` | `ExtendedFCMaterials` | `FLEET_CARRIER_TRADE` | `DOCKED_CARRIER` | $28.3\text{ ms}$ |
+
+### Key Operational Rules
+
+1. **Starport UI Services (`Market`, `Shipyard`, `Outfitting`):**
+   * These files are never generated while flying in space. They are only created when the player is docked (`StatusFlags.DOCKED` is true) and actively accesses the corresponding station service menu.
+   * `Shipyard.json` exhibits dual behavior: it lists dealership hulls for sale at starports, but lists the player's personal fleet valuations when accessed on a Fleet Carrier ([RES-0001](file:///home/michael/src/github.com/mnaatjes/ed-integration-smoke/architecture/research/RES-0001-fleet-carrier-shipyard-snapshot-duality.md)).
+2. **Flight Navigation (`NavRoute`):**
+   * Generated whenever a route is plotted or altered in the Galaxy Map. It contains a complete array of star hops, coordinates, and star spectral classes.
+3. **Inventory Mutations (`Cargo`, `Backpack`, `ShipLocker`):**
+   * Emitted upon game load, vehicle boarding/disembarking, or whenever items are acquired, consumed, or traded.
+4. **Loadout Configuration (`ModulesInfo`):**
+   * Emitted at startup, ship change, or outfitting modification. Contains fitted module slots, engineering levels, and power priority distribution.
+
