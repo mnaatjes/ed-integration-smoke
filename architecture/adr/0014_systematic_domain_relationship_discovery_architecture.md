@@ -142,6 +142,28 @@ The architecture establishes four specialized discovery engines:
 * **Tooling Implementation:** `scripts/verify_mutex_invariants.py`
   * Generates the **Mutex Invariant Matrix** and acts as an automated anomaly detection validator inside the SDK.
 
+### 5.5 Artifact Serialization Contracts & Schemas
+
+To ensure discovery outputs are immediately ingestible by automated test suites, IDE extensions, state reducers, and documentation generators, all discovery scripts must output machine-readable JSON schemas alongside companion Mermaid diagrams under `architecture/reference/data/`:
+
+| Discovery Script | Output JSON Artifact | Companion Visual Graph | Schema Contents |
+| :--- | :--- | :--- | :--- |
+| `map_domain_schema.py` | `domain_entity_graph.json` | `domain_entity_graph.mmd` | Foreign key inverted index, cross-domain affinity matrix, entity degree centrality. |
+| `mine_event_sequences.py` | `event_transitions.json` | `lifecycle_workflows.mmd` | 1st-order Markov transition probabilities, mean/min/max $\Delta t$ latencies, canonical DAG paths. |
+| `map_trigger_matrix.py` | `status_trigger_matrix.json` | `trigger_matrix_table.md` | Bitmask edge-to-journal event mapping, trigger confidence score, edge latency $\tau$. |
+| `verify_mutex_invariants.py` | `mutex_invariants.json` | `mutex_matrix_heat.md` | $64 \times 64$ flag co-occurrence matrix, certified zero-co-occurrence invariants, inversion pairs. |
+
+All JSON artifacts adhere to strict versioned metadata envelopes:
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "generated_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "source_dataset_frames": 150420,
+  "schema_version": "1.0.0",
+  "data": { ... }
+}
+```
+
 ---
 
 ## 6. Implementation Roadmap
