@@ -1,0 +1,46 @@
+stateDiagram-v2
+    [*] --> StartJump
+    StartJump --> SupercruiseExit
+    SupercruiseExit --> FSDJump
+    FSDJump --> Location
+    Location --> ApproachBody
+    ApproachBody --> ApproachSettlement
+    ApproachSettlement --> Touchdown
+    Touchdown --> Docked
+    Docked --> [*]
+    Status --> Cargo : P=0.333
+    Status --> ShipLocker : P=0.222
+    Status --> Market : P=0.222
+    Cargo --> Friends : P=0.333
+    Market --> Shipyard : P=0.333
+    ModuleInfo --> NavRouteClear : P=0.333
+    ModuleInfo --> Status : P=0.333
+    Backpack --> Cargo : P=0.333
+    Shipyard --> NavRouteClear : P=0.429
+    Shipyard --> Backpack : P=0.286
+    NavRouteClear --> ShipLocker : P=0.5
+    ShipLocker --> Missions : P=0.562
+    Commander --> Materials : P=1.0
+    Materials --> LoadGame : P=0.938
+    Fileheader --> Friends : P=1.0
+    Friends --> Friends : P=0.667
+    Friends --> Commander : P=0.238
+    LoadGame --> GameModeChange : P=1.0
+    GameModeChange --> Rank : P=0.933
+    Rank --> Progress : P=1.0
+    Progress --> Reputation : P=1.0
+    Reputation --> EngineerProgress : P=1.0
+    EngineerProgress --> CarrierLocation : P=0.929
+    CarrierLocation --> SquadronStartup : P=0.5
+    CarrierLocation --> Statistics : P=0.417
+    SquadronStartup --> CarrierLocation : P=0.917
+    Statistics --> ReceiveText : P=0.9
+    ReceiveText --> FSSSignalDiscovered : P=0.391
+    ReceiveText --> ReceiveText : P=0.348
+    FSSSignalDiscovered --> FSSSignalDiscovered : P=0.875
+    Location --> Music : P=1.0
+    Music --> ShipLocker : P=0.385
+    Music --> Music : P=0.308
+    Music --> Cargo : P=0.231
+    Missions --> Loadout : P=1.0
+    Loadout --> Music : P=1.0

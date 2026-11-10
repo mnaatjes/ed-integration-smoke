@@ -1,0 +1,5024 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-10T03:34:33.718032+00:00",
+  "total_events_indexed": 285,
+  "total_canonical_keys": 17,
+  "canonical_keys": {
+    "MarketID": [
+      "ApproachSettlement",
+      "CarrierJump",
+      "ColonisationConstructionDepot",
+      "ColonisationContribution",
+      "DeliverPowerMicroResources",
+      "Disembark",
+      "Docked",
+      "DockingCancelled",
+      "DockingDenied",
+      "DockingGranted",
+      "DockingRequested",
+      "DockingTimeout",
+      "Embark",
+      "ExtendedFCMaterials",
+      "ExtendedMarket",
+      "ExtendedOutfitting",
+      "ExtendedShipyard",
+      "FCMaterials",
+      "Location",
+      "Market",
+      "MarketBuy",
+      "MarketSell",
+      "MassModuleStore",
+      "MaterialTrade",
+      "ModuleBuy",
+      "ModuleBuyAndStore",
+      "ModuleRetrieve",
+      "ModuleSell",
+      "ModuleStore",
+      "ModuleSwap",
+      "NewBuyMicroResources",
+      "OldBuyMicroResources",
+      "Outfitting",
+      "ScientificResearch",
+      "SearchAndRescue",
+      "SellMicroResources",
+      "SellOrganicData",
+      "Shipyard",
+      "ShipyardBankDeposit",
+      "ShipyardBuy",
+      "ShipyardRedeem",
+      "ShipyardSell",
+      "ShipyardSwap",
+      "ShipyardTransfer",
+      "StoredModules",
+      "StoredShips",
+      "SupercruiseDestinationDrop",
+      "TechnologyBroker",
+      "TradeMicroResources",
+      "Undocked"
+    ],
+    "SystemAddress": [
+      "ApproachBody",
+      "ApproachSettlement",
+      "CarrierBuy",
+      "CarrierJump",
+      "CarrierJumpRequest",
+      "CarrierLocation",
+      "CodexEntry",
+      "DiscoveryScan",
+      "Disembark",
+      "Docked",
+      "DropshipDeploy",
+      "Embark",
+      "FSDJump",
+      "FSDTarget",
+      "FSSAllBodiesFound",
+      "FSSBodySignals",
+      "FSSDiscoveryScan",
+      "FSSSignalDiscovered",
+      "LeaveBody",
+      "Liftoff",
+      "Location",
+      "NavBeaconScan",
+      "SAAScanComplete",
+      "SAASignalsFound",
+      "ScanBaryCentre",
+      "ScanBody",
+      "ScanOrganic",
+      "ScanOther",
+      "ScanPlanet",
+      "ScanStar",
+      "StartJump",
+      "SupercruiseEntry",
+      "SupercruiseExit",
+      "Touchdown"
+    ],
+    "StarSystem": [
+      "ApproachBody",
+      "CarrierJump",
+      "CarrierLocation",
+      "Disembark",
+      "Docked",
+      "DropshipDeploy",
+      "Embark",
+      "ExtendedMarket",
+      "ExtendedOutfitting",
+      "ExtendedShipyard",
+      "FSDJump",
+      "LeaveBody",
+      "Liftoff",
+      "Location",
+      "Market",
+      "Outfitting",
+      "ScanBaryCentre",
+      "ScanBody",
+      "ScanOther",
+      "ScanPlanet",
+      "ScanStar",
+      "Shipyard",
+      "StartJump",
+      "StoredModules",
+      "StoredShips",
+      "SupercruiseEntry",
+      "SupercruiseExit",
+      "Touchdown"
+    ],
+    "BodyID": [
+      "ApproachBody",
+      "ApproachSettlement",
+      "CarrierJump",
+      "CarrierJumpRequest",
+      "CarrierLocation",
+      "CodexEntry",
+      "Disembark",
+      "DropshipDeploy",
+      "Embark",
+      "FSDJump",
+      "FSSBodySignals",
+      "LeaveBody",
+      "Liftoff",
+      "Location",
+      "SAAScanComplete",
+      "SAASignalsFound",
+      "ScanBaryCentre",
+      "ScanBody",
+      "ScanOther",
+      "ScanPlanet",
+      "ScanStar",
+      "SupercruiseExit",
+      "Touchdown"
+    ],
+    "CarrierID": [
+      "CarrierBankTransfer",
+      "CarrierBuy",
+      "CarrierCrewServices",
+      "CarrierDepositFuel",
+      "CarrierDockingPermission",
+      "CarrierFinance",
+      "CarrierJumpCancelled",
+      "CarrierJumpRequest",
+      "CarrierLocation",
+      "CarrierModulePackBase",
+      "CarrierModulePackBuy",
+      "CarrierModulePackSell",
+      "CarrierNameChange",
+      "CarrierShipPackBase",
+      "CarrierShipPackBuy",
+      "CarrierShipPackSell",
+      "CarrierStats",
+      "CarrierTradeOrder",
+      "ExtendedFCMaterials",
+      "FCMaterials"
+    ],
+    "StationName": [
+      "CarrierJump",
+      "Disembark",
+      "Docked",
+      "DockingCancelled",
+      "DockingDenied",
+      "DockingGranted",
+      "DockingRequested",
+      "DockingTimeout",
+      "Embark",
+      "ExtendedMarket",
+      "ExtendedOutfitting",
+      "ExtendedShipyard",
+      "Location",
+      "Market",
+      "Outfitting",
+      "Shipyard",
+      "StoredModules",
+      "StoredShips",
+      "Undocked"
+    ],
+    "CarrierType": [
+      "CarrierBankTransfer",
+      "CarrierBuy",
+      "CarrierCrewServices",
+      "CarrierDockingPermission",
+      "CarrierFinance",
+      "CarrierJumpCancelled",
+      "CarrierJumpRequest",
+      "CarrierLocation",
+      "CarrierModulePackBase",
+      "CarrierModulePackBuy",
+      "CarrierModulePackSell",
+      "CarrierNameChange",
+      "CarrierShipPackBase",
+      "CarrierShipPackBuy",
+      "CarrierShipPackSell",
+      "CarrierStats",
+      "CarrierTradeOrder"
+    ],
+    "ShipID": [
+      "FetchRemoteModule",
+      "LoadGame",
+      "Loadout",
+      "MassModuleStore",
+      "ModuleBuy",
+      "ModuleBuyAndStore",
+      "ModuleRetrieve",
+      "ModuleSell",
+      "ModuleSellRemote",
+      "ModuleStore",
+      "ModuleSwap",
+      "PayBounties",
+      "PayFines",
+      "SetUserShipName",
+      "ShipyardSwap",
+      "ShipyardTransfer"
+    ],
+    "Body": [
+      "ApproachBody",
+      "AsteroidCracked",
+      "CarrierJump",
+      "CarrierJumpRequest",
+      "Disembark",
+      "DropshipDeploy",
+      "Embark",
+      "FSDJump",
+      "LeaveBody",
+      "Liftoff",
+      "Location",
+      "ScanOrganic",
+      "Screenshot",
+      "SupercruiseExit",
+      "Touchdown"
+    ],
+    "Power": [
+      "Interdicted",
+      "Interdiction",
+      "Powerplay",
+      "PowerplayCollect",
+      "PowerplayDeliver",
+      "PowerplayFastTrack",
+      "PowerplayJoin",
+      "PowerplayLeave",
+      "PowerplayMerits",
+      "PowerplayRank",
+      "PowerplaySalary",
+      "PowerplayVote",
+      "PowerplayVoucher",
+      "ShipTargeted"
+    ],
+    "StationType": [
+      "CarrierJump",
+      "Disembark",
+      "Docked",
+      "DockingCancelled",
+      "DockingDenied",
+      "DockingGranted",
+      "DockingRequested",
+      "DockingTimeout",
+      "Embark",
+      "ExtendedMarket",
+      "Location",
+      "Market",
+      "Undocked"
+    ],
+    "Ship": [
+      "FetchRemoteModule",
+      "LoadGame",
+      "Loadout",
+      "MassModuleStore",
+      "ModuleBuy",
+      "ModuleBuyAndStore",
+      "ModuleRetrieve",
+      "ModuleSell",
+      "ModuleSellRemote",
+      "ModuleStore",
+      "ModuleSwap",
+      "SetUserShipName",
+      "ShipTargeted"
+    ],
+    "Faction": [
+      "Bounty",
+      "CommitCrime",
+      "CrewHire",
+      "EngineerContribution",
+      "Interdicted",
+      "Interdiction",
+      "MissionAccepted",
+      "MissionCompleted",
+      "PayBounties",
+      "PayFines",
+      "RedeemVoucher",
+      "ShipTargeted"
+    ],
+    "SquadronID": [
+      "JoinedSquadron",
+      "LeftSquadron",
+      "SharedBookmarkToSquadron",
+      "ShipTargeted",
+      "SquadronCreated",
+      "SquadronDemotion",
+      "SquadronPromotion",
+      "SquadronStartup"
+    ],
+    "BodyType": [
+      "CarrierJump",
+      "FSDJump",
+      "Location",
+      "SupercruiseExit"
+    ],
+    "FID": [
+      "ClearSavedGame",
+      "Commander",
+      "LoadGame",
+      "NewCommander"
+    ],
+    "Commander": [
+      "LoadGame"
+    ]
+  },
+  "domain_affinity_matrix": {
+    "carrier": {
+      "carrier": 600,
+      "combat": 0,
+      "exploration": 95,
+      "odyssey": 88,
+      "other": 11,
+      "powerplay": 1,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 51,
+      "trade": 4,
+      "travel": 126
+    },
+    "combat": {
+      "carrier": 0,
+      "combat": 18,
+      "exploration": 0,
+      "odyssey": 0,
+      "other": 4,
+      "powerplay": 30,
+      "squadrons": 7,
+      "startup": 5,
+      "station": 38,
+      "trade": 0,
+      "travel": 0
+    },
+    "exploration": {
+      "carrier": 95,
+      "combat": 0,
+      "exploration": 274,
+      "odyssey": 102,
+      "other": 23,
+      "powerplay": 0,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 40,
+      "trade": 1,
+      "travel": 274
+    },
+    "odyssey": {
+      "carrier": 88,
+      "combat": 0,
+      "exploration": 102,
+      "odyssey": 114,
+      "other": 43,
+      "powerplay": 9,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 269,
+      "trade": 22,
+      "travel": 227
+    },
+    "other": {
+      "carrier": 11,
+      "combat": 4,
+      "exploration": 23,
+      "odyssey": 43,
+      "other": 12,
+      "powerplay": 4,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 107,
+      "trade": 8,
+      "travel": 50
+    },
+    "powerplay": {
+      "carrier": 1,
+      "combat": 30,
+      "exploration": 0,
+      "odyssey": 9,
+      "other": 4,
+      "powerplay": 90,
+      "squadrons": 0,
+      "startup": 10,
+      "station": 25,
+      "trade": 2,
+      "travel": 8
+    },
+    "squadrons": {
+      "carrier": 0,
+      "combat": 7,
+      "exploration": 0,
+      "odyssey": 0,
+      "other": 0,
+      "powerplay": 0,
+      "squadrons": 42,
+      "startup": 0,
+      "station": 0,
+      "trade": 0,
+      "travel": 0
+    },
+    "startup": {
+      "carrier": 0,
+      "combat": 5,
+      "exploration": 0,
+      "odyssey": 0,
+      "other": 0,
+      "powerplay": 10,
+      "squadrons": 0,
+      "startup": 16,
+      "station": 48,
+      "trade": 0,
+      "travel": 0
+    },
+    "station": {
+      "carrier": 51,
+      "combat": 38,
+      "exploration": 40,
+      "odyssey": 269,
+      "other": 107,
+      "powerplay": 25,
+      "squadrons": 0,
+      "startup": 48,
+      "station": 1028,
+      "trade": 50,
+      "travel": 360
+    },
+    "trade": {
+      "carrier": 4,
+      "combat": 0,
+      "exploration": 1,
+      "odyssey": 22,
+      "other": 8,
+      "powerplay": 2,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 50,
+      "trade": 2,
+      "travel": 23
+    },
+    "travel": {
+      "carrier": 126,
+      "combat": 0,
+      "exploration": 274,
+      "odyssey": 227,
+      "other": 50,
+      "powerplay": 8,
+      "squadrons": 0,
+      "startup": 0,
+      "station": 360,
+      "trade": 23,
+      "travel": 458
+    }
+  },
+  "models": {
+    "AfmuRepairs": {
+      "name": "AfmuRepairs",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.afmu_repairs",
+      "total_fields": 4,
+      "fields": [
+        "FullyRepaired",
+        "Health",
+        "Module",
+        "Module_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "AppliedToSquadron": {
+      "name": "AppliedToSquadron",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.applied_to_squadron",
+      "total_fields": 1,
+      "fields": [
+        "SquadronName"
+      ],
+      "foreign_keys": []
+    },
+    "ApproachBody": {
+      "name": "ApproachBody",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.approach_body",
+      "total_fields": 4,
+      "fields": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "ApproachSettlement": {
+      "name": "ApproachSettlement",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.approach_settlement",
+      "total_fields": 16,
+      "fields": [
+        "BodyID",
+        "BodyName",
+        "Latitude",
+        "Longitude",
+        "MarketID",
+        "Name",
+        "Name_Localised",
+        "StationAllegiance",
+        "StationEconomies",
+        "StationEconomy",
+        "StationEconomy_Localised",
+        "StationFaction",
+        "StationGovernment",
+        "StationGovernment_Localised",
+        "StationServices",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "MarketID",
+        "SystemAddress"
+      ]
+    },
+    "AsteroidCracked": {
+      "name": "AsteroidCracked",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.asteroid_cracked",
+      "total_fields": 1,
+      "fields": [
+        "Body"
+      ],
+      "foreign_keys": [
+        "Body"
+      ]
+    },
+    "Backpack": {
+      "name": "Backpack",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.backpack",
+      "total_fields": 4,
+      "fields": [
+        "Components",
+        "Consumables",
+        "Data",
+        "Items"
+      ],
+      "foreign_keys": []
+    },
+    "BackpackChange": {
+      "name": "BackpackChange",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.backpack_change",
+      "total_fields": 2,
+      "fields": [
+        "Added",
+        "Removed"
+      ],
+      "foreign_keys": []
+    },
+    "BackpackItem": {
+      "name": "BackpackItem",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.backpack",
+      "total_fields": 5,
+      "fields": [
+        "Count",
+        "MissionID",
+        "Name",
+        "Name_Localised",
+        "OwnerID"
+      ],
+      "foreign_keys": []
+    },
+    "BookDropship": {
+      "name": "BookDropship",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.book_dropship",
+      "total_fields": 4,
+      "fields": [
+        "Cost",
+        "DestinationLocation",
+        "DestinationSystem",
+        "Retreat"
+      ],
+      "foreign_keys": []
+    },
+    "BookTaxi": {
+      "name": "BookTaxi",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.book_taxi",
+      "total_fields": 4,
+      "fields": [
+        "Cost",
+        "DestinationLocation",
+        "DestinationSystem",
+        "Retreat"
+      ],
+      "foreign_keys": []
+    },
+    "Bounty": {
+      "name": "Bounty",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.bounty",
+      "total_fields": 12,
+      "fields": [
+        "Faction",
+        "Faction_Localised",
+        "PilotName",
+        "PilotName_Localised",
+        "Reward",
+        "Rewards",
+        "SharedWithOthers",
+        "Target",
+        "Target_Localised",
+        "TotalReward",
+        "VictimFaction",
+        "VictimFaction_Localised"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "BuyAmmo": {
+      "name": "BuyAmmo",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.buy_ammo",
+      "total_fields": 1,
+      "fields": [
+        "Cost"
+      ],
+      "foreign_keys": []
+    },
+    "BuyDrones": {
+      "name": "BuyDrones",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.buy_drones",
+      "total_fields": 4,
+      "fields": [
+        "BuyPrice",
+        "Count",
+        "TotalCost",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "BuyExplorationData": {
+      "name": "BuyExplorationData",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.buy_exploration_data",
+      "total_fields": 2,
+      "fields": [
+        "Cost",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "BuySuit": {
+      "name": "BuySuit",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.buy_suit",
+      "total_fields": 5,
+      "fields": [
+        "Name",
+        "Name_Localised",
+        "Price",
+        "SuitID",
+        "SuitMods"
+      ],
+      "foreign_keys": []
+    },
+    "BuyTradeData": {
+      "name": "BuyTradeData",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.buy_trade_data",
+      "total_fields": 2,
+      "fields": [
+        "Cost",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "BuyWeapon": {
+      "name": "BuyWeapon",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.buy_weapon",
+      "total_fields": 6,
+      "fields": [
+        "Class",
+        "Name",
+        "Name_Localised",
+        "Price",
+        "SuitModuleID",
+        "WeaponMods"
+      ],
+      "foreign_keys": []
+    },
+    "CancelDropship": {
+      "name": "CancelDropship",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.cancel_dropship",
+      "total_fields": 1,
+      "fields": [
+        "Refund"
+      ],
+      "foreign_keys": []
+    },
+    "CancelTaxi": {
+      "name": "CancelTaxi",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.cancel_taxi",
+      "total_fields": 1,
+      "fields": [
+        "Refund"
+      ],
+      "foreign_keys": []
+    },
+    "CapShipBond": {
+      "name": "CapShipBond",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.cap_ship_bond",
+      "total_fields": 5,
+      "fields": [
+        "AwardingFaction",
+        "AwardingFaction_Localised",
+        "Reward",
+        "VictimFaction",
+        "VictimFaction_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Cargo": {
+      "name": "Cargo",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.cargo",
+      "total_fields": 3,
+      "fields": [
+        "Count",
+        "Inventory",
+        "Vessel"
+      ],
+      "foreign_keys": []
+    },
+    "CargoDepot": {
+      "name": "CargoDepot",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.cargo_depot",
+      "total_fields": 11,
+      "fields": [
+        "CargoType",
+        "CargoType_Localised",
+        "Count",
+        "EndMarketID",
+        "ItemsCollected",
+        "ItemsDelivered",
+        "MissionID",
+        "Progress",
+        "StartMarketID",
+        "TotalItemsToDeliver",
+        "UpdateType"
+      ],
+      "foreign_keys": []
+    },
+    "CargoTransfer": {
+      "name": "CargoTransfer",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.cargo_transfer",
+      "total_fields": 1,
+      "fields": [
+        "Transfers"
+      ],
+      "foreign_keys": []
+    },
+    "CarrierBankTransfer": {
+      "name": "CarrierBankTransfer",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_bank_transfer",
+      "total_fields": 6,
+      "fields": [
+        "CarrierBalance",
+        "CarrierID",
+        "CarrierType",
+        "Deposit",
+        "PlayerBalance",
+        "Withdraw"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierBuy": {
+      "name": "CarrierBuy",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_buy",
+      "total_fields": 8,
+      "fields": [
+        "BoughtAtMarket",
+        "Callsign",
+        "CarrierID",
+        "CarrierType",
+        "Location",
+        "Price",
+        "SystemAddress",
+        "Variant"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType",
+        "SystemAddress"
+      ]
+    },
+    "CarrierCrewServices": {
+      "name": "CarrierCrewServices",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_crew_services",
+      "total_fields": 5,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "CrewName",
+        "CrewRole",
+        "Operation"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierDepositFuel": {
+      "name": "CarrierDepositFuel",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_deposit_fuel",
+      "total_fields": 3,
+      "fields": [
+        "Amount",
+        "CarrierID",
+        "Total"
+      ],
+      "foreign_keys": [
+        "CarrierID"
+      ]
+    },
+    "CarrierDockingPermission": {
+      "name": "CarrierDockingPermission",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_docking_permission",
+      "total_fields": 4,
+      "fields": [
+        "AllowNotorious",
+        "CarrierID",
+        "CarrierType",
+        "DockingAccess"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierFinance": {
+      "name": "CarrierFinance",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_finance",
+      "total_fields": 13,
+      "fields": [
+        "AvailableBalance",
+        "CarrierBalance",
+        "CarrierID",
+        "CarrierType",
+        "ReserveBalance",
+        "ReservePercent",
+        "TaxRate",
+        "TaxRate_outfitting",
+        "TaxRate_pioneersupplies",
+        "TaxRate_rearm",
+        "TaxRate_refuel",
+        "TaxRate_repair",
+        "TaxRate_shipyard"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierJump": {
+      "name": "CarrierJump",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_jump",
+      "total_fields": 40,
+      "fields": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "Conflicts",
+        "ControllingPower",
+        "Docked",
+        "Factions",
+        "MarketID",
+        "Multicrew",
+        "OnFoot",
+        "Population",
+        "PowerplayConflictProgress",
+        "PowerplayState",
+        "PowerplayStateControlProgress",
+        "PowerplayStateReinforcement",
+        "PowerplayStateUndermining",
+        "Powers",
+        "StarPos",
+        "StarSystem",
+        "StationEconomies",
+        "StationEconomy",
+        "StationEconomy_Localised",
+        "StationFaction",
+        "StationGovernment",
+        "StationGovernment_Localised",
+        "StationName",
+        "StationServices",
+        "StationType",
+        "SystemAddress",
+        "SystemAllegiance",
+        "SystemEconomy",
+        "SystemEconomy_Localised",
+        "SystemFaction",
+        "SystemGovernment",
+        "SystemGovernment_Localised",
+        "SystemSecondEconomy",
+        "SystemSecondEconomy_Localised",
+        "SystemSecurity",
+        "SystemSecurity_Localised",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress"
+      ]
+    },
+    "CarrierJumpCancelled": {
+      "name": "CarrierJumpCancelled",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_jump_cancelled",
+      "total_fields": 2,
+      "fields": [
+        "CarrierID",
+        "CarrierType"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierJumpRequest": {
+      "name": "CarrierJumpRequest",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_jump_request",
+      "total_fields": 7,
+      "fields": [
+        "Body",
+        "BodyID",
+        "CarrierID",
+        "CarrierType",
+        "DepartureTime",
+        "SystemAddress",
+        "SystemName"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "CarrierID",
+        "CarrierType",
+        "SystemAddress"
+      ]
+    },
+    "CarrierLocation": {
+      "name": "CarrierLocation",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_location",
+      "total_fields": 5,
+      "fields": [
+        "BodyID",
+        "CarrierID",
+        "CarrierType",
+        "StarSystem",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "CarrierID",
+        "CarrierType",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "CarrierModulePackBase": {
+      "name": "CarrierModulePackBase",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_module_pack",
+      "total_fields": 4,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "PackTheme",
+        "PackTier"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierModulePackBuy": {
+      "name": "CarrierModulePackBuy",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_module_pack",
+      "total_fields": 6,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "Cost",
+        "Operation",
+        "PackTheme",
+        "PackTier"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierModulePackSell": {
+      "name": "CarrierModulePackSell",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_module_pack",
+      "total_fields": 6,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "Operation",
+        "PackTheme",
+        "PackTier",
+        "Refund"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierNameChange": {
+      "name": "CarrierNameChange",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_name_change",
+      "total_fields": 4,
+      "fields": [
+        "Callsign",
+        "CarrierID",
+        "CarrierType",
+        "Name"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierShipPackBase": {
+      "name": "CarrierShipPackBase",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_ship_pack",
+      "total_fields": 4,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "PackTheme",
+        "PackTier"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierShipPackBuy": {
+      "name": "CarrierShipPackBuy",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_ship_pack",
+      "total_fields": 6,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "Cost",
+        "Operation",
+        "PackTheme",
+        "PackTier"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierShipPackSell": {
+      "name": "CarrierShipPackSell",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_ship_pack",
+      "total_fields": 6,
+      "fields": [
+        "CarrierID",
+        "CarrierType",
+        "Operation",
+        "PackTheme",
+        "PackTier",
+        "Refund"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierStats": {
+      "name": "CarrierStats",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_stats",
+      "total_fields": 15,
+      "fields": [
+        "AllowNotorious",
+        "Callsign",
+        "CarrierID",
+        "CarrierType",
+        "Crew",
+        "DockingAccess",
+        "Finance",
+        "FuelLevel",
+        "JumpRangeCurr",
+        "JumpRangeMax",
+        "ModulePacks",
+        "Name",
+        "PendingDecommission",
+        "ShipPacks",
+        "SpaceUsage"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "CarrierTradeOrder": {
+      "name": "CarrierTradeOrder",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_trade_order",
+      "total_fields": 9,
+      "fields": [
+        "BlackMarket",
+        "CancelTrade",
+        "CarrierID",
+        "CarrierType",
+        "Commodity",
+        "Commodity_Localised",
+        "Price",
+        "PurchaseOrder",
+        "SaleOrder"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "CarrierType"
+      ]
+    },
+    "ChangeCrewRole": {
+      "name": "ChangeCrewRole",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.change_crew_role",
+      "total_fields": 1,
+      "fields": [
+        "Role"
+      ],
+      "foreign_keys": []
+    },
+    "ChangedBackpackItem": {
+      "name": "ChangedBackpackItem",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.backpack_change",
+      "total_fields": 6,
+      "fields": [
+        "Count",
+        "MissionID",
+        "Name",
+        "Name_Localised",
+        "OwnerID",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "ClearSavedGame": {
+      "name": "ClearSavedGame",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.clear_saved_game",
+      "total_fields": 2,
+      "fields": [
+        "FID",
+        "Name"
+      ],
+      "foreign_keys": [
+        "FID"
+      ]
+    },
+    "CockpitBreached": {
+      "name": "CockpitBreached",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.cockpit_breached",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "CodexEntry": {
+      "name": "CodexEntry",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.codex_entry",
+      "total_fields": 20,
+      "fields": [
+        "BodyID",
+        "Category",
+        "Category_Localised",
+        "EntryID",
+        "IsNewEntry",
+        "Latitude",
+        "Longitude",
+        "Name",
+        "Name_Localised",
+        "NearestDestination",
+        "NearestDestination_Localised",
+        "NewTraitsDiscovered",
+        "Region",
+        "Region_Localised",
+        "SubCategory",
+        "SubCategory_Localised",
+        "System",
+        "SystemAddress",
+        "Traits",
+        "VoucherAmount"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "SystemAddress"
+      ]
+    },
+    "CollectCargo": {
+      "name": "CollectCargo",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.collect_cargo",
+      "total_fields": 4,
+      "fields": [
+        "MissionID",
+        "Stolen",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "CollectItems": {
+      "name": "CollectItems",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.collect_items",
+      "total_fields": 6,
+      "fields": [
+        "Count",
+        "Name",
+        "Name_Localised",
+        "OwnerID",
+        "Stolen",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "ColonisationConstructionDepot": {
+      "name": "ColonisationConstructionDepot",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.colonisation_construction_depot",
+      "total_fields": 5,
+      "fields": [
+        "ConstructionComplete",
+        "ConstructionFailed",
+        "ConstructionProgress",
+        "MarketID",
+        "ResourcesRequired"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ColonisationConstructionResource": {
+      "name": "ColonisationConstructionResource",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.colonisation_construction_depot",
+      "total_fields": 5,
+      "fields": [
+        "Name",
+        "Name_Localised",
+        "Payment",
+        "ProvidedAmount",
+        "RequiredAmount"
+      ],
+      "foreign_keys": []
+    },
+    "ColonisationContribution": {
+      "name": "ColonisationContribution",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.colonisation_contribution",
+      "total_fields": 2,
+      "fields": [
+        "Contributions",
+        "MarketID"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ColonisationContributionResource": {
+      "name": "ColonisationContributionResource",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.colonisation_contribution",
+      "total_fields": 3,
+      "fields": [
+        "Amount",
+        "Name",
+        "Name_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Commander": {
+      "name": "Commander",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.commander",
+      "total_fields": 2,
+      "fields": [
+        "FID",
+        "Name"
+      ],
+      "foreign_keys": [
+        "FID"
+      ]
+    },
+    "CommitCrime": {
+      "name": "CommitCrime",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.commit_crime",
+      "total_fields": 6,
+      "fields": [
+        "Bounty",
+        "CrimeType",
+        "Faction",
+        "Fine",
+        "Victim",
+        "Victim_Localised"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "CommunityGoal": {
+      "name": "CommunityGoal",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.community_goal",
+      "total_fields": 1,
+      "fields": [
+        "CurrentGoals"
+      ],
+      "foreign_keys": []
+    },
+    "CommunityGoalDiscard": {
+      "name": "CommunityGoalDiscard",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.community_goal_discard",
+      "total_fields": 3,
+      "fields": [
+        "CGID",
+        "Name",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "CommunityGoalJoin": {
+      "name": "CommunityGoalJoin",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.community_goal_join",
+      "total_fields": 3,
+      "fields": [
+        "CGID",
+        "Name",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "CommunityGoalReward": {
+      "name": "CommunityGoalReward",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.community_goal_reward",
+      "total_fields": 4,
+      "fields": [
+        "CGID",
+        "Name",
+        "Reward",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "Continued": {
+      "name": "Continued",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.continued",
+      "total_fields": 1,
+      "fields": [
+        "Part"
+      ],
+      "foreign_keys": []
+    },
+    "CreateSuitLoadout": {
+      "name": "CreateSuitLoadout",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.create_suit_loadout",
+      "total_fields": 7,
+      "fields": [
+        "LoadoutID",
+        "LoadoutName",
+        "Modules",
+        "SuitID",
+        "SuitMods",
+        "SuitName",
+        "SuitName_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "CrewAssign": {
+      "name": "CrewAssign",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.crew_assign",
+      "total_fields": 3,
+      "fields": [
+        "CrewID",
+        "Name",
+        "Role"
+      ],
+      "foreign_keys": []
+    },
+    "CrewFire": {
+      "name": "CrewFire",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.crew_fire",
+      "total_fields": 2,
+      "fields": [
+        "CrewID",
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "CrewHire": {
+      "name": "CrewHire",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.crew_hire",
+      "total_fields": 5,
+      "fields": [
+        "CombatRank",
+        "Cost",
+        "CrewID",
+        "Faction",
+        "Name"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "CrewLaunchFighter": {
+      "name": "CrewLaunchFighter",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.crew_launch_fighter",
+      "total_fields": 1,
+      "fields": [
+        "Crew"
+      ],
+      "foreign_keys": []
+    },
+    "CrewMemberJoins": {
+      "name": "CrewMemberJoins",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.crew_member_joins",
+      "total_fields": 2,
+      "fields": [
+        "Crew",
+        "Telepresence"
+      ],
+      "foreign_keys": []
+    },
+    "CrewMemberQuits": {
+      "name": "CrewMemberQuits",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.crew_member_quits",
+      "total_fields": 2,
+      "fields": [
+        "Crew",
+        "Telepresence"
+      ],
+      "foreign_keys": []
+    },
+    "CrewMemberRoleChange": {
+      "name": "CrewMemberRoleChange",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.crew_member_role_change",
+      "total_fields": 3,
+      "fields": [
+        "Crew",
+        "Role",
+        "Telepresence"
+      ],
+      "foreign_keys": []
+    },
+    "CrimeVictim": {
+      "name": "CrimeVictim",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.crime_victim",
+      "total_fields": 4,
+      "fields": [
+        "Bounty",
+        "CrimeType",
+        "Fine",
+        "Offender"
+      ],
+      "foreign_keys": []
+    },
+    "DataScanned": {
+      "name": "DataScanned",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.data_scanned",
+      "total_fields": 2,
+      "fields": [
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "DatalinkScan": {
+      "name": "DatalinkScan",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.datalink_scan",
+      "total_fields": 2,
+      "fields": [
+        "Message",
+        "Message_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "DatalinkVoucher": {
+      "name": "DatalinkVoucher",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.datalink_voucher",
+      "total_fields": 3,
+      "fields": [
+        "PayeeFaction",
+        "Reward",
+        "VictimFaction"
+      ],
+      "foreign_keys": []
+    },
+    "DeleteSuitLoadout": {
+      "name": "DeleteSuitLoadout",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.delete_suit_loadout",
+      "total_fields": 5,
+      "fields": [
+        "LoadoutID",
+        "LoadoutName",
+        "SuitID",
+        "SuitName",
+        "SuitName_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "DeliverPowerMicroResources": {
+      "name": "DeliverPowerMicroResources",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.deliver_power_micro_resources",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "MicroResources",
+        "TotalCount"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "Died": {
+      "name": "Died",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.died",
+      "total_fields": 4,
+      "fields": [
+        "KillerName",
+        "KillerName_Localised",
+        "KillerRank",
+        "KillerShip"
+      ],
+      "foreign_keys": []
+    },
+    "DiscoveryScan": {
+      "name": "DiscoveryScan",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.discovery_scan",
+      "total_fields": 2,
+      "fields": [
+        "Bodies",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "Disembark": {
+      "name": "Disembark",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.disembark",
+      "total_fields": 13,
+      "fields": [
+        "Body",
+        "BodyID",
+        "ID",
+        "MarketID",
+        "Multicrew",
+        "OnPlanet",
+        "OnStation",
+        "SRV",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress"
+      ]
+    },
+    "DockFighter": {
+      "name": "DockFighter",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.dock_fighter",
+      "total_fields": 1,
+      "fields": [
+        "ID"
+      ],
+      "foreign_keys": []
+    },
+    "DockSRV": {
+      "name": "DockSRV",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.dock_srv",
+      "total_fields": 3,
+      "fields": [
+        "ID",
+        "SRVType",
+        "SRVType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Docked": {
+      "name": "Docked",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docked",
+      "total_fields": 23,
+      "fields": [
+        "ActiveFine",
+        "CockpitBreach",
+        "DistFromStarLS",
+        "LandingPads",
+        "MarketID",
+        "Multicrew",
+        "Security",
+        "Security_Localised",
+        "StarSystem",
+        "StationAllegiance",
+        "StationEconomies",
+        "StationEconomy",
+        "StationEconomy_Localised",
+        "StationFaction",
+        "StationGovernment",
+        "StationGovernment_Localised",
+        "StationName",
+        "StationServices",
+        "StationState",
+        "StationType",
+        "SystemAddress",
+        "Taxi",
+        "Wanted"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress"
+      ]
+    },
+    "DockingCancelled": {
+      "name": "DockingCancelled",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docking_cancelled",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "DockingDenied": {
+      "name": "DockingDenied",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docking_denied",
+      "total_fields": 4,
+      "fields": [
+        "MarketID",
+        "Reason",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "DockingGranted": {
+      "name": "DockingGranted",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docking_granted",
+      "total_fields": 4,
+      "fields": [
+        "LandingPad",
+        "MarketID",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "DockingRequested": {
+      "name": "DockingRequested",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docking_requested",
+      "total_fields": 4,
+      "fields": [
+        "LandingPads",
+        "MarketID",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "DockingTimeout": {
+      "name": "DockingTimeout",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.docking_timeout",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "DropItems": {
+      "name": "DropItems",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.drop_items",
+      "total_fields": 5,
+      "fields": [
+        "Count",
+        "Name",
+        "Name_Localised",
+        "OwnerID",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "DropshipDeploy": {
+      "name": "DropshipDeploy",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.dropship_deploy",
+      "total_fields": 6,
+      "fields": [
+        "Body",
+        "BodyID",
+        "OnPlanet",
+        "OnStation",
+        "StarSystem",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "EjectCargo": {
+      "name": "EjectCargo",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.eject_cargo",
+      "total_fields": 5,
+      "fields": [
+        "Abandoned",
+        "Count",
+        "PowerplayOrigin",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Embark": {
+      "name": "Embark",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.embark",
+      "total_fields": 14,
+      "fields": [
+        "Body",
+        "BodyID",
+        "Crew",
+        "ID",
+        "MarketID",
+        "Multicrew",
+        "OnPlanet",
+        "OnStation",
+        "SRV",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress"
+      ]
+    },
+    "EndCrewSession": {
+      "name": "EndCrewSession",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.end_crew_session",
+      "total_fields": 2,
+      "fields": [
+        "OnCrime",
+        "Telepresence"
+      ],
+      "foreign_keys": []
+    },
+    "EngineerApply": {
+      "name": "EngineerApply",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_apply",
+      "total_fields": 4,
+      "fields": [
+        "Blueprint",
+        "Engineer",
+        "Level",
+        "Override"
+      ],
+      "foreign_keys": []
+    },
+    "EngineerBase": {
+      "name": "EngineerBase",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_progress",
+      "total_fields": 3,
+      "fields": [
+        "Engineer",
+        "EngineerID",
+        "Progress"
+      ],
+      "foreign_keys": []
+    },
+    "EngineerContribution": {
+      "name": "EngineerContribution",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_contribution",
+      "total_fields": 10,
+      "fields": [
+        "Commodity",
+        "Commodity_Localised",
+        "Engineer",
+        "EngineerID",
+        "Faction",
+        "Material",
+        "Material_Localised",
+        "Quantity",
+        "TotalQuantity",
+        "Type"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "EngineerCraft": {
+      "name": "EngineerCraft",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_craft",
+      "total_fields": 14,
+      "fields": [
+        "ApplyExperimentalEffect",
+        "Blueprint",
+        "BlueprintID",
+        "BlueprintName",
+        "Engineer",
+        "EngineerID",
+        "ExperimentalEffect",
+        "ExperimentalEffect_Localised",
+        "Ingredients",
+        "Level",
+        "Modifiers",
+        "Module",
+        "Quality",
+        "Slot"
+      ],
+      "foreign_keys": []
+    },
+    "EngineerLegacyConvert": {
+      "name": "EngineerLegacyConvert",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_legacy_convert",
+      "total_fields": 14,
+      "fields": [
+        "ApplyExperimentalEffect",
+        "Blueprint",
+        "BlueprintID",
+        "BlueprintName",
+        "Engineer",
+        "EngineerID",
+        "ExperimentalEffect",
+        "ExperimentalEffect_Localised",
+        "IsPreview",
+        "Level",
+        "Modifiers",
+        "Module",
+        "Quality",
+        "Slot"
+      ],
+      "foreign_keys": []
+    },
+    "EngineerProgress": {
+      "name": "EngineerProgress",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_progress",
+      "total_fields": 1,
+      "fields": [
+        "Engineers"
+      ],
+      "foreign_keys": []
+    },
+    "EscapeInterdiction": {
+      "name": "EscapeInterdiction",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.escape_interdiction",
+      "total_fields": 3,
+      "fields": [
+        "Interdictor",
+        "Interdictor_Localised",
+        "IsPlayer"
+      ],
+      "foreign_keys": []
+    },
+    "ExtendedFCMaterials": {
+      "name": "ExtendedFCMaterials",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.fc_materials",
+      "total_fields": 4,
+      "fields": [
+        "CarrierID",
+        "CarrierName",
+        "Items",
+        "MarketID"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "MarketID"
+      ]
+    },
+    "ExtendedMarket": {
+      "name": "ExtendedMarket",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.market",
+      "total_fields": 6,
+      "fields": [
+        "CarrierDockingAccess",
+        "Items",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "ExtendedModuleInfo": {
+      "name": "ExtendedModuleInfo",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.module_info",
+      "total_fields": 1,
+      "fields": [
+        "Modules"
+      ],
+      "foreign_keys": []
+    },
+    "ExtendedNavRoute": {
+      "name": "ExtendedNavRoute",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.nav_route",
+      "total_fields": 1,
+      "fields": [
+        "Route"
+      ],
+      "foreign_keys": []
+    },
+    "ExtendedOutfitting": {
+      "name": "ExtendedOutfitting",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.outfitting",
+      "total_fields": 5,
+      "fields": [
+        "Horizons",
+        "Items",
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "ExtendedShipyard": {
+      "name": "ExtendedShipyard",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard",
+      "total_fields": 6,
+      "fields": [
+        "AllowCobraMkIV",
+        "Horizons",
+        "MarketID",
+        "PriceList",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "FCMaterials": {
+      "name": "FCMaterials",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.fc_materials",
+      "total_fields": 3,
+      "fields": [
+        "CarrierID",
+        "CarrierName",
+        "MarketID"
+      ],
+      "foreign_keys": [
+        "CarrierID",
+        "MarketID"
+      ]
+    },
+    "FSDJump": {
+      "name": "FSDJump",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.fsd_jump",
+      "total_fields": 34,
+      "fields": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "BoostUsed",
+        "Conflicts",
+        "ControllingPower",
+        "Factions",
+        "FuelLevel",
+        "FuelUsed",
+        "JumpDist",
+        "Multicrew",
+        "Population",
+        "PowerplayConflictProgress",
+        "PowerplayState",
+        "PowerplayStateControlProgress",
+        "PowerplayStateReinforcement",
+        "PowerplayStateUndermining",
+        "Powers",
+        "StarPos",
+        "StarSystem",
+        "SystemAddress",
+        "SystemAllegiance",
+        "SystemEconomy",
+        "SystemEconomy_Localised",
+        "SystemFaction",
+        "SystemGovernment",
+        "SystemGovernment_Localised",
+        "SystemSecondEconomy",
+        "SystemSecondEconomy_Localised",
+        "SystemSecurity",
+        "SystemSecurity_Localised",
+        "Taxi",
+        "ThargoidWar",
+        "Wanted"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "FSDTarget": {
+      "name": "FSDTarget",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.fsd_target",
+      "total_fields": 4,
+      "fields": [
+        "Name",
+        "RemainingJumpsInRoute",
+        "StarClass",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "FSSAllBodiesFound": {
+      "name": "FSSAllBodiesFound",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.fss_all_bodies_found",
+      "total_fields": 3,
+      "fields": [
+        "Count",
+        "SystemAddress",
+        "SystemName"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "FSSBodySignals": {
+      "name": "FSSBodySignals",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.fss_body_signals",
+      "total_fields": 4,
+      "fields": [
+        "BodyID",
+        "BodyName",
+        "Signals",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "SystemAddress"
+      ]
+    },
+    "FSSDiscoveryScan": {
+      "name": "FSSDiscoveryScan",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.fss_discovery_scan",
+      "total_fields": 5,
+      "fields": [
+        "BodyCount",
+        "NonBodyCount",
+        "Progress",
+        "SystemAddress",
+        "SystemName"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "FSSSignalDiscovered": {
+      "name": "FSSSignalDiscovered",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.fss_signal_discovered",
+      "total_fields": 15,
+      "fields": [
+        "IsStation",
+        "OpposingPower",
+        "SignalName",
+        "SignalName_Localised",
+        "SignalType",
+        "SpawningFaction",
+        "SpawningFaction_Localised",
+        "SpawningPower",
+        "SpawningState",
+        "SpawningState_Localised",
+        "SystemAddress",
+        "ThreatLevel",
+        "TimeRemaining",
+        "USSType",
+        "USSType_Localised"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "FactionKillBond": {
+      "name": "FactionKillBond",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.faction_kill_bond",
+      "total_fields": 5,
+      "fields": [
+        "AwardingFaction",
+        "AwardingFaction_Localised",
+        "Reward",
+        "VictimFaction",
+        "VictimFaction_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "FetchRemoteModule": {
+      "name": "FetchRemoteModule",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.fetch_remote_module",
+      "total_fields": 8,
+      "fields": [
+        "ServerId",
+        "Ship",
+        "ShipID",
+        "StorageSlot",
+        "StoredItem",
+        "StoredItem_Localised",
+        "TransferCost",
+        "TransferTime"
+      ],
+      "foreign_keys": [
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "FighterDestroyed": {
+      "name": "FighterDestroyed",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.fighter_destroyed",
+      "total_fields": 1,
+      "fields": [
+        "ID"
+      ],
+      "foreign_keys": []
+    },
+    "FighterRebuilt": {
+      "name": "FighterRebuilt",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.fighter_rebuilt",
+      "total_fields": 2,
+      "fields": [
+        "ID",
+        "Loadout"
+      ],
+      "foreign_keys": []
+    },
+    "Fileheader": {
+      "name": "Fileheader",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.fileheader",
+      "total_fields": 5,
+      "fields": [
+        "Odyssey",
+        "build",
+        "gameversion",
+        "language",
+        "part"
+      ],
+      "foreign_keys": []
+    },
+    "Friends": {
+      "name": "Friends",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.friends",
+      "total_fields": 2,
+      "fields": [
+        "Name",
+        "Status"
+      ],
+      "foreign_keys": []
+    },
+    "FuelScoop": {
+      "name": "FuelScoop",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.fuel_scoop",
+      "total_fields": 2,
+      "fields": [
+        "Scooped",
+        "Total"
+      ],
+      "foreign_keys": []
+    },
+    "GameModeChange": {
+      "name": "GameModeChange",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.game_mode_change",
+      "total_fields": 1,
+      "fields": [
+        "GameMode"
+      ],
+      "foreign_keys": []
+    },
+    "HeatDamage": {
+      "name": "HeatDamage",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.heat_damage",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "HeatWarning": {
+      "name": "HeatWarning",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.heat_warning",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "HullDamage": {
+      "name": "HullDamage",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.hull_damage",
+      "total_fields": 3,
+      "fields": [
+        "Fighter",
+        "Health",
+        "PlayerPilot"
+      ],
+      "foreign_keys": []
+    },
+    "Interdicted": {
+      "name": "Interdicted",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.interdicted",
+      "total_fields": 7,
+      "fields": [
+        "CombatRank",
+        "Faction",
+        "Interdictor",
+        "Interdictor_Localised",
+        "IsPlayer",
+        "Power",
+        "Submitted"
+      ],
+      "foreign_keys": [
+        "Faction",
+        "Power"
+      ]
+    },
+    "Interdiction": {
+      "name": "Interdiction",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.interdiction",
+      "total_fields": 6,
+      "fields": [
+        "CombatRank",
+        "Faction",
+        "Interdicted",
+        "IsPlayer",
+        "Power",
+        "Success"
+      ],
+      "foreign_keys": [
+        "Faction",
+        "Power"
+      ]
+    },
+    "InvitedToSquadron": {
+      "name": "InvitedToSquadron",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.invited_to_squadron",
+      "total_fields": 1,
+      "fields": [
+        "SquadronName"
+      ],
+      "foreign_keys": []
+    },
+    "JetConeBoost": {
+      "name": "JetConeBoost",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.jet_cone_boost",
+      "total_fields": 1,
+      "fields": [
+        "BoostValue"
+      ],
+      "foreign_keys": []
+    },
+    "JetConeDamage": {
+      "name": "JetConeDamage",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.jet_cone_damage",
+      "total_fields": 2,
+      "fields": [
+        "Module",
+        "Module_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "JoinACrew": {
+      "name": "JoinACrew",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.join_a_crew",
+      "total_fields": 1,
+      "fields": [
+        "Captain"
+      ],
+      "foreign_keys": []
+    },
+    "JoinedSquadron": {
+      "name": "JoinedSquadron",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.joined_squadron",
+      "total_fields": 2,
+      "fields": [
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "KickCrewMember": {
+      "name": "KickCrewMember",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.kick_crew_member",
+      "total_fields": 2,
+      "fields": [
+        "Crew",
+        "OnCrime"
+      ],
+      "foreign_keys": []
+    },
+    "LaunchDrone": {
+      "name": "LaunchDrone",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.launch_drone",
+      "total_fields": 1,
+      "fields": [
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "LaunchFighter": {
+      "name": "LaunchFighter",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.launch_fighter",
+      "total_fields": 3,
+      "fields": [
+        "ID",
+        "Loadout",
+        "PlayerControlled"
+      ],
+      "foreign_keys": []
+    },
+    "LaunchSRV": {
+      "name": "LaunchSRV",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.launch_srv",
+      "total_fields": 5,
+      "fields": [
+        "ID",
+        "Loadout",
+        "PlayerControlled",
+        "SRVType",
+        "SRVType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "LeaveBody": {
+      "name": "LeaveBody",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.leave_body",
+      "total_fields": 4,
+      "fields": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "LeftSquadron": {
+      "name": "LeftSquadron",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.left_squadron",
+      "total_fields": 2,
+      "fields": [
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "Liftoff": {
+      "name": "Liftoff",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.liftoff",
+      "total_fields": 13,
+      "fields": [
+        "Body",
+        "BodyID",
+        "Latitude",
+        "Longitude",
+        "Multicrew",
+        "NearestDestination",
+        "NearestDestination_Localised",
+        "OnPlanet",
+        "OnStation",
+        "PlayerControlled",
+        "StarSystem",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "LoadGame": {
+      "name": "LoadGame",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.load_game",
+      "total_fields": 20,
+      "fields": [
+        "Commander",
+        "Credits",
+        "FID",
+        "FuelCapacity",
+        "FuelLevel",
+        "GameMode",
+        "Group",
+        "Horizons",
+        "Loan",
+        "Odyssey",
+        "Ship",
+        "ShipID",
+        "ShipIdent",
+        "ShipName",
+        "Ship_Localised",
+        "StartDead",
+        "StartLanded",
+        "build",
+        "gameversion",
+        "language"
+      ],
+      "foreign_keys": [
+        "Commander",
+        "FID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "Loadout": {
+      "name": "Loadout",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.loadout",
+      "total_fields": 14,
+      "fields": [
+        "CargoCapacity",
+        "FuelCapacity",
+        "Hot",
+        "HullHealth",
+        "HullValue",
+        "MaxJumpRange",
+        "Modules",
+        "ModulesValue",
+        "Rebuy",
+        "Ship",
+        "ShipID",
+        "ShipIdent",
+        "ShipName",
+        "UnladenMass"
+      ],
+      "foreign_keys": [
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "LoadoutEquipModule": {
+      "name": "LoadoutEquipModule",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.loadout_equip_module",
+      "total_fields": 11,
+      "fields": [
+        "Class",
+        "LoadoutID",
+        "LoadoutName",
+        "ModuleName",
+        "ModuleName_Localised",
+        "SlotName",
+        "SuitID",
+        "SuitModuleID",
+        "SuitName",
+        "SuitName_Localised",
+        "WeaponMods"
+      ],
+      "foreign_keys": []
+    },
+    "Location": {
+      "name": "Location",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.location",
+      "total_fields": 48,
+      "fields": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "Body_Localised",
+        "Conflicts",
+        "ControllingPower",
+        "DistFromStarLS",
+        "Docked",
+        "Factions",
+        "InSRV",
+        "Latitude",
+        "Longitude",
+        "MarketID",
+        "Multicrew",
+        "OnFoot",
+        "Population",
+        "PowerplayConflictProgress",
+        "PowerplayState",
+        "PowerplayStateControlProgress",
+        "PowerplayStateReinforcement",
+        "PowerplayStateUndermining",
+        "Powers",
+        "StarPos",
+        "StarSystem",
+        "StationAllegiance",
+        "StationEconomies",
+        "StationEconomy",
+        "StationEconomy_Localised",
+        "StationFaction",
+        "StationGovernment",
+        "StationGovernment_Localised",
+        "StationName",
+        "StationServices",
+        "StationType",
+        "SystemAddress",
+        "SystemAllegiance",
+        "SystemEconomy",
+        "SystemEconomy_Localised",
+        "SystemFaction",
+        "SystemGovernment",
+        "SystemGovernment_Localised",
+        "SystemSecondEconomy",
+        "SystemSecondEconomy_Localised",
+        "SystemSecurity",
+        "SystemSecurity_Localised",
+        "Taxi",
+        "ThargoidWar",
+        "Wanted"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType",
+        "SystemAddress"
+      ]
+    },
+    "LockedEngineer": {
+      "name": "LockedEngineer",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_progress",
+      "total_fields": 3,
+      "fields": [
+        "Engineer",
+        "EngineerID",
+        "Progress"
+      ],
+      "foreign_keys": []
+    },
+    "Market": {
+      "name": "Market",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.market",
+      "total_fields": 5,
+      "fields": [
+        "CarrierDockingAccess",
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "MarketBuy": {
+      "name": "MarketBuy",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.market_buy",
+      "total_fields": 6,
+      "fields": [
+        "BuyPrice",
+        "Count",
+        "MarketID",
+        "TotalCost",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "MarketSell": {
+      "name": "MarketSell",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.market_sell",
+      "total_fields": 10,
+      "fields": [
+        "AvgPricePaid",
+        "BlackMarket",
+        "Count",
+        "IllegalGoods",
+        "MarketID",
+        "SellPrice",
+        "StolenGoods",
+        "TotalSale",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "MassModuleStore": {
+      "name": "MassModuleStore",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mass_module_store",
+      "total_fields": 4,
+      "fields": [
+        "Items",
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "Material": {
+      "name": "Material",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.materials",
+      "total_fields": 3,
+      "fields": [
+        "Count",
+        "Name",
+        "Name_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "MaterialCollected": {
+      "name": "MaterialCollected",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.material_collected",
+      "total_fields": 4,
+      "fields": [
+        "Category",
+        "Count",
+        "Name",
+        "Name_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "MaterialDiscarded": {
+      "name": "MaterialDiscarded",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.material_discarded",
+      "total_fields": 3,
+      "fields": [
+        "Category",
+        "Count",
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "MaterialDiscovered": {
+      "name": "MaterialDiscovered",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.material_discovered",
+      "total_fields": 4,
+      "fields": [
+        "Category",
+        "DiscoveryNumber",
+        "Name",
+        "Name_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "MaterialTrade": {
+      "name": "MaterialTrade",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.material_trade",
+      "total_fields": 4,
+      "fields": [
+        "MarketID",
+        "Paid",
+        "Received",
+        "TraderType"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "Materials": {
+      "name": "Materials",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.materials",
+      "total_fields": 3,
+      "fields": [
+        "Encoded",
+        "Manufactured",
+        "Raw"
+      ],
+      "foreign_keys": []
+    },
+    "MiningRefined": {
+      "name": "MiningRefined",
+      "domain": "trade",
+      "module": "ed_models.core.domain.events.trade.mining_refined",
+      "total_fields": 2,
+      "fields": [
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Mission": {
+      "name": "Mission",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.missions",
+      "total_fields": 5,
+      "fields": [
+        "Expires",
+        "MissionID",
+        "Name",
+        "Name_Localised",
+        "PassengerMission"
+      ],
+      "foreign_keys": []
+    },
+    "MissionAbandoned": {
+      "name": "MissionAbandoned",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mission_abandoned",
+      "total_fields": 4,
+      "fields": [
+        "Fine",
+        "LocalisedName",
+        "MissionID",
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "MissionAccepted": {
+      "name": "MissionAccepted",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mission_accepted",
+      "total_fields": 26,
+      "fields": [
+        "Commodity",
+        "Commodity_Localised",
+        "Count",
+        "DestinationSettlement",
+        "DestinationStation",
+        "DestinationSystem",
+        "Donation",
+        "Expiry",
+        "Faction",
+        "Influence",
+        "KillCount",
+        "LocalisedName",
+        "MissionID",
+        "Name",
+        "PassengerCount",
+        "PassengerType",
+        "PassengerVIPs",
+        "PassengerWanted",
+        "Reputation",
+        "Reward",
+        "Target",
+        "TargetFaction",
+        "TargetType",
+        "TargetType_Localised",
+        "Target_Localised",
+        "Wing"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "MissionCompleted": {
+      "name": "MissionCompleted",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mission_completed",
+      "total_fields": 25,
+      "fields": [
+        "Commodity",
+        "CommodityReward",
+        "Commodity_Localised",
+        "Count",
+        "DestinationSettlement",
+        "DestinationStation",
+        "DestinationSystem",
+        "Donated",
+        "Donation",
+        "Faction",
+        "FactionEffects",
+        "KillCount",
+        "LocalisedName",
+        "MaterialsReward",
+        "MissionID",
+        "Name",
+        "NewDestinationStation",
+        "NewDestinationSystem",
+        "PermitsAwarded",
+        "Reward",
+        "Target",
+        "TargetFaction",
+        "TargetType",
+        "TargetType_Localised",
+        "Target_Localised"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "MissionFailed": {
+      "name": "MissionFailed",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mission_failed",
+      "total_fields": 4,
+      "fields": [
+        "Fine",
+        "LocalisedName",
+        "MissionID",
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "MissionRedirected": {
+      "name": "MissionRedirected",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.mission_redirected",
+      "total_fields": 7,
+      "fields": [
+        "LocalisedName",
+        "MissionID",
+        "Name",
+        "NewDestinationStation",
+        "NewDestinationSystem",
+        "OldDestinationStation",
+        "OldDestinationSystem"
+      ],
+      "foreign_keys": []
+    },
+    "Missions": {
+      "name": "Missions",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.missions",
+      "total_fields": 3,
+      "fields": [
+        "Active",
+        "Complete",
+        "Failed"
+      ],
+      "foreign_keys": []
+    },
+    "ModuleBuy": {
+      "name": "ModuleBuy",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_buy",
+      "total_fields": 12,
+      "fields": [
+        "BuyItem",
+        "BuyItem_Localised",
+        "BuyPrice",
+        "MarketID",
+        "SellItem",
+        "SellItem_Localised",
+        "SellPrice",
+        "Ship",
+        "ShipID",
+        "Slot",
+        "StoredItem",
+        "StoredItem_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleBuyAndStore": {
+      "name": "ModuleBuyAndStore",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_buy_and_store",
+      "total_fields": 6,
+      "fields": [
+        "BuyItem",
+        "BuyItem_Localised",
+        "BuyPrice",
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleInfo": {
+      "name": "ModuleInfo",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.module_info",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "ModuleRetrieve": {
+      "name": "ModuleRetrieve",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_retrieve",
+      "total_fields": 13,
+      "fields": [
+        "Cost",
+        "EngineerModifications",
+        "Hot",
+        "Level",
+        "MarketID",
+        "Quality",
+        "RetrievedItem",
+        "RetrievedItem_Localised",
+        "Ship",
+        "ShipID",
+        "Slot",
+        "SwapOutItem",
+        "SwapOutItem_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleSell": {
+      "name": "ModuleSell",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_sell",
+      "total_fields": 7,
+      "fields": [
+        "MarketID",
+        "SellItem",
+        "SellItem_Localised",
+        "SellPrice",
+        "Ship",
+        "ShipID",
+        "Slot"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleSellRemote": {
+      "name": "ModuleSellRemote",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_sell_remote",
+      "total_fields": 7,
+      "fields": [
+        "SellItem",
+        "SellItem_Localised",
+        "SellPrice",
+        "ServerId",
+        "Ship",
+        "ShipID",
+        "StorageSlot"
+      ],
+      "foreign_keys": [
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleStore": {
+      "name": "ModuleStore",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_store",
+      "total_fields": 12,
+      "fields": [
+        "Cost",
+        "EngineerModifications",
+        "Hot",
+        "Level",
+        "MarketID",
+        "Quality",
+        "ReplacementItem",
+        "Ship",
+        "ShipID",
+        "Slot",
+        "StoredItem",
+        "StoredItem_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "ModuleSwap": {
+      "name": "ModuleSwap",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.module_swap",
+      "total_fields": 9,
+      "fields": [
+        "FromItem",
+        "FromItem_Localised",
+        "FromSlot",
+        "MarketID",
+        "Ship",
+        "ShipID",
+        "ToItem",
+        "ToItem_Localised",
+        "ToSlot"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "MultiSellExplorationData": {
+      "name": "MultiSellExplorationData",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.multi_sell_exploration_data",
+      "total_fields": 4,
+      "fields": [
+        "BaseValue",
+        "Bonus",
+        "Discovered",
+        "TotalEarnings"
+      ],
+      "foreign_keys": []
+    },
+    "Music": {
+      "name": "Music",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.music",
+      "total_fields": 1,
+      "fields": [
+        "MusicTrack"
+      ],
+      "foreign_keys": []
+    },
+    "NavBeaconScan": {
+      "name": "NavBeaconScan",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.nav_beacon_scan",
+      "total_fields": 2,
+      "fields": [
+        "NumBodies",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "SystemAddress"
+      ]
+    },
+    "NavRoute": {
+      "name": "NavRoute",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.nav_route",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "NavRouteClear": {
+      "name": "NavRouteClear",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.nav_route_clear",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "NewBuyMicroResources": {
+      "name": "NewBuyMicroResources",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.buy_micro_resources",
+      "total_fields": 4,
+      "fields": [
+        "MarketID",
+        "MicroResources",
+        "Price",
+        "TotalCount"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "NewCommander": {
+      "name": "NewCommander",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.new_commander",
+      "total_fields": 3,
+      "fields": [
+        "FID",
+        "Name",
+        "Package"
+      ],
+      "foreign_keys": [
+        "FID"
+      ]
+    },
+    "NpcCrewPaidWage": {
+      "name": "NpcCrewPaidWage",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.npc_crew_paid_wage",
+      "total_fields": 3,
+      "fields": [
+        "Amount",
+        "NpcCrewId",
+        "NpcCrewName"
+      ],
+      "foreign_keys": []
+    },
+    "NpcCrewRank": {
+      "name": "NpcCrewRank",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.npc_crew_rank",
+      "total_fields": 3,
+      "fields": [
+        "NpcCrewId",
+        "NpcCrewName",
+        "RankCombat"
+      ],
+      "foreign_keys": []
+    },
+    "OldBuyMicroResources": {
+      "name": "OldBuyMicroResources",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.buy_micro_resources",
+      "total_fields": 6,
+      "fields": [
+        "Category",
+        "Count",
+        "MarketID",
+        "Name",
+        "Name_Localised",
+        "Price"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "Outfitting": {
+      "name": "Outfitting",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.outfitting",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "PVPKill": {
+      "name": "PVPKill",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.pvp_kill",
+      "total_fields": 2,
+      "fields": [
+        "CombatRank",
+        "Victim"
+      ],
+      "foreign_keys": []
+    },
+    "Pack": {
+      "name": "Pack",
+      "domain": "carrier",
+      "module": "ed_models.core.domain.events.carrier.carrier_stats",
+      "total_fields": 2,
+      "fields": [
+        "PackTheme",
+        "PackTier"
+      ],
+      "foreign_keys": []
+    },
+    "Passengers": {
+      "name": "Passengers",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.passengers",
+      "total_fields": 1,
+      "fields": [
+        "Manifest"
+      ],
+      "foreign_keys": []
+    },
+    "PayBounties": {
+      "name": "PayBounties",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.pay_bounties",
+      "total_fields": 6,
+      "fields": [
+        "AllFines",
+        "Amount",
+        "BrokerPercentage",
+        "Faction",
+        "Faction_Localised",
+        "ShipID"
+      ],
+      "foreign_keys": [
+        "Faction",
+        "ShipID"
+      ]
+    },
+    "PayFines": {
+      "name": "PayFines",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.pay_fines",
+      "total_fields": 6,
+      "fields": [
+        "AllFines",
+        "Amount",
+        "BrokerPercentage",
+        "Faction",
+        "Faction_Localised",
+        "ShipID"
+      ],
+      "foreign_keys": [
+        "Faction",
+        "ShipID"
+      ]
+    },
+    "PayLegacyFines": {
+      "name": "PayLegacyFines",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.pay_legacy_fines",
+      "total_fields": 2,
+      "fields": [
+        "Amount",
+        "BrokerPercentage"
+      ],
+      "foreign_keys": []
+    },
+    "Powerplay": {
+      "name": "Powerplay",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.powerplay",
+      "total_fields": 5,
+      "fields": [
+        "Merits",
+        "Power",
+        "Rank",
+        "TimePledged",
+        "Votes"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayCollect": {
+      "name": "PowerplayCollect",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_collect",
+      "total_fields": 4,
+      "fields": [
+        "Count",
+        "Power",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayDefect": {
+      "name": "PowerplayDefect",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_defect",
+      "total_fields": 2,
+      "fields": [
+        "FromPower",
+        "ToPower"
+      ],
+      "foreign_keys": []
+    },
+    "PowerplayDeliver": {
+      "name": "PowerplayDeliver",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_deliver",
+      "total_fields": 4,
+      "fields": [
+        "Count",
+        "Power",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayFastTrack": {
+      "name": "PowerplayFastTrack",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_fast_track",
+      "total_fields": 2,
+      "fields": [
+        "Cost",
+        "Power"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayJoin": {
+      "name": "PowerplayJoin",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_join",
+      "total_fields": 1,
+      "fields": [
+        "Power"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayLeave": {
+      "name": "PowerplayLeave",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_leave",
+      "total_fields": 1,
+      "fields": [
+        "Power"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayMerits": {
+      "name": "PowerplayMerits",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_merits",
+      "total_fields": 3,
+      "fields": [
+        "MeritsGained",
+        "Power",
+        "TotalMerits"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayRank": {
+      "name": "PowerplayRank",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_rank",
+      "total_fields": 2,
+      "fields": [
+        "Power",
+        "Rank"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplaySalary": {
+      "name": "PowerplaySalary",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_salary",
+      "total_fields": 2,
+      "fields": [
+        "Amount",
+        "Power"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayVote": {
+      "name": "PowerplayVote",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_vote",
+      "total_fields": 3,
+      "fields": [
+        "Power",
+        "System",
+        "Votes"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "PowerplayVoucher": {
+      "name": "PowerplayVoucher",
+      "domain": "powerplay",
+      "module": "ed_models.core.domain.events.powerplay.powerplay_voucher",
+      "total_fields": 2,
+      "fields": [
+        "Power",
+        "Systems"
+      ],
+      "foreign_keys": [
+        "Power"
+      ]
+    },
+    "Progress": {
+      "name": "Progress",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.progress",
+      "total_fields": 8,
+      "fields": [
+        "CQC",
+        "Combat",
+        "Empire",
+        "Exobiologist",
+        "Explore",
+        "Federation",
+        "Soldier",
+        "Trade"
+      ],
+      "foreign_keys": []
+    },
+    "Promotion": {
+      "name": "Promotion",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.promotion",
+      "total_fields": 8,
+      "fields": [
+        "CQC",
+        "Combat",
+        "Empire",
+        "Exobiologist",
+        "Explore",
+        "Federation",
+        "Soldier",
+        "Trade"
+      ],
+      "foreign_keys": []
+    },
+    "ProspectedAsteroid": {
+      "name": "ProspectedAsteroid",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.prospected_asteroid",
+      "total_fields": 6,
+      "fields": [
+        "Content",
+        "Content_Localised",
+        "Materials",
+        "MotherlodeMaterial",
+        "MotherlodeMaterial_Localised",
+        "Remaining"
+      ],
+      "foreign_keys": []
+    },
+    "QuitACrew": {
+      "name": "QuitACrew",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.quit_a_crew",
+      "total_fields": 1,
+      "fields": [
+        "Captain"
+      ],
+      "foreign_keys": []
+    },
+    "Rank": {
+      "name": "Rank",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.rank",
+      "total_fields": 8,
+      "fields": [
+        "CQC",
+        "Combat",
+        "Empire",
+        "Exobiologist",
+        "Explore",
+        "Federation",
+        "Soldier",
+        "Trade"
+      ],
+      "foreign_keys": []
+    },
+    "RebootRepair": {
+      "name": "RebootRepair",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.reboot_repair",
+      "total_fields": 1,
+      "fields": [
+        "Modules"
+      ],
+      "foreign_keys": []
+    },
+    "ReceiveText": {
+      "name": "ReceiveText",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.receive_text",
+      "total_fields": 5,
+      "fields": [
+        "Channel",
+        "From",
+        "From_Localised",
+        "Message",
+        "Message_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "RedeemVoucher": {
+      "name": "RedeemVoucher",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.redeem_voucher",
+      "total_fields": 5,
+      "fields": [
+        "Amount",
+        "BrokerPercentage",
+        "Faction",
+        "Factions",
+        "Type"
+      ],
+      "foreign_keys": [
+        "Faction"
+      ]
+    },
+    "RefuelAll": {
+      "name": "RefuelAll",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.refuel_all",
+      "total_fields": 2,
+      "fields": [
+        "Amount",
+        "Cost"
+      ],
+      "foreign_keys": []
+    },
+    "RefuelPartial": {
+      "name": "RefuelPartial",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.refuel_partial",
+      "total_fields": 2,
+      "fields": [
+        "Amount",
+        "Cost"
+      ],
+      "foreign_keys": []
+    },
+    "RenameSuitLoadout": {
+      "name": "RenameSuitLoadout",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.rename_suit_loadout",
+      "total_fields": 5,
+      "fields": [
+        "LoadoutID",
+        "LoadoutName",
+        "SuitID",
+        "SuitName",
+        "SuitName_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Repair": {
+      "name": "Repair",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.repair",
+      "total_fields": 4,
+      "fields": [
+        "Cost",
+        "Item",
+        "Item_Localised",
+        "Items"
+      ],
+      "foreign_keys": []
+    },
+    "RepairAll": {
+      "name": "RepairAll",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.repair_all",
+      "total_fields": 1,
+      "fields": [
+        "Cost"
+      ],
+      "foreign_keys": []
+    },
+    "RepairDrone": {
+      "name": "RepairDrone",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.repair_drone",
+      "total_fields": 3,
+      "fields": [
+        "CockpitRepaired",
+        "CorrosionRepaired",
+        "HullRepaired"
+      ],
+      "foreign_keys": []
+    },
+    "Reputation": {
+      "name": "Reputation",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.reputation",
+      "total_fields": 4,
+      "fields": [
+        "Alliance",
+        "Empire",
+        "Federation",
+        "Independent"
+      ],
+      "foreign_keys": []
+    },
+    "ReservoirReplenished": {
+      "name": "ReservoirReplenished",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.reservoir_replenished",
+      "total_fields": 2,
+      "fields": [
+        "FuelMain",
+        "FuelReservoir"
+      ],
+      "foreign_keys": []
+    },
+    "RestockVehicle": {
+      "name": "RestockVehicle",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.restock_vehicle",
+      "total_fields": 6,
+      "fields": [
+        "Cost",
+        "Count",
+        "ID",
+        "Loadout",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Resupply": {
+      "name": "Resupply",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.resupply",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "Resurrect": {
+      "name": "Resurrect",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.resurrect",
+      "total_fields": 3,
+      "fields": [
+        "Bankrupt",
+        "Cost",
+        "Option"
+      ],
+      "foreign_keys": []
+    },
+    "Ring": {
+      "name": "Ring",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan",
+      "total_fields": 5,
+      "fields": [
+        "InnerRad",
+        "MassMT",
+        "Name",
+        "OuterRad",
+        "RingClass"
+      ],
+      "foreign_keys": []
+    },
+    "SAAScanComplete": {
+      "name": "SAAScanComplete",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.saa_scan_complete",
+      "total_fields": 5,
+      "fields": [
+        "BodyID",
+        "BodyName",
+        "EfficiencyTarget",
+        "ProbesUsed",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "SystemAddress"
+      ]
+    },
+    "SAASignalsFound": {
+      "name": "SAASignalsFound",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.saa_signals_found",
+      "total_fields": 5,
+      "fields": [
+        "BodyID",
+        "BodyName",
+        "Genuses",
+        "Signals",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "SystemAddress"
+      ]
+    },
+    "SRVDestroyed": {
+      "name": "SRVDestroyed",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.srv_destroyed",
+      "total_fields": 3,
+      "fields": [
+        "ID",
+        "SRVType",
+        "SRVType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "ScanBaryCentre": {
+      "name": "ScanBaryCentre",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan_bary_centre",
+      "total_fields": 10,
+      "fields": [
+        "AscendingNode",
+        "BodyID",
+        "Eccentricity",
+        "MeanAnomaly",
+        "OrbitalInclination",
+        "OrbitalPeriod",
+        "Periapsis",
+        "SemiMajorAxis",
+        "StarSystem",
+        "SystemAddress"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "ScanBody": {
+      "name": "ScanBody",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan",
+      "total_fields": 19,
+      "fields": [
+        "AscendingNode",
+        "AxialTilt",
+        "BodyID",
+        "BodyName",
+        "DistanceFromArrivalLS",
+        "Eccentricity",
+        "MeanAnomaly",
+        "OrbitalInclination",
+        "OrbitalPeriod",
+        "Parents",
+        "Periapsis",
+        "Rings",
+        "ScanType",
+        "SemiMajorAxis",
+        "StarSystem",
+        "SystemAddress",
+        "WasDiscovered",
+        "WasFootfalled",
+        "WasMapped"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "ScanOrganic": {
+      "name": "ScanOrganic",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.scan_organic",
+      "total_fields": 10,
+      "fields": [
+        "Body",
+        "Genus",
+        "Genus_Localised",
+        "ScanType",
+        "Species",
+        "Species_Localised",
+        "SystemAddress",
+        "Variant",
+        "Variant_Localised",
+        "WasLogged"
+      ],
+      "foreign_keys": [
+        "Body",
+        "SystemAddress"
+      ]
+    },
+    "ScanOther": {
+      "name": "ScanOther",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan",
+      "total_fields": 21,
+      "fields": [
+        "AscendingNode",
+        "AxialTilt",
+        "BodyID",
+        "BodyName",
+        "DistanceFromArrivalLS",
+        "Eccentricity",
+        "MeanAnomaly",
+        "OrbitalInclination",
+        "OrbitalPeriod",
+        "Parents",
+        "Periapsis",
+        "PlanetClass",
+        "Rings",
+        "ScanType",
+        "SemiMajorAxis",
+        "StarSystem",
+        "StarType",
+        "SystemAddress",
+        "WasDiscovered",
+        "WasFootfalled",
+        "WasMapped"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "ScanPlanet": {
+      "name": "ScanPlanet",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan",
+      "total_fields": 37,
+      "fields": [
+        "AscendingNode",
+        "Atmosphere",
+        "AtmosphereComposition",
+        "AtmosphereType",
+        "AxialTilt",
+        "BodyID",
+        "BodyName",
+        "Composition",
+        "DistanceFromArrivalLS",
+        "Eccentricity",
+        "Landable",
+        "MassEM",
+        "Materials",
+        "MeanAnomaly",
+        "OrbitalInclination",
+        "OrbitalPeriod",
+        "Parents",
+        "Periapsis",
+        "PlanetClass",
+        "Radius",
+        "ReserveLevel",
+        "Rings",
+        "RotationPeriod",
+        "ScanType",
+        "SemiMajorAxis",
+        "StarSystem",
+        "StarType",
+        "SurfaceGravity",
+        "SurfacePressure",
+        "SurfaceTemperature",
+        "SystemAddress",
+        "TerraformState",
+        "TidalLock",
+        "Volcanism",
+        "WasDiscovered",
+        "WasFootfalled",
+        "WasMapped"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "ScanStar": {
+      "name": "ScanStar",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.scan",
+      "total_fields": 29,
+      "fields": [
+        "AbsoluteMagnitude",
+        "Age_MY",
+        "AscendingNode",
+        "AxialTilt",
+        "BodyID",
+        "BodyName",
+        "DistanceFromArrivalLS",
+        "Eccentricity",
+        "Luminosity",
+        "MeanAnomaly",
+        "OrbitalInclination",
+        "OrbitalPeriod",
+        "Parents",
+        "Periapsis",
+        "PlanetClass",
+        "Radius",
+        "Rings",
+        "RotationPeriod",
+        "ScanType",
+        "SemiMajorAxis",
+        "StarSystem",
+        "StarType",
+        "StellarMass",
+        "Subclass",
+        "SurfaceTemperature",
+        "SystemAddress",
+        "WasDiscovered",
+        "WasFootfalled",
+        "WasMapped"
+      ],
+      "foreign_keys": [
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "Scanned": {
+      "name": "Scanned",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.scanned",
+      "total_fields": 1,
+      "fields": [
+        "ScanType"
+      ],
+      "foreign_keys": []
+    },
+    "ScientificResearch": {
+      "name": "ScientificResearch",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.scientific_research",
+      "total_fields": 5,
+      "fields": [
+        "Category",
+        "Count",
+        "MarketID",
+        "Name",
+        "Name_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "Screenshot": {
+      "name": "Screenshot",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.screenshot",
+      "total_fields": 9,
+      "fields": [
+        "Altitude",
+        "Body",
+        "Filename",
+        "Heading",
+        "Height",
+        "Latitude",
+        "Longitude",
+        "System",
+        "Width"
+      ],
+      "foreign_keys": [
+        "Body"
+      ]
+    },
+    "SearchAndRescue": {
+      "name": "SearchAndRescue",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.search_and_rescue",
+      "total_fields": 5,
+      "fields": [
+        "Count",
+        "MarketID",
+        "Name",
+        "Name_Localised",
+        "Reward"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "SelfDestruct": {
+      "name": "SelfDestruct",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.self_destruct",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "SellDrones": {
+      "name": "SellDrones",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.sell_drones",
+      "total_fields": 4,
+      "fields": [
+        "Count",
+        "SellPrice",
+        "TotalSale",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "SellExplorationData": {
+      "name": "SellExplorationData",
+      "domain": "exploration",
+      "module": "ed_models.core.domain.events.exploration.sell_exploration_data",
+      "total_fields": 5,
+      "fields": [
+        "BaseValue",
+        "Bonus",
+        "Discovered",
+        "Systems",
+        "TotalEarnings"
+      ],
+      "foreign_keys": []
+    },
+    "SellMicroResources": {
+      "name": "SellMicroResources",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.sell_micro_resources",
+      "total_fields": 4,
+      "fields": [
+        "MarketID",
+        "MicroResources",
+        "Price",
+        "TotalCount"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "SellOrganicData": {
+      "name": "SellOrganicData",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.sell_organic_data",
+      "total_fields": 2,
+      "fields": [
+        "BioData",
+        "MarketID"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "SellShipOnRebuy": {
+      "name": "SellShipOnRebuy",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.sell_ship_on_rebuy",
+      "total_fields": 4,
+      "fields": [
+        "SellShipId",
+        "ShipPrice",
+        "ShipType",
+        "System"
+      ],
+      "foreign_keys": []
+    },
+    "SellSuit": {
+      "name": "SellSuit",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.sell_suit",
+      "total_fields": 5,
+      "fields": [
+        "Name",
+        "Name_Localised",
+        "Price",
+        "SuitID",
+        "SuitMods"
+      ],
+      "foreign_keys": []
+    },
+    "SellWeapon": {
+      "name": "SellWeapon",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.sell_weapon",
+      "total_fields": 6,
+      "fields": [
+        "Class",
+        "Name",
+        "Name_Localised",
+        "Price",
+        "SuitModuleID",
+        "WeaponMods"
+      ],
+      "foreign_keys": []
+    },
+    "SendText": {
+      "name": "SendText",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.send_text",
+      "total_fields": 4,
+      "fields": [
+        "Message",
+        "Sent",
+        "To",
+        "To_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "SetUserShipName": {
+      "name": "SetUserShipName",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.set_user_ship_name",
+      "total_fields": 4,
+      "fields": [
+        "Ship",
+        "ShipID",
+        "UserShipId",
+        "UserShipName"
+      ],
+      "foreign_keys": [
+        "Ship",
+        "ShipID"
+      ]
+    },
+    "SharedBookmarkToSquadron": {
+      "name": "SharedBookmarkToSquadron",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.shared_bookmark_to_squadron",
+      "total_fields": 2,
+      "fields": [
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "ShieldState": {
+      "name": "ShieldState",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.shield_state",
+      "total_fields": 1,
+      "fields": [
+        "ShieldsUp"
+      ],
+      "foreign_keys": []
+    },
+    "ShipLocker": {
+      "name": "ShipLocker",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.ship_locker",
+      "total_fields": 4,
+      "fields": [
+        "Components",
+        "Consumables",
+        "Data",
+        "Items"
+      ],
+      "foreign_keys": []
+    },
+    "ShipLockerItem": {
+      "name": "ShipLockerItem",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.ship_locker",
+      "total_fields": 5,
+      "fields": [
+        "Count",
+        "MissionID",
+        "Name",
+        "Name_Localised",
+        "OwnerID"
+      ],
+      "foreign_keys": []
+    },
+    "ShipRedeemed": {
+      "name": "ShipRedeemed",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.ship_redeemed",
+      "total_fields": 3,
+      "fields": [
+        "NewShipID",
+        "ShipType",
+        "ShipType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "ShipTargeted": {
+      "name": "ShipTargeted",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.ship_targeted",
+      "total_fields": 17,
+      "fields": [
+        "Bounty",
+        "Faction",
+        "HullHealth",
+        "LegalStatus",
+        "PilotName",
+        "PilotName_Localised",
+        "PilotRank",
+        "Power",
+        "ScanStage",
+        "ShieldHealth",
+        "Ship",
+        "Ship_Localised",
+        "SquadronID",
+        "Subsystem",
+        "SubsystemHealth",
+        "Subsystem_Localised",
+        "TargetLocked"
+      ],
+      "foreign_keys": [
+        "Faction",
+        "Power",
+        "Ship",
+        "SquadronID"
+      ]
+    },
+    "Shipyard": {
+      "name": "Shipyard",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "ShipyardBankDeposit": {
+      "name": "ShipyardBankDeposit",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_bank_deposit",
+      "total_fields": 3,
+      "fields": [
+        "MarketID",
+        "ShipType",
+        "ShipType_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ShipyardBuy": {
+      "name": "ShipyardBuy",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_buy",
+      "total_fields": 9,
+      "fields": [
+        "MarketID",
+        "SellOldShip",
+        "SellPrice",
+        "SellShipID",
+        "ShipPrice",
+        "ShipType",
+        "ShipType_Localised",
+        "StoreOldShip",
+        "StoreShipID"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ShipyardNew": {
+      "name": "ShipyardNew",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_new",
+      "total_fields": 3,
+      "fields": [
+        "NewShipID",
+        "ShipType",
+        "ShipType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "ShipyardRedeem": {
+      "name": "ShipyardRedeem",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_redeem",
+      "total_fields": 4,
+      "fields": [
+        "BundleID",
+        "MarketID",
+        "ShipType",
+        "ShipType_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ShipyardSell": {
+      "name": "ShipyardSell",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_sell",
+      "total_fields": 7,
+      "fields": [
+        "MarketID",
+        "SellShipID",
+        "ShipMarketID",
+        "ShipPrice",
+        "ShipType",
+        "ShipType_Localised",
+        "System"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "ShipyardSwap": {
+      "name": "ShipyardSwap",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_swap",
+      "total_fields": 8,
+      "fields": [
+        "MarketID",
+        "SellOldShip",
+        "SellShipID",
+        "ShipID",
+        "ShipType",
+        "ShipType_Localised",
+        "StoreOldShip",
+        "StoreShipID"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "ShipID"
+      ]
+    },
+    "ShipyardTransfer": {
+      "name": "ShipyardTransfer",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.shipyard_transfer",
+      "total_fields": 9,
+      "fields": [
+        "Distance",
+        "MarketID",
+        "ShipID",
+        "ShipMarketID",
+        "ShipType",
+        "ShipType_Localised",
+        "System",
+        "TransferPrice",
+        "TransferTime"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "ShipID"
+      ]
+    },
+    "Shutdown": {
+      "name": "Shutdown",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.shutdown",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "SquadronCreated": {
+      "name": "SquadronCreated",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.squadron_created",
+      "total_fields": 2,
+      "fields": [
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "SquadronDemotion": {
+      "name": "SquadronDemotion",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.squadron_demotion",
+      "total_fields": 6,
+      "fields": [
+        "NewRank",
+        "NewRankName",
+        "OldRank",
+        "OldRankName",
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "SquadronPromotion": {
+      "name": "SquadronPromotion",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.squadron_promotion",
+      "total_fields": 6,
+      "fields": [
+        "NewRank",
+        "NewRankName",
+        "OldRank",
+        "OldRankName",
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "SquadronStartup": {
+      "name": "SquadronStartup",
+      "domain": "squadrons",
+      "module": "ed_models.core.domain.events.squadrons.squadron_startup",
+      "total_fields": 5,
+      "fields": [
+        "CurrentRank",
+        "CurrentRankName",
+        "CurrentRankName_Localised",
+        "SquadronID",
+        "SquadronName"
+      ],
+      "foreign_keys": [
+        "SquadronID"
+      ]
+    },
+    "StartJump": {
+      "name": "StartJump",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.start_jump",
+      "total_fields": 5,
+      "fields": [
+        "JumpType",
+        "StarClass",
+        "StarSystem",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "Statistics": {
+      "name": "Statistics",
+      "domain": "startup",
+      "module": "ed_models.core.domain.events.startup.statistics",
+      "total_fields": 18,
+      "fields": [
+        "Bank_Account",
+        "CQC",
+        "Combat",
+        "Crafting",
+        "Crew",
+        "Crime",
+        "Exobiology",
+        "Exploration",
+        "FLEETCARRIER",
+        "Material_Trader_Stats",
+        "Mining",
+        "Multicrew",
+        "Passengers",
+        "Search_And_Rescue",
+        "Smuggling",
+        "Squadron",
+        "TG_ENCOUNTERS",
+        "Trading"
+      ],
+      "foreign_keys": []
+    },
+    "Status": {
+      "name": "Status",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.status",
+      "total_fields": 22,
+      "fields": [
+        "Altitude",
+        "Balance",
+        "BodyName",
+        "Cargo",
+        "Destination",
+        "FireGroup",
+        "Flags",
+        "Flags2",
+        "Fuel",
+        "Gravity",
+        "GuiFocus",
+        "Heading",
+        "Health",
+        "Latitude",
+        "LegalState",
+        "Longitude",
+        "Oxygen",
+        "Pips",
+        "PlanetRadius",
+        "SelectedWeapon",
+        "SelectedWeapon_Localised",
+        "Temperature"
+      ],
+      "foreign_keys": []
+    },
+    "StoredModules": {
+      "name": "StoredModules",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.stored_modules",
+      "total_fields": 4,
+      "fields": [
+        "Items",
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "StoredShips": {
+      "name": "StoredShips",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.stored_ships",
+      "total_fields": 5,
+      "fields": [
+        "MarketID",
+        "ShipsHere",
+        "ShipsRemote",
+        "StarSystem",
+        "StationName"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StarSystem",
+        "StationName"
+      ]
+    },
+    "SuitLoadout": {
+      "name": "SuitLoadout",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.suit_loadout",
+      "total_fields": 7,
+      "fields": [
+        "LoadoutID",
+        "LoadoutName",
+        "Modules",
+        "SuitID",
+        "SuitMods",
+        "SuitName",
+        "SuitName_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "SupercruiseDestinationDrop": {
+      "name": "SupercruiseDestinationDrop",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.supercruise_destination_drop",
+      "total_fields": 4,
+      "fields": [
+        "MarketID",
+        "Threat",
+        "Type",
+        "Type_Localised"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "SupercruiseEntry": {
+      "name": "SupercruiseEntry",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.supercruise_entry",
+      "total_fields": 4,
+      "fields": [
+        "Multicrew",
+        "StarSystem",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "SupercruiseExit": {
+      "name": "SupercruiseExit",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.supercruise_exit",
+      "total_fields": 7,
+      "fields": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "Multicrew",
+        "StarSystem",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "BodyType",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "SwitchSuitLoadout": {
+      "name": "SwitchSuitLoadout",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.switch_suit_loadout",
+      "total_fields": 7,
+      "fields": [
+        "LoadoutID",
+        "LoadoutName",
+        "Modules",
+        "SuitID",
+        "SuitMods",
+        "SuitName",
+        "SuitName_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "Synthesis": {
+      "name": "Synthesis",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.synthesis",
+      "total_fields": 2,
+      "fields": [
+        "Materials",
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "SystemsShutdown": {
+      "name": "SystemsShutdown",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.systems_shutdown",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    },
+    "TechnologyBroker": {
+      "name": "TechnologyBroker",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.technology_broker",
+      "total_fields": 5,
+      "fields": [
+        "BrokerType",
+        "Commodities",
+        "ItemsUnlocked",
+        "MarketID",
+        "Materials"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "Touchdown": {
+      "name": "Touchdown",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.touchdown",
+      "total_fields": 13,
+      "fields": [
+        "Body",
+        "BodyID",
+        "Latitude",
+        "Longitude",
+        "Multicrew",
+        "NearestDestination",
+        "NearestDestination_Localised",
+        "OnPlanet",
+        "OnStation",
+        "PlayerControlled",
+        "StarSystem",
+        "SystemAddress",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "Body",
+        "BodyID",
+        "StarSystem",
+        "SystemAddress"
+      ]
+    },
+    "TradeMicroResources": {
+      "name": "TradeMicroResources",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.trade_micro_resources",
+      "total_fields": 7,
+      "fields": [
+        "Category",
+        "Count",
+        "MarketID",
+        "Offered",
+        "Received",
+        "Received_Localised",
+        "TotalCount"
+      ],
+      "foreign_keys": [
+        "MarketID"
+      ]
+    },
+    "TransferMicroResources": {
+      "name": "TransferMicroResources",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.transfer_micro_resources",
+      "total_fields": 1,
+      "fields": [
+        "Transfers"
+      ],
+      "foreign_keys": []
+    },
+    "USSDrop": {
+      "name": "USSDrop",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.uss_drop",
+      "total_fields": 3,
+      "fields": [
+        "USSThreat",
+        "USSType",
+        "USSType_Localised"
+      ],
+      "foreign_keys": []
+    },
+    "UnderAttack": {
+      "name": "UnderAttack",
+      "domain": "combat",
+      "module": "ed_models.core.domain.events.combat.under_attack",
+      "total_fields": 1,
+      "fields": [
+        "Target"
+      ],
+      "foreign_keys": []
+    },
+    "Undocked": {
+      "name": "Undocked",
+      "domain": "travel",
+      "module": "ed_models.core.domain.events.travel.undocked",
+      "total_fields": 5,
+      "fields": [
+        "MarketID",
+        "Multicrew",
+        "StationName",
+        "StationType",
+        "Taxi"
+      ],
+      "foreign_keys": [
+        "MarketID",
+        "StationName",
+        "StationType"
+      ]
+    },
+    "UnlockedEngineer": {
+      "name": "UnlockedEngineer",
+      "domain": "station",
+      "module": "ed_models.core.domain.events.station.engineer_progress",
+      "total_fields": 5,
+      "fields": [
+        "Engineer",
+        "EngineerID",
+        "Progress",
+        "Rank",
+        "RankProgress"
+      ],
+      "foreign_keys": []
+    },
+    "UpgradeSuit": {
+      "name": "UpgradeSuit",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.upgrade_suit",
+      "total_fields": 6,
+      "fields": [
+        "Class",
+        "Cost",
+        "Name",
+        "Name_Localised",
+        "Resources",
+        "SuitID"
+      ],
+      "foreign_keys": []
+    },
+    "UpgradeWeapon": {
+      "name": "UpgradeWeapon",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.upgrade_weapon",
+      "total_fields": 6,
+      "fields": [
+        "Class",
+        "Cost",
+        "Name",
+        "Name_Localised",
+        "Resources",
+        "SuitModuleID"
+      ],
+      "foreign_keys": []
+    },
+    "UseConsumable": {
+      "name": "UseConsumable",
+      "domain": "odyssey",
+      "module": "ed_models.core.domain.events.odyssey.use_consumable",
+      "total_fields": 3,
+      "fields": [
+        "Name",
+        "Name_Localised",
+        "Type"
+      ],
+      "foreign_keys": []
+    },
+    "VehicleSwitch": {
+      "name": "VehicleSwitch",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.vehicle_switch",
+      "total_fields": 1,
+      "fields": [
+        "To"
+      ],
+      "foreign_keys": []
+    },
+    "WingAdd": {
+      "name": "WingAdd",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.wing_add",
+      "total_fields": 1,
+      "fields": [
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "WingInvite": {
+      "name": "WingInvite",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.wing_invite",
+      "total_fields": 1,
+      "fields": [
+        "Name"
+      ],
+      "foreign_keys": []
+    },
+    "WingJoin": {
+      "name": "WingJoin",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.wing_join",
+      "total_fields": 1,
+      "fields": [
+        "Others"
+      ],
+      "foreign_keys": []
+    },
+    "WingLeave": {
+      "name": "WingLeave",
+      "domain": "other",
+      "module": "ed_models.core.domain.events.other.wing_leave",
+      "total_fields": 0,
+      "fields": [],
+      "foreign_keys": []
+    }
+  }
+}

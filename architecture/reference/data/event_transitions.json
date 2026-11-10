@@ -1,0 +1,477 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-10T03:34:33.860065+00:00",
+  "total_events_mined": 500,
+  "unique_transitions": 79,
+  "canonical_lifecycles": {
+    "hyperspace_jump": [
+      "StartJump",
+      "SupercruiseExit",
+      "FSDJump",
+      "Location"
+    ],
+    "orbital_descent": [
+      "ApproachBody",
+      "ApproachSettlement",
+      "Touchdown"
+    ],
+    "station_docking": [
+      "DockingRequested",
+      "DockingGranted",
+      "Touchdown",
+      "Docked"
+    ]
+  },
+  "transitions": {
+    "Status": {
+      "Cargo": {
+        "count": 3,
+        "probability": 0.333,
+        "avg_dt_s": 1.0
+      },
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.111,
+        "avg_dt_s": null
+      },
+      "Friends": {
+        "count": 1,
+        "probability": 0.111,
+        "avg_dt_s": 14.0
+      },
+      "ShipLocker": {
+        "count": 2,
+        "probability": 0.222,
+        "avg_dt_s": null
+      },
+      "Market": {
+        "count": 2,
+        "probability": 0.222,
+        "avg_dt_s": null
+      }
+    },
+    "Cargo": {
+      "Market": {
+        "count": 2,
+        "probability": 0.133,
+        "avg_dt_s": 51.0
+      },
+      "Shipyard": {
+        "count": 2,
+        "probability": 0.133,
+        "avg_dt_s": 311.0
+      },
+      "Cargo": {
+        "count": 1,
+        "probability": 0.067,
+        "avg_dt_s": 0.0
+      },
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.067,
+        "avg_dt_s": null
+      },
+      "Status": {
+        "count": 2,
+        "probability": 0.133,
+        "avg_dt_s": 1.0
+      },
+      "Friends": {
+        "count": 5,
+        "probability": 0.333,
+        "avg_dt_s": 15.0
+      },
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.067,
+        "avg_dt_s": null
+      },
+      "Backpack": {
+        "count": 1,
+        "probability": 0.067,
+        "avg_dt_s": null
+      }
+    },
+    "Market": {
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": null
+      },
+      "Backpack": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": null
+      },
+      "ReceiveText": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 20244.0
+      },
+      "Shipyard": {
+        "count": 2,
+        "probability": 0.333,
+        "avg_dt_s": 260.0
+      },
+      "ShipLocker": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 19599.0
+      }
+    },
+    "ModuleInfo": {
+      "Backpack": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": null
+      },
+      "NavRouteClear": {
+        "count": 2,
+        "probability": 0.333,
+        "avg_dt_s": null
+      },
+      "Shipyard": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 5687784.0
+      },
+      "Status": {
+        "count": 2,
+        "probability": 0.333,
+        "avg_dt_s": 5707126.0
+      }
+    },
+    "Backpack": {
+      "Shipyard": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 6280347.0
+      },
+      "Commander": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 6299635.0
+      },
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 592563.0
+      },
+      "Cargo": {
+        "count": 2,
+        "probability": 0.333,
+        "avg_dt_s": 6299688.0
+      },
+      "Market": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 6280087.0
+      }
+    },
+    "Shipyard": {
+      "NavRouteClear": {
+        "count": 3,
+        "probability": 0.429,
+        "avg_dt_s": null
+      },
+      "Market": {
+        "count": 1,
+        "probability": 0.143,
+        "avg_dt_s": null
+      },
+      "Cargo": {
+        "count": 1,
+        "probability": 0.143,
+        "avg_dt_s": 19341.0
+      },
+      "Backpack": {
+        "count": 2,
+        "probability": 0.286,
+        "avg_dt_s": null
+      }
+    },
+    "NavRouteClear": {
+      "ShipLocker": {
+        "count": 3,
+        "probability": 0.5,
+        "avg_dt_s": 6278289.33
+      },
+      "Backpack": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": null
+      },
+      "Shipyard": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 6271837.0
+      },
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.167,
+        "avg_dt_s": 584053.0
+      }
+    },
+    "ShipLocker": {
+      "Status": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": 1142.0
+      },
+      "Cargo": {
+        "count": 2,
+        "probability": 0.125,
+        "avg_dt_s": 2.0
+      },
+      "Missions": {
+        "count": 9,
+        "probability": 0.562,
+        "avg_dt_s": 0.0
+      },
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": null
+      },
+      "NavRouteClear": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": null
+      },
+      "Backpack": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": null
+      },
+      "ModuleInfo": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": null
+      }
+    },
+    "Commander": {
+      "Materials": {
+        "count": 16,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Materials": {
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.062,
+        "avg_dt_s": null
+      },
+      "LoadGame": {
+        "count": 15,
+        "probability": 0.938,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Fileheader": {
+      "Friends": {
+        "count": 15,
+        "probability": 1.0,
+        "avg_dt_s": 34.0
+      }
+    },
+    "Friends": {
+      "Friends": {
+        "count": 42,
+        "probability": 0.667,
+        "avg_dt_s": 0.0
+      },
+      "Commander": {
+        "count": 15,
+        "probability": 0.238,
+        "avg_dt_s": 53.0
+      },
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.016,
+        "avg_dt_s": null
+      },
+      "ReceiveText": {
+        "count": 5,
+        "probability": 0.079,
+        "avg_dt_s": 414.0
+      }
+    },
+    "LoadGame": {
+      "GameModeChange": {
+        "count": 15,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "GameModeChange": {
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.067,
+        "avg_dt_s": null
+      },
+      "Rank": {
+        "count": 14,
+        "probability": 0.933,
+        "avg_dt_s": 2.0
+      }
+    },
+    "Rank": {
+      "Progress": {
+        "count": 14,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Progress": {
+      "Reputation": {
+        "count": 14,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Reputation": {
+      "EngineerProgress": {
+        "count": 14,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "EngineerProgress": {
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.071,
+        "avg_dt_s": null
+      },
+      "CarrierLocation": {
+        "count": 13,
+        "probability": 0.929,
+        "avg_dt_s": 1.0
+      }
+    },
+    "CarrierLocation": {
+      "Fileheader": {
+        "count": 2,
+        "probability": 0.083,
+        "avg_dt_s": null
+      },
+      "SquadronStartup": {
+        "count": 12,
+        "probability": 0.5,
+        "avg_dt_s": 13.0
+      },
+      "Statistics": {
+        "count": 10,
+        "probability": 0.417,
+        "avg_dt_s": 30.0
+      }
+    },
+    "SquadronStartup": {
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.083,
+        "avg_dt_s": null
+      },
+      "CarrierLocation": {
+        "count": 11,
+        "probability": 0.917,
+        "avg_dt_s": 1.0
+      }
+    },
+    "Statistics": {
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.1,
+        "avg_dt_s": null
+      },
+      "ReceiveText": {
+        "count": 9,
+        "probability": 0.9,
+        "avg_dt_s": 4.0
+      }
+    },
+    "ReceiveText": {
+      "FSSSignalDiscovered": {
+        "count": 9,
+        "probability": 0.391,
+        "avg_dt_s": 0.0
+      },
+      "Fileheader": {
+        "count": 4,
+        "probability": 0.174,
+        "avg_dt_s": null
+      },
+      "Status": {
+        "count": 2,
+        "probability": 0.087,
+        "avg_dt_s": null
+      },
+      "ReceiveText": {
+        "count": 8,
+        "probability": 0.348,
+        "avg_dt_s": 530.75
+      }
+    },
+    "FSSSignalDiscovered": {
+      "FSSSignalDiscovered": {
+        "count": 63,
+        "probability": 0.875,
+        "avg_dt_s": 0.0
+      },
+      "Location": {
+        "count": 9,
+        "probability": 0.125,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Location": {
+      "Music": {
+        "count": 9,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Music": {
+      "ShipLocker": {
+        "count": 10,
+        "probability": 0.385,
+        "avg_dt_s": 0.0
+      },
+      "Fileheader": {
+        "count": 1,
+        "probability": 0.038,
+        "avg_dt_s": null
+      },
+      "Music": {
+        "count": 8,
+        "probability": 0.308,
+        "avg_dt_s": 0.0
+      },
+      "Status": {
+        "count": 1,
+        "probability": 0.038,
+        "avg_dt_s": 1.0
+      },
+      "Cargo": {
+        "count": 6,
+        "probability": 0.231,
+        "avg_dt_s": 2.0
+      }
+    },
+    "Missions": {
+      "Loadout": {
+        "count": 9,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    },
+    "Loadout": {
+      "Music": {
+        "count": 9,
+        "probability": 1.0,
+        "avg_dt_s": 0.0
+      }
+    }
+  }
+}
