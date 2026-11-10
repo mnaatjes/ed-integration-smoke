@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-10T03:34:34.290301+00:00",
+  "total_hardware_interlocks": 5,
+  "total_inversion_pairs": 6,
+  "flight_regimes": [
+    "DOCKED",
+    "LANDED",
+    "SUPERCRUISE",
+    "GLIDE_MODE",
+    "NORMAL_SPACE"
+  ],
+  "hardware_interlocks": [
+    {
+      "primary_flag": "SUPERCRUISE",
+      "mutually_excludes": [
+        "HARDPOINTS_DEPLOYED",
+        "LANDING_GEAR_DOWN",
+        "CARGO_SCOOP_DEPLOYED",
+        "DOCKED",
+        "LANDED"
+      ],
+      "rationale": "Avionics inhibit deployables and docking clamps in supercruise."
+    },
+    {
+      "primary_flag": "DOCKED",
+      "mutually_excludes": [
+        "SUPERCRUISE",
+        "HARDPOINTS_DEPLOYED",
+        "FLIGHT_ASSIST_OFF",
+        "IN_WING",
+        "SCOOPING_FUEL"
+      ],
+      "rationale": "Station docking clamps mechanically lock vessel power and flight surfaces."
+    },
+    {
+      "primary_flag": "LANDED",
+      "mutually_excludes": [
+        "SUPERCRUISE",
+        "SCOOPING_FUEL"
+      ],
+      "rationale": "Planetary touchdown precludes high-energy orbital maneuvers."
+    },
+    {
+      "primary_flag": "SILENT_RUNNING",
+      "mutually_excludes": [
+        "SHIELDS_UP"
+      ],
+      "rationale": "Silent running closes radiators and immediately collapses shields."
+    },
+    {
+      "primary_flag": "ON_FOOT",
+      "mutually_excludes": [
+        "IN_SRV",
+        "SUPERCRUISE",
+        "HARDPOINTS_DEPLOYED",
+        "LANDING_GEAR_DOWN",
+        "CARGO_SCOOP_DEPLOYED"
+      ],
+      "rationale": "Odyssey on-foot agency is isolated from cockpit flight controls."
+    }
+  ],
+  "inversion_pairs": [
+    {
+      "open_event": "Docked",
+      "close_event": "Undocked",
+      "domain": "station"
+    },
+    {
+      "open_event": "SupercruiseEntry",
+      "close_event": "SupercruiseExit",
+      "domain": "travel"
+    },
+    {
+      "open_event": "Touchdown",
+      "close_event": "Liftoff",
+      "domain": "travel"
+    },
+    {
+      "open_event": "Disembark",
+      "close_event": "Embark",
+      "domain": "odyssey"
+    },
+    {
+      "open_event": "Interdicted",
+      "close_event": "EscapeInterdiction",
+      "domain": "combat"
+    },
+    {
+      "open_event": "ApproachBody",
+      "close_event": "LeaveBody",
+      "domain": "exploration"
+    }
+  ]
+}

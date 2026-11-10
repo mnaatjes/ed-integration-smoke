@@ -53,5 +53,6 @@ Thumbs.db
 .vscode/
 
 # Local database and domain mismatch telemetry artifacts
-data/
+/data/
+
 
