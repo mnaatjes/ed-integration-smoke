@@ -28,7 +28,7 @@ Without systematic discovery tooling, architectural development relies on heuris
 ## 2. Decision Drivers
 
 * **Determinism & Reproducibility:** Discovery methodologies must rely on programmatic introspection of Python AST/dataclass signatures and empirical event logs rather than manual documentation review.
-* **Tripartite Discovery Framework:** Cover structural static schema correlation, sequential dynamic workflow discovery, and cross-plane status-to-journal trigger mapping.
+* **Quadripartite Discovery Framework:** Cover structural static schema correlation, sequential dynamic workflow discovery, cross-plane status-to-journal trigger mapping, and mutual exclusion invariants.
 * **Exportable Graph Artifacts:** Outputs must be machine-readable (JSON adjacency matrices, Graphviz `.dot`, Mermaid graphs) for ingestion into documentation, IDE tooling, and validation engines.
 * **Non-Invasive Introspection:** Tooling must operate offline against `ed-models` source code or online against historical telemetry archives (`ed-telemetry` REST endpoints).
 
@@ -38,19 +38,19 @@ Without systematic discovery tooling, architectural development relies on heuris
 
 * **Option 1: Manual Community Wiki Scraping.** Rely on third-party community documentation (EDCD / Frontier Journal Manual). Rejected due to schema drift, unversioned changes, and lack of programmatic verification.
 * **Option 2: Runtime Logging Assertions Only.** Add arbitrary print statements inside the client facade during gameplay. Rejected because it provides no global architectural topology and fails to systematically discover edge-case relationships.
-* **Option 3: Tripartite Deterministic Discovery Framework (Approved).** A dedicated suite of automated analysis tools covering Static Schema Key Correlation, Causal Sequence Induction, and State-Flag Differential Triggering.
+* **Option 3: Quadripartite Deterministic Discovery Framework (Approved).** A dedicated suite of automated analysis tools covering Static Schema Key Correlation, Causal Sequence Induction, State-Flag Differential Triggering, and Mutual Exclusion Invariant Verification.
 
 ---
 
 ## 4. Decision Outcome
 
-Chosen Option: **Option 3: Tripartite Deterministic Discovery Framework**.
+Chosen Option: **Option 3: Quadripartite Deterministic Discovery Framework**.
 
-The architecture establishes three specialized discovery engines:
+The architecture establishes four specialized discovery engines:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                      Tripartite Discovery Engine                       │
+│                     Quadripartite Discovery Engine                     │
 ├────────────────────────────────┬───────────────────────────────────────┤
 │ 1. Static Schema Key           │ Programmatically traverses ed-models  │
 │    Correlation Engine          │ dataclasses to build entity graphs    │
@@ -63,6 +63,10 @@ The architecture establishes three specialized discovery engines:
 │ 3. State-Flag Differential     │ Correlates microsecond status bitmask │
 │    Trigger Mapping Engine      │ edge transitions (rising/falling) with│
 │    (Status-to-Journal Triggers)│ discrete lifecycle journal emissions. │
+├────────────────────────────────┼───────────────────────────────────────┤
+│ 4. Mutual Exclusion Invariant  │ Mines empirical zero-co-occurrence    │
+│    Verification Engine         │ matrices and asserts physical flight  │
+│    (Mutex Validation Matrices) │ regime and hardware interlocks.       │
 └────────────────────────────────┴───────────────────────────────────────┘
 ```
 
@@ -116,8 +120,27 @@ The architecture establishes three specialized discovery engines:
   * `StatusFlags.LANDED` (Bit 1) $\uparrow \implies$ `Touchdown`
   * `StatusFlags.SUPERCRUISE` (Bit 4) $\downarrow \implies$ `SupercruiseExit`
   * `StatusFlags2.GLIDE_MODE` (Bit 12) $\downarrow \implies$ Surface flight transition
-* **Tooling Implementation:** `scripts/map_trigger_matrix.py`
-  * Emits formal mapping specification linking bitwise flags to event handlers.
+### 5.4 Pillar 4: Mutual Exclusion Invariant Verification (Mutex Validation Matrices)
+
+* **Objective:** Formalize, discover, and mathematically prove mutually exclusive sets across game states, telemetry flags, and event pairs.
+* **Mechanism:**
+  1. **Empirical Zero-Co-occurrence Mining:** For any pair of status flags $(A, B)$ across historical frames:
+     $$\text{Co-occurrence}(A, B) = \sum_{t=0}^{T} \mathbb{I}(A_t \land B_t)$$
+     Pairs with strictly zero co-occurrence across statistically significant corpora ($N > 10^6$ frames) are certified as physical simulation invariants.
+  2. **Categorical Mutex Partitions:**
+     * **Flight Regime Mutex:** A vessel strictly occupies exactly one spatial regime:
+       $$\text{Regime} \in \{\text{Docked}, \text{Landed}, \text{NormalSpace}, \text{Supercruise}, \text{GlideMode}, \text{HyperspaceJump}\}$$
+       *Invariant:* $\text{Docked} \implies \neg \text{Supercruise} \land \neg \text{GlideMode} \land \neg \text{HardpointsDeployed}$.
+     * **Entity Persona Mutex:** Player agency is partitioned into disjoint entity types:
+       $$\text{EntityHost} \in \{\text{MainShip}, \text{SRV}, \text{Fighter}, \text{OnFootOnPlanet}, \text{OnFootInStation}, \text{TaxiDropship}\}$$
+       *Invariant:* `ON_FOOT` mutually excludes ship-centric targeting and flight maneuvers.
+     * **Cockpit Hardware Interlock Mutex:** Mechanical interlocks enforced by flight avionics:
+       $$\text{StatusFlags.SUPERCRUISE} \implies \neg \text{HARDPOINTS_DEPLOYED} \land \neg \text{LANDING_GEAR_DOWN} \land \neg \text{CARGO_SCOOP_DEPLOYED}$$
+       $$\text{StatusFlags.SILENT_RUNNING} \implies \neg \text{SHIELDS_UP}$$
+     * **Event Lifecycle Inversion Pairs:** Antithetical event transitions where event $B$ strictly terminates the state established by event $A$:
+       $$\langle \text{Docked}, \text{Undocked} \rangle, \quad \langle \text{SupercruiseEntry}, \text{SupercruiseExit} \rangle, \quad \langle \text{ShieldsUp}, \text{ShieldsDown} \rangle$$
+* **Tooling Implementation:** `scripts/verify_mutex_invariants.py`
+  * Generates the **Mutex Invariant Matrix** and acts as an automated anomaly detection validator inside the SDK.
 
 ---
 
@@ -126,17 +149,19 @@ The architecture establishes three specialized discovery engines:
 1. **Step 1:** Implement `scripts/map_domain_schema.py` to introspect `ed-models` dataclasses and generate the canonical entity-relationship topology.
 2. **Step 2:** Implement `scripts/mine_event_sequences.py` to stream historical telemetry and build empirical Markov transition DAGs.
 3. **Step 3:** Implement `scripts/map_trigger_matrix.py` to verify status flag bitmask edges against journal emissions.
-4. **Step 4:** Integrate the discovered trigger rules into `ed_services` to power predictive event synthesizers.
+4. **Step 4:** Implement `scripts/verify_mutex_invariants.py` to compute zero-co-occurrence matrices and assert telemetry frame integrity.
+5. **Step 5:** Integrate the discovered trigger rules and mutex assertions into `ed_services` and `ed_reducer` for predictive caching and anomaly rejection.
 
 ---
 
 ## 7. Consequences
 
 ### Positive
-* Eliminates guesswork regarding event dependencies and preconditions.
-* Enables automated synthetic test generation by replaying valid DAG sequence paths.
+* Eliminates guesswork regarding event dependencies, preconditions, and impossible states.
+* Provides deterministic integrity checks rejecting corrupted telemetry frames or desynchronized state projections.
+* Enables automated synthetic test generation by replaying valid DAG sequence paths while respecting mutex invariants.
 * Informs predictive caching (e.g. pre-fetching system market data upon `StartJump` or `FSDTarget`).
 
 ### Negative / Trade-offs
-* Requires historical log corpora to establish statistically significant sequence probabilities.
+* Requires historical log corpora to establish statistically significant sequence probabilities and prove zero co-occurrence.
 * Asynchronous player actions (e.g. opening cargo scoop while jumping) can introduce noisy parallel branches in empirical DAG mining.
