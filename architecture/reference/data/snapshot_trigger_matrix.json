@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-10T15:39:55.743675+00:00",
+  "total_snapshots_mapped": 9,
+  "snapshots": [
+    {
+      "snapshot_file": "Market.json",
+      "companion_journal_event": "Market",
+      "extended_model_class": "ExtendedMarket",
+      "trigger_category": "UI_MENU_ACCESS",
+      "prerequisite_state": "DOCKED",
+      "trigger_description": "Written when commander opens the Commodities Market interface at a station or fleet carrier.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "MarketID",
+        "StationName",
+        "StarSystem"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 18.5
+    },
+    {
+      "snapshot_file": "Shipyard.json",
+      "companion_journal_event": "Shipyard",
+      "extended_model_class": "ExtendedShipyard",
+      "trigger_category": "UI_MENU_ACCESS",
+      "prerequisite_state": "DOCKED",
+      "trigger_description": "Written when accessing the Shipyard menu. Displays available hulls for retail purchase at starports, or commander stored fleet valuations when docked at a Fleet Carrier (RES-0001).",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "MarketID",
+        "StationName",
+        "StarSystem"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 22.0
+    },
+    {
+      "snapshot_file": "Outfitting.json",
+      "companion_journal_event": "Outfitting",
+      "extended_model_class": "ExtendedOutfitting",
+      "trigger_category": "UI_MENU_ACCESS",
+      "prerequisite_state": "DOCKED",
+      "trigger_description": "Written when accessing the Outfitting service menu to view available modules for purchase.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "MarketID",
+        "StationName",
+        "StarSystem"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 20.4
+    },
+    {
+      "snapshot_file": "NavRoute.json",
+      "companion_journal_event": "NavRoute",
+      "extended_model_class": "ExtendedNavRoute",
+      "trigger_category": "FLIGHT_NAVIGATION",
+      "prerequisite_state": "ANY",
+      "trigger_description": "Written when plotting or recalculating a multi-star navigation route in the Galaxy Map.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "Route"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 35.0
+    },
+    {
+      "snapshot_file": "Cargo.json",
+      "companion_journal_event": "Cargo",
+      "extended_model_class": "Cargo",
+      "trigger_category": "INVENTORY_MUTATION",
+      "prerequisite_state": "IN_SHIP_OR_SRV",
+      "trigger_description": "Written at startup after missions initialize, and updated when vessel cargo manifest changes (e.g. CollectCargo, EjectCargo, MarketBuy, MarketSell, MiningRefined). Main journal receives minimal Cargo event.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "Vessel",
+        "Count",
+        "Inventory"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 14.2
+    },
+    {
+      "snapshot_file": "ModulesInfo.json",
+      "companion_journal_event": "ModuleInfo",
+      "extended_model_class": "ExtendedModuleInfo",
+      "trigger_category": "LOADOUT_INSPECTION",
+      "prerequisite_state": "IN_SHIP",
+      "trigger_description": "Written at game startup, ship switch, or outfitting modification to dump complete fitted module roster and power distribution.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "Modules"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 16.8
+    },
+    {
+      "snapshot_file": "ShipLocker.json",
+      "companion_journal_event": "ShipLocker",
+      "extended_model_class": "ShipLocker",
+      "trigger_category": "ON_FOOT_INVENTORY",
+      "prerequisite_state": "IN_SHIP_OR_SETTLEMENT",
+      "trigger_description": "Written at startup and when boarding a ship. Dumps Odyssey micro-resources (Components, Consumables, Data, Items).",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "Components",
+        "Consumables",
+        "Data",
+        "Items"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 25.0
+    },
+    {
+      "snapshot_file": "Backpack.json",
+      "companion_journal_event": "Backpack",
+      "extended_model_class": "Backpack",
+      "trigger_category": "ON_FOOT_INVENTORY",
+      "prerequisite_state": "ON_FOOT",
+      "trigger_description": "Written when suit backpack inventory updates during on-foot exploration, looting, or settlement operations.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "Components",
+        "Consumables",
+        "Data",
+        "Items"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 19.1
+    },
+    {
+      "snapshot_file": "FCMaterials.json",
+      "companion_journal_event": "FCMaterials",
+      "extended_model_class": "ExtendedFCMaterials",
+      "trigger_category": "FLEET_CARRIER_TRADE",
+      "prerequisite_state": "DOCKED_CARRIER",
+      "trigger_description": "Written when accessing carrier bar / bartender materials market on a player Fleet Carrier.",
+      "write_behavior": "OVERWRITE_IN_PLACE",
+      "contains_full_dump": true,
+      "primary_keys": [
+        "MarketID",
+        "CarrierID",
+        "Items"
+      ],
+      "confidence": 1.0,
+      "avg_latency_ms": 28.3
+    }
+  ]
+}
