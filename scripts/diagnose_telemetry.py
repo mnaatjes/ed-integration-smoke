@@ -124,7 +124,7 @@ def run_diagnostics(target: str, api_key: str | None, game_running: bool) -> int
     # 5. ed-fleet-client SDK Facade Check
     start = time.perf_counter()
     try:
-        _ = create_client()
+        client = create_client()
         ms = (time.perf_counter() - start) * 1000.0
         reporter.report_live(
             DiagnosticCheckResult("Fleet Client Facade", "create_client()", True, ms, "initialized")
@@ -134,8 +134,96 @@ def run_diagnostics(target: str, api_key: str | None, game_running: bool) -> int
         reporter.report_live(
             DiagnosticCheckResult("Fleet Client Facade", "create_client()", False, ms, str(exc))
         )
+        client = None
+
+    if game_running and client is not None:
+        _run_fleet_client_diagnostics(reporter, client, base_url)
 
     return reporter.print_summary()
+
+
+def _run_fleet_client_diagnostics(
+    reporter: DiagnosticReporter, client: Any, base_url: str
+) -> None:
+    """Exercise EliteDangerousClient hydration and domain services in --game-running mode."""
+    # State & projections
+    for prop in ("state", "ship", "location", "session"):
+        start = time.perf_counter()
+        try:
+            val = getattr(client, prop)
+            ms = (time.perf_counter() - start) * 1000.0
+            detail = "hydrated" if val is not None else "N/A (idle)"
+            reporter.report_live(
+                DiagnosticCheckResult(f"Client .{prop}", f"client.{prop}", True, ms, detail)
+            )
+        except Exception as exc:
+            ms = (time.perf_counter() - start) * 1000.0
+            reporter.report_live(
+                DiagnosticCheckResult(f"Client .{prop}", f"client.{prop}", False, ms, str(exc))
+            )
+
+    # Snapshot hydration
+    for snap_name in ("Status.json", "Cargo.json", "Market.json"):
+        start = time.perf_counter()
+        try:
+            snap = client.get_snapshot(base_url, f"/api/v1/snapshots/{snap_name}")
+            ms = (time.perf_counter() - start) * 1000.0
+            detail = "hydrated" if snap is not None else "N/A (not present)"
+            reporter.report_live(
+                DiagnosticCheckResult(
+                    f"Snapshot {snap_name}", f"get_snapshot({snap_name})", True, ms, detail
+                )
+            )
+        except Exception as exc:
+            ms = (time.perf_counter() - start) * 1000.0
+            reporter.report_live(
+                DiagnosticCheckResult(
+                    f"Snapshot {snap_name}", f"get_snapshot({snap_name})", False, ms, str(exc)
+                )
+            )
+
+    # Domain services
+    for svc_name in (
+        "navigation",
+        "orbital",
+        "flight_performance",
+        "combat_analytics",
+        "astrophysics",
+    ):
+        start = time.perf_counter()
+        try:
+            svc = getattr(client, svc_name)
+            ms = (time.perf_counter() - start) * 1000.0
+            reporter.report_live(
+                DiagnosticCheckResult(
+                    f"Service .{svc_name}", f"client.{svc_name}", svc is not None, ms, "ready"
+                )
+            )
+        except Exception as exc:
+            ms = (time.perf_counter() - start) * 1000.0
+            reporter.report_live(
+                DiagnosticCheckResult(
+                    f"Service .{svc_name}", f"client.{svc_name}", False, ms, str(exc)
+                )
+            )
+
+    # Event subscription & dispatcher
+    start = time.perf_counter()
+    try:
+        handler = lambda _evt: None  # noqa: E731
+        client.on("Status")(handler)
+        _ = client.dispatcher
+        ms = (time.perf_counter() - start) * 1000.0
+        reporter.report_live(
+            DiagnosticCheckResult("Event Dispatcher", "client.on() / dispatcher", True, ms, "ready")
+        )
+    except Exception as exc:
+        ms = (time.perf_counter() - start) * 1000.0
+        reporter.report_live(
+            DiagnosticCheckResult(
+                "Event Dispatcher", "client.on() / dispatcher", False, ms, str(exc)
+            )
+        )
 
 
 def main() -> int:
