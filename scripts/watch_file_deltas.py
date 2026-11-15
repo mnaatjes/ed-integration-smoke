@@ -4,20 +4,22 @@
 from __future__ import annotations
 
 import sys
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
-from rich.console import Console
-from rich.text import Text
-
-from ed_cli_core import (
+from ed_fleet_client.adapters.driven.telemetry_http import (
+    TelemetryConnectionConfig,
+    TelemetryHttpClient,
+)
+from ed_fleet_client.adapters.driving.stream import StreamMonitor, StreamMonitorConfig
+from ed_ui_cli.components import render_connection_pill
+from ed_ui_cli.options import (
     ApiKeyOption,
     HostOption,
     PortOption,
-    render_connection_pill,
 )
-from ed_stream_monitor import TelemetryStreamMonitor
-from ed_telemetry_client import TelemetryConnectionConfig, TelemetryHttpClient
+from rich.console import Console
+from rich.text import Text
 
 app = typer.Typer(
     name="watch-file-deltas",
@@ -65,23 +67,34 @@ def main(
     console.print(f"[bold cyan]Listening for file deltas on {filter_label}...[/bold cyan]")
     console.print("[dim]Press Ctrl+C to terminate monitor.[/dim]\n")
 
-    monitor = TelemetryStreamMonitor(config=config)
+    import asyncio
+    from datetime import datetime
+
+    async def _stream_loop() -> None:
+        monitor = StreamMonitor(transport=client, config=StreamMonitorConfig())
+
+        def _on_frame(frame: dict[str, Any]) -> None:
+            target = frame.get("target") or frame.get("name") or "stream"
+            if filter_set and target not in filter_set:
+                return
+            now_str = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            line = Text()
+            line.append(f"[{now_str}] ", style="dim")
+            topic = frame.get("topic", "event")
+            line.append(f" {topic.upper():<16} ", style="bold black on bright_yellow")
+            line.append(f" {target:24} ", style="bold white")
+            console.print(line)
+
+        monitor.on_event(_on_frame)
+        await monitor.start()
+        try:
+            while True:
+                await asyncio.sleep(1)
+        finally:
+            await monitor.stop()
 
     try:
-        for delta in monitor.listen_deltas(filter_targets=filter_set):
-            line = Text()
-            line.append(f"[{delta.timestamp.strftime('%H:%M:%S.%f')[:-3]}] ", style="dim")
-            if delta.action == "rollover":
-                line.append(" ROLLOVER ", style="bold black on bright_magenta")
-            elif delta.action == "created":
-                line.append(" CREATED  ", style="bold black on bright_cyan")
-            else:
-                line.append(" DELTA    ", style="bold black on bright_yellow")
-            line.append(f" {delta.target:32} ", style="bold white")
-            line.append(f"({delta.action}) ", style="cyan")
-            if delta.raw_hash:
-                line.append(f"hash={delta.raw_hash[:16]}", style="dim green")
-            console.print(line)
+        asyncio.run(_stream_loop())
     except KeyboardInterrupt:
         console.print("\n[yellow]Terminated stream monitor.[/yellow]")
         sys.exit(0)

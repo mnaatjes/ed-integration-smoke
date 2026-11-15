@@ -10,9 +10,12 @@ from datetime import UTC, datetime
 from typing import Annotated, Any
 
 import typer
-from rich.console import Console
-
-from ed_cli_core import (
+from ed_fleet_client.adapters.driven.telemetry_http import (
+    TelemetryConnectionConfig,
+    TelemetryHttpClient,
+)
+from ed_ui_cli.components import render_connection_pill
+from ed_ui_cli.options import (
     ApiKeyOption,
     CountOption,
     FormatOption,
@@ -20,12 +23,10 @@ from ed_cli_core import (
     IntervalOption,
     OutputFormat,
     PortOption,
-    TailEventLine,
-    TailLineFormatter,
     VerboseOption,
-    render_connection_pill,
 )
-from ed_telemetry_client import TelemetryConnectionConfig, TelemetryHttpClient
+from ed_ui_cli.tail import TailEventLine, TailLineFormatter
+from rich.console import Console
 
 app = typer.Typer(
     name="tail_endpoint",
@@ -144,6 +145,7 @@ def main(
                     if content_key is not None:
                         current_hash = str(content_key)
                     else:
+
                         def _strip_transient(obj: Any) -> Any:
                             if isinstance(obj, dict):
                                 return {
@@ -172,18 +174,22 @@ def main(
 
                 # Formatter dispatch
                 if output_format == OutputFormat.JSON:
-                    print(json.dumps({
-                        "timestamp": datetime.now(UTC).isoformat(),
-                        "endpoint": normalized_path,
-                        "metadata": {
-                            "status_code": status_code,
-                            "plane": response_dto.metadata.plane.value,
-                            "source": response_dto.metadata.source.value,
-                            "etag": current_etag,
-                            "latency_ms": latency_ms,
-                        },
-                        "payload": response_dto.data,
-                    }))
+                    print(
+                        json.dumps(
+                            {
+                                "timestamp": datetime.now(UTC).isoformat(),
+                                "endpoint": normalized_path,
+                                "metadata": {
+                                    "status_code": status_code,
+                                    "plane": response_dto.metadata.plane.value,
+                                    "source": response_dto.metadata.source.value,
+                                    "etag": current_etag,
+                                    "latency_ms": latency_ms,
+                                },
+                                "payload": response_dto.data,
+                            }
+                        )
+                    )
                 elif output_format == OutputFormat.COMPACT:
                     data_summary = str(response_dto.data)[:80].replace("\n", " ")
                     plane = response_dto.metadata.plane
@@ -222,9 +228,7 @@ def main(
                 else:
                     pill_off = render_connection_pill(host, port, is_connected=False)
                     err_time = datetime.now(UTC).strftime("%H:%M:%S")
-                    err_console.print(
-                        f"[{err_time}] {pill_off.plain} Error: {exc}"
-                    )
+                    err_console.print(f"[{err_time}] {pill_off.plain} Error: {exc}")
 
             time.sleep(interval)
 
