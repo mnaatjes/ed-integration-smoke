@@ -51,8 +51,15 @@ We establish the **Meta-Tool vs. Runtime Facade Decoupling Pattern** across the 
      - `run_diagnostics`: Runs health audits on the running daemon.
    - **`ed-sdk mock --journal-dir ./fixtures/samples/ --port 8080`:**
      Spins up a lightweight mock `ed-telemetry` HTTP/SSE server serving recorded flight logs so developers can build and test UI/logic offline without running the game.
+   - **`ed-sdk install-telemetry [--service]`:**
+     Optional convenience command for single-machine gaming setups (where the game and development occur on the same host) to install and configure the standalone `ed-telemetry` daemon.
 
-4. **Testing & Test Harness Contract:**
+4. **`ed-telemetry` Architectural Boundary & Decoupling:**
+   - **No Hard Dependency:** `ed-telemetry` is **not** a hard dependency of `ed-sdk`. This keeps `ed-sdk` lightweight, cross-platform (installable across macOS, Linux, and Windows), and avoids requiring game journal path configurations on developer machines that do not host the game.
+   - **Heterogeneous Topologies:** Supports split-machine sim gaming topologies (game running on dedicated Windows PC or Steam Deck, development on Linux/macOS) by allowing `ed-sdk doctor` to probe remote hosts and output actionable setup instructions.
+   - **Zero-Setup Mocking:** `ed-sdk mock` is bundled out of the box to enable immediate development and CI test execution without requiring a live game client or local daemon.
+
+5. **Testing & Test Harness Contract:**
    Test suites (`tests/`) import test harnesses directly from `ed-sdk`:
    ```python
    import pytest
@@ -64,7 +71,7 @@ We establish the **Meta-Tool vs. Runtime Facade Decoupling Pattern** across the 
            yield harness.client
    ```
 
-5. **Scaffolding & Dependency Declaration Pattern:**
+6. **Scaffolding & Dependency Declaration Pattern:**
    ```toml
    [project]
    name = "commander-hud"
