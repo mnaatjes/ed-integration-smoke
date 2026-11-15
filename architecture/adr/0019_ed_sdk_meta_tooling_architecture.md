@@ -40,7 +40,10 @@ We establish the **Meta-Tool vs. Runtime Facade Decoupling Pattern** across the 
    - **`ed-sdk init <project-name> --template <template>`:**
      Scaffolds clean repository structures with compliant `pyproject.toml`, `.gitignore`, `ruff.toml`, and typed stubs. Populates `[project.dependencies]` with runtime packages (`ed-fleet-client`, `ed-gui-core`) and `[dependency-groups] dev` with `ed-sdk` and `pytest`.
    - **`ed-sdk add <module>`:**
-     Intelligently appends fleet dependencies into the local `pyproject.toml` with pinned/compatible versions.
+     Intelligently appends fleet dependencies into the local `pyproject.toml` with pinned/compatible versions:
+     - `ed-sdk add ed-schema`: Adds the canonical JSON Schema registry and contract validators for developers requiring raw schema validation, synthetic event generation, or event schema linting.
+     - `ed-sdk add ed-gui-core`: Adds Hexagonal GUI and legacy EDMC-compatible Tkinter widgets/themes for desktop HUD applications.
+     - `ed-sdk add ed-cli-core`: Adds rich CLI formatting, progress bars, and terminal UI components for command-line tools.
    - **`ed-sdk doctor --target <host:port> [--game-running]`:**
      Executes environment and infrastructure diagnostics (migrated from `diagnose_telemetry.py`), auditing daemon reachability, API keys, journal access, SSE stream ingestion, and state engine hydration.
    - **`ed-sdk mcp [--transport stdio|sse] [--target <host:port>]`:**
@@ -78,6 +81,7 @@ We establish the **Meta-Tool vs. Runtime Facade Decoupling Pattern** across the 
    dependencies = [
        "ed-fleet-client>=0.1.0",
        "ed-gui-core>=0.1.0",     # optional GUI components
+       "ed-schema>=1.1.0",       # optional JSON schema validators & contracts
    ]
 
    [dependency-groups]
