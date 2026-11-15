@@ -24,8 +24,13 @@ Implement a CLI diagnostic suite (`scripts/diagnose_telemetry.py`) with the foll
    - `--api-key` (optional pre-shared API key for authenticated `ed-telemetry` deployments).
    - `--game-running` / `--no-game-running` (toggles live-telemetry assertions vs. idle/offline-game baseline checks).
 2. **Diagnostic Checks:**
-   - **System Health & Infrastructure:** Probe `/api/v1/system/health` (and `/api/v1/health`), verify `status == "ok"`, `version`, `db.ok == True` (SQLite readiness), and `journal_dir.configured == True`.
-   - **Endpoint Coverage:** Exercise all canonical REST endpoints (`/api/v1/state`, `/api/v1/status`, `/api/v1/events/query`, `/api/v1/events/queue`, `/api/v1/journal/events`, `/api/v1/system/watcher`) and SSE stream connectivity (`/api/v1/events/stream`).
+   - **System Health & Infrastructure:** Probe `GET /api/v1/system/health` (and legacy `GET /api/v1/health`), verify `status == "ok"`, `version`, `db.ok == True` (SQLite readiness), and `journal_dir.configured == True`.
+   - **Complete Endpoint Coverage (all 14 canonical endpoints from `ed-telemetry/docs/reference/http_api_endpoints.md`):**
+     - System Plane: `GET /api/v1/system/health`, `GET /api/v1/system/watcher`, `GET /api/v1/system/logs`, `POST /api/v1/system/control`
+     - State & Status Plane: `GET /api/v1/state`, `GET /api/v1/state/heartbeat`, `GET /api/v1/status`
+     - Snapshots Plane: `GET /api/v1/snapshots`, `GET /api/v1/snapshots/{name}`
+     - Journal Plane: `GET /api/v1/journal/latest`, `GET /api/v1/journal/events`
+     - Events & Stream Plane: `GET /api/v1/events/query`, `GET /api/v1/events/queue`, `GET /api/v1/events/stream` (SSE)
    - **Latency & Speed:** Measure round-trip latency (ms) per endpoint and report min/avg/max.
    - **Value & Contract Assertions:** Compare returned payloads against anticipated schemas/values (e.g., `ed-fleet-client` DTO hydration, non-empty `Status.json` fields when `--game-running` is set).
 3. **Real-Time Presentation (`src/ed_cli_core`):**
