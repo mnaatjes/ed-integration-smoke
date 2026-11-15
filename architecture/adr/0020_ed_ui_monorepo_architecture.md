@@ -135,6 +135,33 @@ We establish the **`ed-ui` Monorepo Multi-Package Distribution Architecture**, d
      - Changes in `python/ed_ui_cli/**` $\rightarrow$ publish `ed-ui-cli` wheel to PyPI.
      - Changes in `web/ed-ui-vue/**` $\rightarrow$ publish `@ed-fleet/vue` to npm.
 
+4. **Scope & Boundary Enforcement Rules:**
+   Rather than applying a single-service hexagonal template across the entire monorepo, enforcement is tiered across the **Repository Level** and the **Package Level**:
+
+   - **Tier 1: Repository-Level Invariants (Hexagonal Boundary Enforcement):**
+     - **Rule 1.1 (Core Framework Isolation):** `python/ed_ui_core` is strictly framework-agnostic. It must have zero imports of `tkinter`, `ttk`, `rich`, `textual`, or web frameworks. It imports only Python standard library and pure domain data types. Enforced via AST import analysis in test suite.
+     - **Rule 1.2 (Strict Inward Dependency Direction):** Outer presentation packages (`ed-ui-tk`, `ed-ui-cli`, `ed-ui-vue`) may import from `ed-ui-core`. `ed-ui-core` must **never** import from `ed-ui-tk`, `ed-ui-cli`, or `ed-ui-vue`.
+     - **Rule 1.3 (Adapter-to-Adapter Isolation):** Concrete UI packages are strictly isolated peers. `ed-ui-tk` must never import `ed-ui-cli`, and `ed-ui-cli` must never import `ed-ui-tk`.
+     - **Rule 1.4 (Web Asset Decoupling):** `web/` is strictly isolated from Python runtimes. Python linter tools (`mypy`, `ruff`, `pytest`) must ignore `web/`; npm/pnpm linting (`eslint`, `tsc`) governs `web/`.
+
+   - **Tier 2: Package-Level Invariants (Component-Driven Architecture Enforcement):**
+     - **Rule 2.1 (Pure Presentation Components):** In `components/`, UI widgets (`AnnunciatorGrid`, `PipMeter`) must remain pure visual rendering elements. They accept display view-models or raw primitives via props/arguments and must **never** instantiate HTTP transports or talk directly to remote network daemons.
+     - **Rule 2.2 (Composition Root Encapsulation):** All external runtime coupling (such as subscribing to `ed-fleet-client` SSE events or binding callbacks) is strictly restricted to `factories/` (`shell.py`, `binder.py`). Component files must never contain composition logic.
+     - **Rule 2.3 (Direct Component Export Contract):** Each concrete UI package's `__init__.py` must export both atomic components for custom layouts and composition factory helpers for turnkey assemblies.
+
+   - **Tier 3: Monorepo Quality Gate Runner (`scripts/verify.py`):**
+     The workspace verification runner enforces these multi-tier boundaries in pre-commit and CI:
+     ```python
+     CHECKS = [
+         ("Pre-commit hooks", ["pre-commit", "run", "--all-files"]),
+         ("Core Isolation Gate", ["pytest", "tests/architecture/test_core_isolation.py"]),
+         ("Adapter Peer Isolation Gate", ["pytest", "tests/architecture/test_peer_isolation.py"]),
+         ("Python Type Checking", ["mypy", "python/"]),
+         ("Python Test Suite", ["pytest", "tests/"]),
+         ("Web Typecheck & Build", ["pnpm", "--filter", "@ed-fleet/vue", "build"]),
+     ]
+     ```
+
 ## 3. Consequences
 
 - **Positive:**
