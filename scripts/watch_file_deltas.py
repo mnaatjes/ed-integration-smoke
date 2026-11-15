@@ -48,7 +48,7 @@ def main(
     client = TelemetryHttpClient(config=config)
 
     try:
-        health_resp = client.get_system_health()
+        health_resp = client.request("/api/v1/health")
         is_online = health_resp.metadata.status_code == 200
         latency_ms = health_resp.metadata.latency_ms
     except Exception:
