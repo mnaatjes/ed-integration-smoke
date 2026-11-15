@@ -11,11 +11,10 @@ import urllib.parse
 from typing import Any
 
 import httpx
-from ed_cli_core.diagnostics import DiagnosticCheckResult, DiagnosticReporter
-from ed_fleet_client.adapters.driven.telemetry_http.models import TelemetryConnectionConfig
-from rich.console import Console
-
 from ed_fleet_client import create_client
+from ed_fleet_client.adapters.driven.telemetry_http.models import TelemetryConnectionConfig
+from ed_ui_cli.diagnostics import DiagnosticCheckResult, DiagnosticReporter
+from rich.console import Console
 
 
 def _probe_json(
@@ -199,7 +198,7 @@ def run_diagnostics(
     if output_json:
         return _render_json_summary(reporter)
 
-    exit_code = reporter.print_summary()
+    exit_code = int(reporter.print_summary())
     if exit_code != 0:
         _print_remediation_guidance(reporter)
     return exit_code

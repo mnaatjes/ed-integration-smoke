@@ -62,10 +62,14 @@ module = [
     "ed_resolver",
     "ed_telemetry.*",
     "ed_telemetry",
+    "ed_fleet_client.*",
+    "ed_fleet_client",
+    "ed_ui_core.*",
+    "ed_ui_core",
+    "ed_ui_tk.*",
+    "ed_ui_tk",
+    "ed_ui_cli.*",
+    "ed_ui_cli",
 ]
 ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "ed_services.models"
-disallow_subclassing_any = false
 
