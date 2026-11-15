@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Authored [ADR 0020](architecture/adr/0020_ed_ui_monorepo_architecture.md) defining the `ed-ui` monorepo architecture and component-driven multi-package distribution spanning `ed-ui-core` (hexagonal display models), `ed-ui-tk` (Tkinter/EDMC), `ed-ui-cli` (Rich/Textual), and `ed-ui-vue` (Vue 3 / TypeScript).
+- Authored [ADR 0019](architecture/adr/0019_ed_sdk_meta_tooling_architecture.md) defining the meta-tooling vs. runtime facade architecture for `ed-sdk`, establishing scaffolding, diagnostics (`doctor`), AI agent MCP server, offline telemetry mocks, and clean separation from `ed-fleet-client`.
 - Authored [ADR 0018](architecture/adr/0018_developer_diagnostics_and_connection_verification.md) defining developer diagnostics, connection configuration, and streaming probe verification for `ed-fleet-client`.
 - Enhanced [`scripts/diagnose_telemetry.py`](scripts/diagnose_telemetry.py) with:
   - Explicit `TelemetryConnectionConfig` configuration binding `--target` (host/port) and `--api-key` into `create_client(config=config)`.
