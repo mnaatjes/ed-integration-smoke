@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import time
 from typing import Any
 
@@ -166,7 +167,7 @@ def _run_fleet_client_diagnostics(
     for snap_name in ("Status.json", "Cargo.json", "Market.json"):
         start = time.perf_counter()
         try:
-            snap = client.get_snapshot(base_url, f"/api/v1/snapshots/{snap_name}")
+            snap = asyncio.run(client.get_snapshot(base_url, f"/api/v1/snapshots/{snap_name}"))
             ms = (time.perf_counter() - start) * 1000.0
             detail = "hydrated" if snap is not None else "N/A (not present)"
             reporter.report_live(
