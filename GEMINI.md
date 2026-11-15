@@ -30,3 +30,12 @@ The project uses a local virtual environment located at `.venv/` in the reposito
 # 3. Run MyPy type checker:
 .venv/bin/mypy scripts/ tests/
 ```
+
+---
+
+## 4. Conversation Directives
+
+* **Explain Concepts Simply:** Present ideas in accessible, plain language before introducing technical data or implementation details.
+* **Eliminate Jargon:** Avoid dense technical jargon where simpler phrasing communicates the concept clearly.
+* **Define Terms Upfront:** When technical terms, abbreviations, or domain-specific names are used, define them clearly within the explanation.
+
