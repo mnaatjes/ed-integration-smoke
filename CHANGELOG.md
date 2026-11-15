@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Authored [ADR 0018](architecture/adr/0018_developer_diagnostics_and_connection_verification.md) defining developer diagnostics, connection configuration, and streaming probe verification for `ed-fleet-client`.
+- Enhanced [`scripts/diagnose_telemetry.py`](scripts/diagnose_telemetry.py) with:
+  - Explicit `TelemetryConnectionConfig` configuration binding `--target` (host/port) and `--api-key` into `create_client(config=config)`.
+  - Live SSE streaming smoke probe (`--stream-probe`, `--probe-duration`) verifying active event ingestion and state reduction sequence progression.
+  - Corrected `client.get_snapshot(name, endpoint)` argument ordering.
+  - Machine-readable `--json` output format for CI and developer automation.
+  - Actionable remediation advice on check failures.
+- Authored EDMC Tkinter UI research ([`architecture/research/edmc_ui_architecture.md`](architecture/research/edmc_ui_architecture.md)) and component library specification ([`architecture/research/tkinter_component_library.md`](architecture/research/tkinter_component_library.md)).
+- Authored [ADR 0015](architecture/adr/0015_hexagonal_gui_core_and_component_library_architecture.md) and [SDD-004](architecture/designs/SDD-004_hexagonal_gui_core_and_legacy_edmc_components.md) defining a Hexagonal (Ports & Adapters) GUI core.
+- Created workspace subpackage `src/ed_gui_core` (`ed-gui-core`) with `domain`, `ports`, and `adapters/tkinter/legacy_edmc` (`shell`, `theme`, `telemetry`, `settings`, `bridge`).
+- Created presentation-only EDMC GUI preview script [`scripts/preview_edmc_gui.py`](scripts/preview_edmc_gui.py) using `ed_gui_core`.
 - Authored [ADR 0013](architecture/adr/0013_reactive_domain_services_and_stream_derivers.md) detailing reactive domain services and stream derivers across Pattern 1 (State-Guarded Pull) and Pattern 2 (Reactive Stream Pipe).
 - Created workspace subpackage `src/ed_services` (`ed-services`) providing abstract `TelemetryService` contract and specialized domain services:
   - `NavigationService`: Surface great-circle bearing, distance, heading deflection, target locking, and hyperspace route progress.
@@ -26,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added pytest unit test suite under `src/ed_telemetry_client/tests/test_client.py` validating client defaults, metadata parsing, convenience endpoints, and error handling.
 
 ### Changed
+- Adopted upstream `ed-fleet-client` (`v0.1.0`) from `https://github.com/mnaatjes/ed-fleet-client.git` in `pyproject.toml`.
 - Refactored repository root `pyproject.toml` into a UV workspace configuring `[tool.uv.workspace] members = ["src/*"]`.
 - Updated Elite Dangerous fleet dependencies to latest upstream versions:
   - `ed-schema`: `v1.1.0`
@@ -36,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configured Ruff and MyPy rules across the monorepo for Python 3.13.
 
 ### Removed
+- Removed 7 superseded prototype submodules from `src/` (`ed_dispatcher`, `ed_fleet_client`, `ed_hydrator`, `ed_reducer`, `ed_services`, `ed_stream_monitor`, `ed_telemetry_client`) while preserving `src/ed_cli_core`.
 - Removed deprecated local `schemas/` directory; schemas are now canonically imported directly from upstream `ed-schema`.
 - Removed legacy `generated_dtos/` directory across Spansh, EDDN, EDSM, Inara, EDMC CAPI, and EDAstro.
 - Purged obsolete legacy scripts, tests, and documentation.
