@@ -9,7 +9,7 @@ from typing import Any
 import httpx
 from ed_cli_core.diagnostics import DiagnosticCheckResult, DiagnosticReporter
 
-from ed_fleet_client import EliteDangerousClient
+from ed_fleet_client import create_client
 
 
 def _probe_json(
@@ -124,21 +124,15 @@ def run_diagnostics(target: str, api_key: str | None, game_running: bool) -> int
     # 5. ed-fleet-client SDK Facade Check
     start = time.perf_counter()
     try:
-        host, _, port_str = target.removeprefix("http://").removeprefix("https://").partition(":")
-        port = int(port_str) if port_str else 8080
-        _ = EliteDangerousClient(host=host, port=port, api_key=api_key)
+        _ = create_client()
         ms = (time.perf_counter() - start) * 1000.0
         reporter.report_live(
-            DiagnosticCheckResult(
-                "Fleet Client Facade", "EliteDangerousClient()", True, ms, "initialized"
-            )
+            DiagnosticCheckResult("Fleet Client Facade", "create_client()", True, ms, "initialized")
         )
     except Exception as exc:
         ms = (time.perf_counter() - start) * 1000.0
         reporter.report_live(
-            DiagnosticCheckResult(
-                "Fleet Client Facade", "EliteDangerousClient()", False, ms, str(exc)
-            )
+            DiagnosticCheckResult("Fleet Client Facade", "create_client()", False, ms, str(exc))
         )
 
     return reporter.print_summary()
