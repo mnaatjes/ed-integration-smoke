@@ -66,3 +66,34 @@ class NavigationRouteDto:
             is_scoopable=is_scoop,
             waypoints=waypoints or [],
         )
+
+
+@dataclass(frozen=True)
+class FsdTargetDto:
+    """Discrete presentation DTO for an immediate hyperspace jump target."""
+
+    system_name: str
+    system_address: int | None = None
+    star_class: str = "Unknown"
+    remaining_jumps: int = 1
+    is_scoopable: bool = False
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+
+    @classmethod
+    def create(
+        cls,
+        system_name: str,
+        star_class: str,
+        remaining_jumps: int = 1,
+        system_address: int | None = None,
+    ) -> FsdTargetDto:
+        """Convenience constructor evaluating scoopability."""
+        clean = star_class.strip().upper()
+        spectral = clean[0] if clean else ""
+        return cls(
+            system_name=system_name,
+            system_address=system_address,
+            star_class=star_class,
+            remaining_jumps=remaining_jumps,
+            is_scoopable=spectral in SCOOPABLE_STAR_CLASSES,
+        )

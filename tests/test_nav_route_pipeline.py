@@ -122,3 +122,25 @@ async def test_discrete_navigation_route_card_rendering() -> None:
         app.card.update_route(done_dto)
         assert app.card._dto.remaining_jumps == 0
         assert app.card._nixie_hops.current_value == "0"
+
+
+def test_render_fsd_target_table() -> None:
+    """Verify render_fsd_target_table formats Rich table correctly for states."""
+    from dto.navigation import FsdTargetDto
+    from widgets.fsd_target import render_fsd_target_table
+
+    # 1. Unlocked state
+    table_unlocked = render_fsd_target_table(None)
+    assert table_unlocked.title == "FSD Target Lock"
+    assert len(table_unlocked.columns) == 2
+
+    # 2. Locked scoopable state
+    dto = FsdTargetDto.create(
+        system_name="Shinrarta Dezhra",
+        star_class="A",
+        remaining_jumps=3,
+        system_address=3932277478106,
+    )
+    table_locked = render_fsd_target_table(dto)
+    assert table_locked.title == "FSD Target Lock"
+    assert dto.is_scoopable is True

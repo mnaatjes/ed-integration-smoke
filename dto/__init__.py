@@ -1,10 +1,12 @@
-"""Presentation DTO package exports."""
-
-from __future__ import annotations
-
-from .navigation import SCOOPABLE_STAR_CLASSES, NavigationRouteDto, RouteWaypointDto
+from .navigation import (
+    SCOOPABLE_STAR_CLASSES,
+    FsdTargetDto,
+    NavigationRouteDto,
+    RouteWaypointDto,
+)
 
 __all__ = [
+    "FsdTargetDto",
     "NavigationRouteDto",
     "RouteWaypointDto",
     "SCOOPABLE_STAR_CLASSES",
