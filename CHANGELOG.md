@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Implemented decoupled presentation DTOs under `dto/navigation.py` (`NavigationRouteDto`, `RouteWaypointDto`, `FsdTargetDto`) isolating widget rendering from raw telemetry payloads.
+- Implemented `RouteTrackingUseCase` (`use_cases/route_tracking.py`) mapping reactive `RouteProgressUpdated` events and public navigation state into clean presentation DTOs.
+- Implemented discrete UI molecules:
+  - `render_fsd_target_table()` in `widgets/fsd_target.py` for Rich CLI target lock tables.
+  - `NavigationRouteCard` in `widgets/nav_route.py` as a discrete, self-contained Textual component consuming only `NavigationRouteDto`.
+- Built unified component Workbench harness (`workbench/registry.py`, `scripts/run_workbench.py`) allowing instant inspection and live streaming of slotted components (`list`, `show <name> [--live]`) without creating one-off preview scripts.
+- Added comprehensive unit tests for workbench registration and CLI execution in `tests/test_workbench.py`.
 - Created showcase utility [`scripts/preview_ui_elements.py`](scripts/preview_ui_elements.py) displaying all `ed-ui-cli` UI components with mock/filler data across interactive full-screen TUI mode (Textual `TelemetryConsoleApp`) and static console renderables (`--rich`).
 - Authored [ADR 0021](architecture/adr/0021_repository_taxonomy_incubator_and_apps_topology.md) establishing repository taxonomy across single-file utilities (`scripts/`), candidate library subpackages (`incubator/`), and runnable prototype applications (`apps/`).
 - Scaffolded [`incubator/README.md`](incubator/README.md) defining subpackage `src-layout`, testing requirements, and promotion/extraction quality gates.
@@ -43,15 +50,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added pytest unit test suite under `src/ed_telemetry_client/tests/test_client.py` validating client defaults, metadata parsing, convenience endpoints, and error handling.
 
 ### Changed
-- Updated `ed-ui` fleet packages (`ed-ui-core`, `ed-ui-tk`, `ed-ui-cli`) to upstream release [`v0.2.0`](https://github.com/mnaatjes/ed-ui/releases/tag/v0.2.0) featuring interactive TUI components (`FuzzySearchInput`, `TelemetryDataTable`, `TelemetryTree`, `JsonInspectorTree`, `SystemSwitch`, `CockpitButton`, `RadioSelector`, `FilterCheckbox`) and `TelemetryConsoleApp` composition roots.
-- Adopted upstream `ed-fleet-client` (`v0.1.0`) from `https://github.com/mnaatjes/ed-fleet-client.git` in `pyproject.toml`.
-- Refactored repository root `pyproject.toml` into a UV workspace configuring `[tool.uv.workspace] members = ["src/*"]`.
+- Upgraded `ed-ui` fleet packages (`ed-ui-core`, `ed-ui-tk`, `ed-ui-cli`) to upstream release [`v0.3.0`](https://github.com/mnaatjes/ed-ui/releases/tag/v0.3.0) adding theme tokens and retro hardware instrumentation components.
+- Upgraded `ed-fleet-client` to [`v0.1.2`](https://github.com/mnaatjes/ed-fleet-client/releases/tag/v0.1.2) fixing SSE envelope hydration (`"payload"` key support), enabling domain event dispatching on stream ingestion, adding initial state sync on connect, and adding historical frame filtering.
 - Updated Elite Dangerous fleet dependencies to latest upstream versions:
   - `ed-schema`: `v1.1.0`
   - `ed-transport`: `main` (rev `f0b0476`)
   - `ed-models`: `v0.2.1`
   - `ed-resolver`: `v0.2.0`
-  - `ed-telemetry`: `v0.9.0`
+  - `ed-telemetry`: `v0.10.0`
 - Configured Ruff and MyPy rules across the monorepo for Python 3.13.
 
 ### Removed
