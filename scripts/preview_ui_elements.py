@@ -216,6 +216,18 @@ def _launch_tui_showcase() -> None:
     class ShowcaseConsoleApp(TelemetryConsoleApp):
         """Showcase application populating mock data once widgets are mounted."""
 
+        CSS = (
+            TelemetryConsoleApp.CSS
+            + """
+        #nav-sidebar {
+            width: 44;
+            min-width: 36;
+            max-width: 55;
+            overflow-x: auto;
+        }
+        """
+        )
+
         def on_mount(self) -> None:
             super().on_mount()
             self.cartography_tree.populate_celestial_system("Sol System", mock_bodies)
