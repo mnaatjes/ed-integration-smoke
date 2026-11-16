@@ -225,8 +225,92 @@ def _launch_tui_showcase() -> None:
             max-width: 55;
             overflow-x: auto;
         }
+        #rich-components-scroll {
+            height: 1fr;
+            overflow-y: auto;
+            padding: 1;
+        }
+        .rich-widget-box {
+            margin-bottom: 1;
+        }
         """
         )
+
+        def compose(self):  # type: ignore[no-untyped-def]
+            from textual.containers import Container, Horizontal, Vertical, VerticalScroll
+            from textual.widgets import Footer, Header, Label, Static, TabbedContent, TabPane
+
+            yield Header(show_clock=True)
+            with Container(id="console-top-row"):
+                yield Label(id="connection-label")
+                yield self.fuzzy_search
+            with Horizontal(id="console-middle"):
+                with Vertical(id="nav-sidebar"):
+                    yield Label("Nav / Data Source", classes="section-title")
+                    yield self.mode_selector
+                    yield self.cartography_tree
+                with Vertical(id="main-viewport"):
+                    with TabbedContent():
+                        with TabPane("Event Log", id="tab-event-log"):
+                            yield self.data_table
+                        with TabPane("JSON Inspector", id="tab-inspector"):
+                            yield self.json_inspector
+                        with TabPane("Rich Components", id="tab-rich"):
+                            with VerticalScroll(id="rich-components-scroll"):
+                                yield Static(
+                                    render_metric_grid(
+                                        "Ship Cockpit Telemetry (Rich Grid)",
+                                        {
+                                            "Vessel": "Anaconda (Core Dynamics)",
+                                            "Shields Active": True,
+                                            "Hull Integrity": 98.4,
+                                            "SYS Pips": 4.0,
+                                            "ENG Pips": 2.0,
+                                            "WEP Pips": 0.0,
+                                            "FSD Status": "Ready",
+                                            "Cargo Capacity": "128 / 256 T",
+                                        },
+                                    ),
+                                    classes="rich-widget-box",
+                                )
+                                yield Static(
+                                    render_key_value_table(
+                                        "Flight Telemetry Vectors (Rich Table)",
+                                        {
+                                            "System": "Shinrarta Dezhra",
+                                            "Star Class": "A (White-Blue)",
+                                            "Coordinates": "(55.72, 17.59, 27.16)",
+                                            "Speed": "299.79 Mm/s (Supercruise)",
+                                            "Heading": "042° / Pitch +12°",
+                                            "Next Waypoint": "Jameson Memorial [0.42 ls]",
+                                        },
+                                    ),
+                                    classes="rich-widget-box",
+                                )
+                                cargo_snapshot = """{
+                                    "Inventory": [
+                                        {"Name": "painite", "Count": 64, "Stolen": 0},
+                                        {"Name": "lowtemperaturediamond", "Count": 32, "Stolen": 0},
+                                        {"Name": "tritium", "Count": 32, "Stolen": 0}
+                                    ]
+                                }"""
+                                cargo_tables = render_snapshot_tables(
+                                    SnapshotTarget.CARGO, cargo_snapshot
+                                )
+                                for tbl in cargo_tables:
+                                    yield Static(tbl, classes="rich-widget-box")
+                with Vertical(id="controls-sidebar"):
+                    yield Label("Stream Power", classes="section-title")
+                    yield self.stream_switch
+                    yield Label("Topic Filters", classes="section-title")
+                    yield self.filter_nav
+                    yield self.filter_combat
+                    yield self.filter_status
+                    yield Label("Action Triggers", classes="section-title")
+                    yield self.btn_poll
+                    yield self.btn_reconnect
+                    yield self.btn_clear
+            yield Footer()
 
         def on_mount(self) -> None:
             super().on_mount()
