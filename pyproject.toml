@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-ed-fleet-client = { git = "https://github.com/mnaatjes/ed-fleet-client.git", tag = "v0.1.1" }
+ed-fleet-client = { git = "https://github.com/mnaatjes/ed-fleet-client.git", tag = "v0.1.2" }
 ed-ui-core = { git = "https://github.com/mnaatjes/ed-ui.git", tag = "v0.3.0", subdirectory = "python/ed_ui_core" }
 ed-ui-tk = { git = "https://github.com/mnaatjes/ed-ui.git", tag = "v0.3.0", subdirectory = "python/ed_ui_tk" }
 ed-ui-cli = { git = "https://github.com/mnaatjes/ed-ui.git", tag = "v0.3.0", subdirectory = "python/ed_ui_cli" }
