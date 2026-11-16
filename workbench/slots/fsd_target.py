@@ -25,6 +25,21 @@ def _connect_live_fsd_target(
     client: EliteDangerousClient,
     on_update: Any,
 ) -> Any:
+    # Ensure navigation domain service is attached to listen to status and target events
+    client.navigation.attach()
+
+    # Seed initial DTO from synchronized client state if available
+    initial_dest = client.navigation.destination_name
+    if initial_dest:
+        dest_addr = getattr(client.navigation, "_destination_system_address", None)
+        dto_seed = FsdTargetDto.create(
+            system_name=initial_dest,
+            star_class="Unknown",
+            remaining_jumps=1,
+            system_address=dest_addr,
+        )
+        on_update(dto_seed)
+
     def _on_target(ev: FSDTarget) -> None:
         dto = FsdTargetDto.create(
             system_name=getattr(ev, "Name", "Unknown"),

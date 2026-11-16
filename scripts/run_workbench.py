@@ -15,7 +15,7 @@ if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
 import typer  # noqa: E402
-from ed_fleet_client import create_client  # noqa: E402
+from ed_fleet_client import StreamMonitorConfig, create_client  # noqa: E402
 from ed_fleet_client.adapters.driven.telemetry_http.models import (  # noqa: E402
     TelemetryConnectionConfig,
 )
@@ -76,7 +76,8 @@ def _render_rich_slot(slot: ComponentSlot, live: bool, host: str, port: int) -> 
 
     async def _run_live() -> None:
         cfg = TelemetryConnectionConfig(host=host, port=port)
-        client = create_client(cfg)
+        stream_cfg = StreamMonitorConfig(filter_historical=True)
+        client = create_client(cfg, stream_config=stream_cfg)
 
         console.print(
             f"[dim]Streaming live '{slot.name}' from {host}:{port}... (Ctrl+C to stop)[/dim]"
@@ -142,7 +143,8 @@ def _launch_textual_slot(slot: ComponentSlot, live: bool, host: str, port: int) 
 
         async def _connect_live(self) -> None:
             cfg = TelemetryConnectionConfig(host=host, port=port)
-            self._client = create_client(cfg)
+            stream_cfg = StreamMonitorConfig(filter_historical=True)
+            self._client = create_client(cfg, stream_config=stream_cfg)
 
             def _on_update(dto: Any) -> None:
                 if hasattr(self.slotted_widget, "update_route"):

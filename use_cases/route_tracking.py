@@ -77,9 +77,9 @@ class RouteTrackingUseCase:
         self._publish_dto(dto)
 
     def _refresh_from_state(self) -> None:
-        """Poll navigation service state for initial target data."""
+        """Hydrate presentation DTO from public navigation service state."""
         nav = self.client.navigation
-        target_sys = getattr(nav, "_fsd_target_system", None)
+        target_sys = nav.destination_name or getattr(nav, "_fsd_target_system", None)
         if isinstance(target_sys, str) and target_sys:
             raw_remaining = getattr(nav, "_fsd_remaining_jumps", 1)
             remaining = int(raw_remaining) if isinstance(raw_remaining, int) else 1
