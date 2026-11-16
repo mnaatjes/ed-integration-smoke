@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added pytest unit test suite under `src/ed_telemetry_client/tests/test_client.py` validating client defaults, metadata parsing, convenience endpoints, and error handling.
 
 ### Changed
+- Updated `ed-ui` fleet packages (`ed-ui-core`, `ed-ui-tk`, `ed-ui-cli`) to upstream release [`v0.2.0`](https://github.com/mnaatjes/ed-ui/releases/tag/v0.2.0) featuring interactive TUI components (`FuzzySearchInput`, `TelemetryDataTable`, `TelemetryTree`, `JsonInspectorTree`, `SystemSwitch`, `CockpitButton`, `RadioSelector`, `FilterCheckbox`) and `TelemetryConsoleApp` composition roots.
 - Adopted upstream `ed-fleet-client` (`v0.1.0`) from `https://github.com/mnaatjes/ed-fleet-client.git` in `pyproject.toml`.
 - Refactored repository root `pyproject.toml` into a UV workspace configuring `[tool.uv.workspace] members = ["src/*"]`.
 - Updated Elite Dangerous fleet dependencies to latest upstream versions:

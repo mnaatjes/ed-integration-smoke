@@ -154,9 +154,9 @@ requires-dist = [
     { name = "ed-schema", git = "https://github.com/mnaatjes/ed-schema.git?tag=v1.1.0" },
     { name = "ed-telemetry", git = "https://github.com/mnaatjes/ed-telemetry.git?tag=v0.10.0" },
     { name = "ed-transport", git = "https://github.com/mnaatjes/ed-transport.git?branch=main" },
-    { name = "ed-ui-cli", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_cli&tag=v0.1.0" },
-    { name = "ed-ui-core", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_core&tag=v0.1.0" },
-    { name = "ed-ui-tk", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_tk&tag=v0.1.0" },
+    { name = "ed-ui-cli", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_cli&tag=v0.2.0" },
+    { name = "ed-ui-core", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_core&tag=v0.2.0" },
+    { name = "ed-ui-tk", git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_tk&tag=v0.2.0" },
     { name = "rich", specifier = ">=13.0.0" },
     { name = "textual", specifier = ">=1.0.0" },
     { name = "typer", specifier = ">=0.15.0" },
@@ -203,8 +203,8 @@ dependencies = [
 
 [[package]]
 name = "ed-ui-cli"
-version = "0.1.0"
-source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_cli&tag=v0.1.0#330040f4c4d55e4cd3cfbc62c6073498819f5eeb" }
+version = "0.2.0"
+source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_cli&tag=v0.2.0#a7355a9266ea1202997513762d31f7027cd249f2" }
 dependencies = [
     { name = "ed-ui-core" },
     { name = "rich" },
@@ -214,13 +214,13 @@ dependencies = [
 
 [[package]]
 name = "ed-ui-core"
-version = "0.1.0"
-source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_core&tag=v0.1.0#330040f4c4d55e4cd3cfbc62c6073498819f5eeb" }
+version = "0.2.0"
+source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_core&tag=v0.2.0#a7355a9266ea1202997513762d31f7027cd249f2" }
 
 [[package]]
 name = "ed-ui-tk"
-version = "0.1.0"
-source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_tk&tag=v0.1.0#330040f4c4d55e4cd3cfbc62c6073498819f5eeb" }
+version = "0.2.0"
+source = { git = "https://github.com/mnaatjes/ed-ui.git?subdirectory=python%2Fed_ui_tk&tag=v0.2.0#a7355a9266ea1202997513762d31f7027cd249f2" }
 dependencies = [
     { name = "ed-ui-core" },
 ]
