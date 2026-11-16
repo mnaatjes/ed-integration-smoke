@@ -1,4 +1,4 @@
-"""Unit and pipeline integration tests for the decoupled navigation route pipeline."""
+"""Unit and pipeline integration tests for the discrete NavigationRouteCard."""
 
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ import pytest
 from ed_fleet_client.core.domain.services.navigation import RouteProgressUpdated
 from textual.app import App, ComposeResult
 
-from dto.navigation import NavigationRouteDto, RouteWaypointDto
+from dto.navigation import NavigationRouteDto
 from use_cases.route_tracking import RouteTrackingUseCase
-from widgets.nav_route import NavigationRouteWidget
+from widgets.nav_route import NavigationRouteCard
 
 
 def test_dto_invariants_and_scoopable_detection() -> None:
@@ -72,46 +72,53 @@ def test_route_tracking_use_case_publishes_dto() -> None:
     assert dto.current_system == "Shinrarta Dezhra"
     assert dto.is_scoopable is True
     assert dto.is_route_active is True
-    assert len(dto.waypoints) == 1
-    assert dto.waypoints[0].is_destination is True
 
 
 @pytest.mark.asyncio
-async def test_navigation_route_widget_headless_rendering() -> None:
-    """Verify NavigationRouteWidget renders and updates cleanly in headless Textual test harness."""
+async def test_discrete_navigation_route_card_rendering() -> None:
+    """Verify isolated NavigationRouteCard renders and updates cleanly in headless Textual pilot."""
     initial_dto = NavigationRouteDto.create(
         destination_system="Maia",
         star_class="B",
         remaining_jumps=2,
         jump_distance_ly=34.2,
-        waypoints=[
-            RouteWaypointDto("Pleiades Sector", "M", 20.0, is_scoopable=True),
-            RouteWaypointDto("Maia", "B", 14.2, is_scoopable=True, is_destination=True),
-        ],
+        current_system="Pleiades Sector",
     )
 
-    class WidgetTestApp(App[None]):
+    class CardTestApp(App[None]):
         def __init__(self) -> None:
             super().__init__()
-            self.widget = NavigationRouteWidget(initial_dto=initial_dto)
+            self.card = NavigationRouteCard(initial_dto=initial_dto)
 
         def compose(self) -> ComposeResult:
-            yield self.widget
+            yield self.card
 
-    app = WidgetTestApp()
+    app = CardTestApp()
     async with app.run_test() as pilot:
         await pilot.pause()
-        assert app.widget._dto is not None
-        assert app.widget._dto.destination_system == "Maia"
-        assert app.widget._nixie_hops.current_value == "2"
+        assert app.card._dto is not None
+        assert app.card._dto.destination_system == "Maia"
+        assert app.card._nixie_hops.current_value == "2"
 
-        # Update widget with new DTO (hop completed)
+        # Update discrete card with single hop remaining
         next_dto = NavigationRouteDto.create(
             destination_system="Maia",
             star_class="B",
             remaining_jumps=1,
             jump_distance_ly=14.2,
+            current_system="Merope",
         )
-        app.widget.update_route(next_dto)
-        assert app.widget._dto.remaining_jumps == 1
-        assert app.widget._nixie_hops.current_value == "1"
+        app.card.update_route(next_dto)
+        assert app.card._dto.remaining_jumps == 1
+        assert app.card._nixie_hops.current_value == "1"
+
+        # Update discrete card with route completed
+        done_dto = NavigationRouteDto.create(
+            destination_system="Maia",
+            star_class="B",
+            remaining_jumps=0,
+            current_system="Maia",
+        )
+        app.card.update_route(done_dto)
+        assert app.card._dto.remaining_jumps == 0
+        assert app.card._nixie_hops.current_value == "0"
