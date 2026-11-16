@@ -86,9 +86,18 @@ def _render_rich_slot(slot: ComponentSlot, live: bool, host: str, port: int) -> 
             if slot.rich_renderer:
                 console.print(slot.rich_renderer(dto))
 
+        # Render initial state immediately so terminal does not exit or hang blank
+        dto_initial = slot.mock_factory() if slot.name != "fsd-target" else None
+        if slot.rich_renderer:
+            console.print(slot.rich_renderer(dto_initial))
+
         assert slot.live_connector is not None
         slot.live_connector(client, _on_update)
         await client.connect()
+
+        # Keep streaming loop alive until interrupted
+        while True:
+            await asyncio.sleep(0.5)
 
     try:
         asyncio.run(_run_live())
