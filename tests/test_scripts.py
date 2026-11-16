@@ -40,3 +40,28 @@ def test_watch_file_deltas_help() -> None:
     )
     assert res.returncode == 0
     assert "Usage: watch_file_deltas.py" in res.stdout
+
+
+def test_preview_ui_elements_help() -> None:
+    """Verify scripts/preview_ui_elements.py executes and presents Typer help."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_ui_elements.py", "--help"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "preview_ui_elements.py" in res.stdout
+
+
+def test_preview_ui_elements_rich_mode() -> None:
+    """Verify scripts/preview_ui_elements.py --rich runs without error."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_ui_elements.py", "--rich"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "Rich Terminal Component Showcase" in res.stdout
+

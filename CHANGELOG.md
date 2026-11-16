@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Created showcase utility [`scripts/preview_ui_elements.py`](scripts/preview_ui_elements.py) displaying all `ed-ui-cli` UI components with mock/filler data across interactive full-screen TUI mode (Textual `TelemetryConsoleApp`) and static console renderables (`--rich`).
 - Authored [ADR 0021](architecture/adr/0021_repository_taxonomy_incubator_and_apps_topology.md) establishing repository taxonomy across single-file utilities (`scripts/`), candidate library subpackages (`incubator/`), and runnable prototype applications (`apps/`).
 - Scaffolded [`incubator/README.md`](incubator/README.md) defining subpackage `src-layout`, testing requirements, and promotion/extraction quality gates.
 - Scaffolded [`apps/README.md`](apps/README.md) defining prototype application structure, runbook expectations, and composition root governance.
