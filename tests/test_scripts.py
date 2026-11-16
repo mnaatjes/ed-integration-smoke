@@ -89,3 +89,27 @@ def test_preview_cassette_futurism_static() -> None:
     assert res.returncode == 0
     assert "C A S S E T T E   F U T U R I S M" in res.stdout
 
+
+def test_preview_nav_route_help() -> None:
+    """Verify scripts/preview_nav_route.py executes and presents Typer help."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_nav_route.py", "--help"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "preview_nav_route.py" in res.stdout
+
+
+def test_preview_nav_route_dto() -> None:
+    """Verify scripts/preview_nav_route.py --dto executes and displays DTO."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_nav_route.py", "--dto"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "Constructed NavigationRouteDto:" in res.stdout
+    assert "destination_system='Sol'" in res.stdout
