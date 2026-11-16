@@ -65,3 +65,27 @@ def test_preview_ui_elements_rich_mode() -> None:
     assert res.returncode == 0
     assert "Rich Terminal Component Showcase" in res.stdout
 
+
+def test_preview_cassette_futurism_help() -> None:
+    """Verify scripts/preview_cassette_futurism.py executes and presents Typer help."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_cassette_futurism.py", "--help"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "preview_cassette_futurism.py" in res.stdout
+
+
+def test_preview_cassette_futurism_static() -> None:
+    """Verify scripts/preview_cassette_futurism.py --static runs without error."""
+    res = subprocess.run(
+        [sys.executable, "scripts/preview_cassette_futurism.py", "--static"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert res.returncode == 0
+    assert "C A S S E T T E   F U T U R I S M" in res.stdout
+
