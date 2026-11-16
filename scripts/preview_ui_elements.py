@@ -17,8 +17,8 @@ from ed_ui_cli.components import (
     render_metric_grid,
 )
 from ed_ui_cli.diagnostics import DiagnosticCheckResult, DiagnosticReporter
-from ed_ui_cli.factories import create_telemetry_console_app
 from ed_ui_cli.snapshots import SnapshotTarget, render_snapshot_tables
+from ed_ui_cli.tui.app import TelemetryConsoleApp
 from rich.console import Console
 from rich.panel import Panel
 
@@ -126,13 +126,6 @@ def _render_rich_showcase(console: Console) -> None:
 
 def _launch_tui_showcase() -> None:
     """Launch the interactive full-screen Textual application with populated mock data."""
-    tui_app, binder = create_telemetry_console_app(
-        title="Elite Dangerous Telemetry Station (UI Showcase)",
-        host="192.168.1.214",
-        port=8080,
-    )
-
-    # Populate Mock Cartography Tree
     mock_bodies = [
         {"name": "Sol", "type": "G-Type Main Sequence Star", "distance_ls": 0.0},
         {
@@ -169,9 +162,7 @@ def _launch_tui_showcase() -> None:
             "parent_body": "Sol",
         },
     ]
-    tui_app.cartography_tree.populate_celestial_system("Sol System", mock_bodies)
 
-    # Populate Mock Nested JSON Payload Inspector Tree
     mock_payload = {
         "event": "FSDJump",
         "Timestamp": datetime.datetime.now().isoformat(),
@@ -197,9 +188,7 @@ def _launch_tui_showcase() -> None:
             "Happiness": "Elated",
         },
     }
-    tui_app.json_inspector.load_payload("FSDJump DTO Payload", mock_payload)
 
-    # Populate Autocomplete Candidates
     systems = [
         "Sol",
         "Shinrarta Dezhra",
@@ -212,9 +201,7 @@ def _launch_tui_showcase() -> None:
         "Beagle Point",
         "Sagittarius A*",
     ]
-    tui_app.fuzzy_search.set_candidates(systems)
 
-    # Populate Mock Event Rows in the Data Table
     events = [
         ("00:01:12", "nav", "FSDTarget", "Locked destination Shinrarta Dezhra [24.89 ly]"),
         ("00:01:15", "flight", "StartJump", "Jump type: Hyperspace to Shinrarta Dezhra"),
@@ -225,14 +212,25 @@ def _launch_tui_showcase() -> None:
         ("00:02:45", "station", "DockingGranted", "Pad 42 allocated at Jameson Memorial"),
         ("00:03:10", "station", "Docked", "Touchdown confirmed at Jameson Memorial"),
     ]
-    for ts, channel, event_name, summary in events:
-        tui_app.data_table.append_event_row(ts, channel, event_name, summary)
 
-    # Set switch and connection status
-    tui_app.update_connection_status(is_connected=True, latency_ms=3.8)
-    tui_app.stream_switch.value = True
+    class ShowcaseConsoleApp(TelemetryConsoleApp):
+        """Showcase application populating mock data once widgets are mounted."""
 
-    # Run the interactive TUI
+        def on_mount(self) -> None:
+            super().on_mount()
+            self.cartography_tree.populate_celestial_system("Sol System", mock_bodies)
+            self.json_inspector.load_payload("FSDJump DTO Payload", mock_payload)
+            self.fuzzy_search.set_candidates(systems)
+            for ts, channel, event_name, summary in events:
+                self.data_table.append_event_row(ts, channel, event_name, summary)
+            self.update_connection_status(is_connected=True, latency_ms=3.8)
+            self.stream_switch.value = True
+
+    tui_app = ShowcaseConsoleApp(
+        title="Elite Dangerous Telemetry Station (UI Showcase)",
+        host="192.168.1.214",
+        port=8080,
+    )
     tui_app.run()
 
 
